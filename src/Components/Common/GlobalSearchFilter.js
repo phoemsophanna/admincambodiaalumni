@@ -217,7 +217,7 @@ const ContactsGlobalFilter = () => {
         <React.Fragment>
             <div className="col-md-auto ms-auto">
                 <div className="d-flex align-items-center gap-2">
-                    <span className="text-muted">Sort by: </span>
+                    {/* <span className="text-muted">Sort by: </span>
                     <Select
                         className="mb-0"
                         value={sortBy}
@@ -227,7 +227,7 @@ const ContactsGlobalFilter = () => {
                         options={sortbyname}
                         id="choices-single-default"
                     >
-                    </Select>
+                    </Select> */}
                 </div>
             </div>
         </React.Fragment>

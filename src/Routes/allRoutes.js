@@ -29,7 +29,6 @@ import BannerMenu from "../pages/Pages/Banner";
 import BannerForm from "../pages/Pages/Banner/BannerForm";
 import AboutCompany from "../pages/Pages/SiteSetting/AboutCompany";
 import Whoweare from "../pages/Pages/SiteSetting/Whoweare";
-import OurGoal from "../pages/Pages/SiteSetting/OurGoal";
 import SiteService from "../pages/Pages/SiteSetting/SiteService";
 import WhyChooseUs from "../pages/Pages/SiteSetting/WhyChooseUs";
 import SiteProject from "../pages/Pages/SiteSetting/SiteProject";
@@ -43,6 +42,7 @@ import TermOfService from "../pages/Pages/SiteSetting/TermOfService";
 import PrivacyPolicy from "../pages/Pages/SiteSetting/PrivacyPolicy";
 import CampaignMenu from "../pages/Pages/Campaign";
 import CampaignForm from "../pages/Pages/Campaign/CampaignForm";
+import HomePage from "../pages/Pages/SiteSetting/HomePage";
 
 const authProtectedRoutes = [
 	{ path: "/dashboard", component: <Dashboard /> },
@@ -62,9 +62,9 @@ const authProtectedRoutes = [
 	{ path: "/campaign-menu", component: <CampaignMenu /> },
 	{ path: "/campaign-menu/create", component: <CampaignForm /> },
 	{ path: "/campaign-menu/edit/:id", component: <CampaignForm /> },
-	{ path: "/performance-menu", component: <PerformanceMenu /> },
-	{ path: "/performance-menu/create", component: <PerformanceForm /> },
-	{ path: "/performance-menu/edit/:id", component: <PerformanceForm /> },
+	{ path: "/how-it-work", component: <PerformanceMenu /> },
+	{ path: "/how-it-work/create", component: <PerformanceForm /> },
+	{ path: "/how-it-work/edit/:id", component: <PerformanceForm /> },
 	{ path: "/news-menu", component: <NewsMenu /> },
 	{ path: "/news-menu/create", component: <NewsForm /> },
 	{ path: "/news-menu/edit/:id", component: <NewsForm /> },
@@ -74,7 +74,7 @@ const authProtectedRoutes = [
 	{ path: "/privacy-policy", component: <PrivacyPolicy /> },
 	{ path: "/site-setting/about-company", component: <AboutCompany /> },
 	{ path: "/site-setting/who-we-are", component: <Whoweare /> },
-	{ path: "/site-setting/our-goal", component: <OurGoal /> },
+	{ path: "/site-setting/home-page", component: <HomePage /> },
 	{ path: "/site-setting/service", component: <SiteService /> },
 	{ path: "/site-setting/why-choose-us", component: <WhyChooseUs /> },
 	{ path: "/site-setting/project", component: <SiteProject /> },

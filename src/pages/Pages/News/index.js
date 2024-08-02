@@ -12,7 +12,7 @@ import { api } from "../../../config";
 import DeleteModal from "../../../Components/Common/DeleteModal";
 
 const NewsMenu = () => {
-	document.title = "News | Admin & Dashboards";
+	document.title = "Article | Admin & Dashboards";
 	const [UID, setUID] = useState(null);
 	const [deleteModal, setDeleteModal] = useState(false);
 
@@ -54,8 +54,14 @@ const NewsMenu = () => {
 			{
 				Header: "ID",
 				accessor: "id",
-				Cell: (contact) => <span className="fw-semibold">{parseInt(contact.row.id) + 1}</span>,
+				Cell: (item) => <span className="fw-semibold">{parseInt(item.row.id) + 1}</span>,
 				filterable: false,
+			},
+			{
+				Header: "Type",
+				accessor: "type",
+				filterable: true,
+				Cell: (item) => <span className="fw-bold">{item.row.original.type}</span>
 			},
 			{
 				Header: "News",
@@ -160,7 +166,7 @@ const NewsMenu = () => {
 		<React.Fragment>
 			<div className="page-content">
 				<Container fluid>
-					<BreadCrumb title="News Menu" pageTitle="Home" />
+					<BreadCrumb title="News & Events" pageTitle="Home" />
 					<Row>
 						<Col lg={12}>
 							<Card>

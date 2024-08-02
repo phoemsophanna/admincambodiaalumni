@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
-import { Button, Card, CardBody, CardHeader, Col, Container, Form, Input, Label, Row, Spinner } from "reactstrap";
+import { Button, Card, CardBody, CardHeader, Col, Container, Form, Input, Label, Nav, NavItem, NavLink, Row, Spinner, TabContent, TabPane } from "reactstrap";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getSiteSetting, resetSiteSettingFlag, saveSiteSetting } from "../../../store/actions";
@@ -9,7 +9,7 @@ import BreadCrumb from "../../../Components/Common/BreadCrumb";
 
 import withRouter from "../../../Components/Common/withRouter";
 import LayoutNav from "./LayoutNav";
-
+import classnames from "classnames";
 // Import React FilePond
 import { FilePond, registerPlugin } from "react-filepond";
 // Import FilePond styles
@@ -22,7 +22,12 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 const ContactUs = () => {
 	document.title = "Site Setting: Contact Us | Admin & Dashboard";
-
+	const [titleTap, settitleTap] = useState("ENG");
+	const titleTapToggle = (tab) => {
+		if (titleTap !== tab) {
+			settitleTap(tab);
+		}
+	};
 	const dispatch = useDispatch();
 	const [file, setFile] = useState([]);
 
@@ -57,13 +62,16 @@ const ContactUs = () => {
 			phoneNumber1: siteSetting ? siteSetting.phoneNumber1 : "",
 			phoneNumber2: siteSetting ? siteSetting.phoneNumber2 : "",
 			address: siteSetting ? siteSetting.address : "",
+			addressKh: siteSetting ? siteSetting.addressKh : "",
 			embedMap: siteSetting ? siteSetting.embedMap : "",
 			facebookLink: siteSetting ? siteSetting.facebookLink : "",
 			instagramLink: siteSetting ? siteSetting.instagramLink : "",
 			telegramLink: siteSetting ? siteSetting.telegramLink : "",
 			linkedinLink: siteSetting ? siteSetting.linkedinLink : "",
-			appId: siteSetting ? siteSetting.appId : "",
-			pageId: siteSetting ? siteSetting.pageId : "",
+			pageTitle: siteSetting ? siteSetting.pageTitle : "",
+			pageTitleKh: siteSetting ? siteSetting.pageTitleKh : "",
+			pageDescription: siteSetting ? siteSetting.pageDescription : "",
+			pageDescriptionKh: siteSetting ? siteSetting.pageDescriptionKh : "",
 			thumbnail: siteSetting ? siteSetting.thumbnail : "",
 		},
 		onSubmit: (values) => {
@@ -140,92 +148,134 @@ const ContactUs = () => {
 									<Row>
 										<Col xl={8}>
 											<Card>
-												<CardBody>
-													<Row>
-														<Col xl={6}>
-															<div className="mb-3">
-																<Label className="form-label" htmlFor="email1-input">
-																	Email 1
-																</Label>
-																<Input
-																	type="text"
-																	className="form-control"
-																	id="email1-input"
-																	placeholder="Enter text"
-																	name="email1"
-																	onChange={settingForm.handleChange}
-																	onBlur={settingForm.handleBlur}
-																	value={settingForm.values.email1}
-																/>
-															</div>
-														</Col>
-														<Col xl={6}>
-															<div className="mb-3">
-																<Label className="form-label" htmlFor="email2-input">
-																	Email 2
-																</Label>
-																<Input
-																	type="text"
-																	className="form-control"
-																	id="email2-input"
-																	placeholder="Enter text"
-																	name="email2"
-																	onChange={settingForm.handleChange}
-																	onBlur={settingForm.handleBlur}
-																	value={settingForm.values.email2}
-																/>
-															</div>
-														</Col>
-														<Col xl={6}>
-															<div className="mb-3">
-																<Label className="form-label" htmlFor="phoneNumber1-input">
-																	Phone Number 1
-																</Label>
-																<Input
-																	type="text"
-																	className="form-control"
-																	id="phoneNumber1-input"
-																	placeholder="Enter text"
-																	name="phoneNumber1"
-																	onChange={settingForm.handleChange}
-																	onBlur={settingForm.handleBlur}
-																	value={settingForm.values.phoneNumber1}
-																/>
-															</div>
-														</Col>
-														<Col xl={6}>
-															<div className="mb-3">
-																<Label className="form-label" htmlFor="phoneNumber2-input">
-																	Phone Number 2
-																</Label>
-																<Input
-																	type="text"
-																	className="form-control"
-																	id="phoneNumber2-input"
-																	placeholder="Enter text"
-																	name="phoneNumber2"
-																	onChange={settingForm.handleChange}
-																	onBlur={settingForm.handleBlur}
-																	value={settingForm.values.phoneNumber2}
-																/>
-															</div>
-														</Col>
-													</Row>
-													<div className="mb-3">
-														<Label className="form-label" htmlFor="address-input">
-															Address
-														</Label>
-														<textarea
-															className="form-control"
-															id="address-input"
-															rows="3"
-															placeholder="Enter address"
-															name="address"
-															onChange={settingForm.handleChange}
-															onBlur={settingForm.handleBlur}
-															value={settingForm.values.address}
-														></textarea>
+												<CardHeader>
+													<div className="align-items-center d-flex">
+														<div className="flex-shrink-0">
+															<Nav tabs className="nav justify-content-end nav-tabs-custom rounded card-header-tabs border-bottom-0">
+																<NavItem>
+																	<NavLink
+																		style={{ cursor: "pointer" }}
+																		className={classnames({ active: titleTap === "ENG" })}
+																		onClick={() => {
+																			titleTapToggle("ENG");
+																		}}
+																	>
+																		English
+																	</NavLink>
+																</NavItem>
+																<NavItem>
+																	<NavLink
+																		style={{ cursor: "pointer" }}
+																		className={classnames({ active: titleTap === "KHM" })}
+																		onClick={() => {
+																			titleTapToggle("KHM");
+																		}}
+																	>
+																		Khmer
+																	</NavLink>
+																</NavItem>
+															</Nav>
+														</div>
 													</div>
+												</CardHeader>
+												<CardBody>
+													<TabContent activeTab={titleTap}>
+														<TabPane tabId="ENG" id="eng">
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="contact-title-input">
+																	Page Title
+																</Label>
+																<Input
+																	type="text"
+																	className="form-control"
+																	id="contact-title-input"
+																	placeholder="Enter title"
+																	name="pageTitle"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.pageTitle}
+																/>
+															</div>
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="description-input">
+																	Description
+																</Label>
+																<textarea
+																	className="form-control"
+																	id="description-input"
+																	rows="3"
+																	placeholder="Enter description"
+																	name="pageDescription"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.pageDescription}
+																></textarea>
+															</div>
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="address-input">
+																	Address
+																</Label>
+																<textarea
+																	className="form-control"
+																	id="address-input"
+																	rows="3"
+																	placeholder="Enter address"
+																	name="address"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.address}
+																></textarea>
+															</div>
+														</TabPane>
+														<TabPane tabId="KHM" id="khm">
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="contact-title-input">
+																	Page Title
+																</Label>
+																<Input
+																	type="text"
+																	className="form-control"
+																	id="contact-title-input"
+																	placeholder="Enter title"
+																	name="pageTitleKh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.pageTitleKh}
+																/>
+															</div>
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="description-input">
+																	Description
+																</Label>
+																<textarea
+																	className="form-control"
+																	id="description-input"
+																	rows="3"
+																	placeholder="Enter description"
+																	name="pageDescriptionKh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.pageDescriptionKh}
+																></textarea>
+															</div>
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="address-input">
+																	Address
+																</Label>
+																<textarea
+																	className="form-control"
+																	id="address-input"
+																	rows="3"
+																	placeholder="Enter address"
+																	name="addressKh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.addressKh}
+																></textarea>
+															</div>
+														</TabPane>
+													</TabContent>
+
 													<div className="mb-3">
 														<Label className="form-label" htmlFor="embedMap-input">
 															Embed Map
@@ -260,9 +310,81 @@ const ContactUs = () => {
 										<Col xl={4}>
 											<Card>
 												<CardHeader>
-													<div className="fw-bold">Social Media Link</div>
+													<div className="fw-bold">Thumbnail Contact</div>
 												</CardHeader>
 												<CardBody>
+													<div className="mb-3">
+														<div className="position-relative d-block mx-auto">
+															<div style={{ width: "100%" }}>
+																<FilePond
+																	labelIdle='<span class="filepond--label-action">Choose Image</span>'
+																	files={file}
+																	onupdatefiles={setFile}
+																	allowMultiple={false}
+																	maxFiles={1}
+																	name="file"
+																	server={`${api.BASE_URL}/save-image/site-setting`}
+																	className="filepond filepond-input-multiple"
+																	imagePreviewMaxHeight={195}
+																/>
+															</div>
+														</div>
+													</div>
+												</CardBody>
+											</Card>
+											<Card>
+												<CardHeader>
+													<div className="fw-bold">Contact List</div>
+												</CardHeader>
+												<CardBody>
+													<div className="form-icon mb-3">
+														<Input
+															type="text"
+															className="form-control form-control-icon"
+															placeholder="Enter phone number"
+															name="phoneNumber1"
+															onChange={settingForm.handleChange}
+															onBlur={settingForm.handleBlur}
+															value={settingForm.values.phoneNumber1 || ""}
+														/>
+														<i className="ri-phone-line"></i>
+													</div>
+													<div className="form-icon mb-3">
+														<Input
+															type="text"
+															className="form-control form-control-icon"
+															placeholder="Enter phone number"
+															name="phoneNumber2"
+															onChange={settingForm.handleChange}
+															onBlur={settingForm.handleBlur}
+															value={settingForm.values.phoneNumber2 || ""}
+														/>
+														<i className="ri-phone-line"></i>
+													</div>
+													<div className="form-icon mb-3">
+														<Input
+															type="text"
+															className="form-control form-control-icon"
+															placeholder="Enter email"
+															name="email1"
+															onChange={settingForm.handleChange}
+															onBlur={settingForm.handleBlur}
+															value={settingForm.values.email1 || ""}
+														/>
+														<i className="ri-mail-line"></i>
+													</div>
+													<div className="form-icon mb-3">
+														<Input
+															type="text"
+															className="form-control form-control-icon"
+															placeholder="Enter email"
+															name="email2"
+															onChange={settingForm.handleChange}
+															onBlur={settingForm.handleBlur}
+															value={settingForm.values.email2 || ""}
+														/>
+														<i className="ri-mail-line"></i>
+													</div>
 													<div className="form-icon mb-3">
 														<Input
 															type="text"
@@ -310,67 +432,6 @@ const ContactUs = () => {
 															value={settingForm.values.linkedinLink || ""}
 														/>
 														<i className="ri-linkedin-line"></i>
-													</div>
-												</CardBody>
-											</Card>
-											<Card>
-												<CardHeader>
-													<div className="fw-bold">Facebook Setting</div>
-												</CardHeader>
-												<CardBody>
-													<div className="input-group mb-3">
-														<span className="input-group-text" id="app-id">
-															App ID
-														</span>
-														<Input
-															type="text"
-															className="form-control"
-															id="app-id-input"
-															aria-describedby="app-id"
-															name="appId"
-															onChange={settingForm.handleChange}
-															onBlur={settingForm.handleBlur}
-															value={settingForm.values.appId || ""}
-														/>
-													</div>
-													<div className="input-group mb-3">
-														<span className="input-group-text" id="page-id">
-															Page ID
-														</span>
-														<Input
-															type="text"
-															className="form-control"
-															id="page-id-input"
-															aria-describedby="page-id"
-															name="pageId"
-															onChange={settingForm.handleChange}
-															onBlur={settingForm.handleBlur}
-															value={settingForm.values.pageId || ""}
-														/>
-													</div>
-												</CardBody>
-											</Card>
-											<Card>
-												<CardHeader>
-													<div className="fw-bold">Thumbnail Contact</div>
-												</CardHeader>
-												<CardBody>
-													<div className="mb-3">
-														<div className="position-relative d-block mx-auto">
-															<div style={{ width: "100%" }}>
-																<FilePond
-																	labelIdle='<span class="filepond--label-action">Choose Image</span>'
-																	files={file}
-																	onupdatefiles={setFile}
-																	allowMultiple={false}
-																	maxFiles={1}
-																	name="file"
-																	server={`${api.BASE_URL}/save-image/site-setting`}
-																	className="filepond filepond-input-multiple"
-																	imagePreviewMaxHeight={195}
-																/>
-															</div>
-														</div>
 													</div>
 												</CardBody>
 											</Card>

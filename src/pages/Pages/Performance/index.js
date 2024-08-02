@@ -12,7 +12,7 @@ import { api } from "../../../config";
 import DeleteModal from "../../../Components/Common/DeleteModal";
 
 const PerformanceMenu = () => {
-	document.title = "Performance | Admin & Dashboards";
+	document.title = "How It Work | Admin & Dashboards";
 	const [UID, setUID] = useState(null);
 	const [deleteModal, setDeleteModal] = useState(false);
 
@@ -58,7 +58,7 @@ const PerformanceMenu = () => {
 				filterable: false,
 			},
 			{
-				Header: "Performance",
+				Header: "Title",
 				accessor: "title",
 				filterable: false,
 				Cell: (performance) => (
@@ -117,7 +117,7 @@ const PerformanceMenu = () => {
 					return (
 						<ul className="list-inline hstack gap-2 mb-0">
 							<li className="list-inline-item" title="Edit">
-								<Link className="edit-item-btn" to={`/performance-menu/edit/${cellProps.row.original.id}`}>
+								<Link className="edit-item-btn" to={`/how-it-work/edit/${cellProps.row.original.id}`}>
 									<i className="ri-pencil-fill align-bottom text-muted"></i>
 								</Link>
 							</li>
@@ -146,14 +146,14 @@ const PerformanceMenu = () => {
 		<React.Fragment>
 			<div className="page-content">
 				<Container fluid>
-					<BreadCrumb title="Performance Menu" pageTitle="Home" />
+					<BreadCrumb title="How It Work" pageTitle="Home" />
 					<Row>
 						<Col lg={12}>
 							<Card>
 								<CardHeader>
 									<Row className="justify-content-between align-items-center gy-3">
 										<Col lg={3}>
-											<Link className="btn add-btn btn-primary" to="/performance-menu/create">
+											<Link className="btn add-btn btn-primary" to="/how-it-work/create">
 												<i className="ri-add-fill me-1 align-bottom"></i> Create New
 											</Link>
 										</Col>

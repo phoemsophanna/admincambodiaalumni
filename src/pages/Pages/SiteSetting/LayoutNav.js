@@ -39,6 +39,17 @@ const LayoutNav = (props) => {
 				<NavItem>
 					<NavLink
 						style={{ cursor: "pointer" }}
+						className={classnames({ active: props.router.location.pathname === "/site-setting/home-page" })}
+						onClick={() => {
+							toggle("home-page");
+						}}
+					>
+						Home Page
+					</NavLink>
+				</NavItem>
+				<NavItem>
+					<NavLink
+						style={{ cursor: "pointer" }}
 						className={classnames({ active: props.router.location.pathname === "/site-setting/who-we-are" })}
 						onClick={() => {
 							toggle("who-we-are");
@@ -47,17 +58,7 @@ const LayoutNav = (props) => {
 						Who we are
 					</NavLink>
 				</NavItem>
-				<NavItem>
-					<NavLink
-						style={{ cursor: "pointer" }}
-						className={classnames({ active: props.router.location.pathname === "/site-setting/our-goal" })}
-						onClick={() => {
-							toggle("our-goal");
-						}}
-					>
-						Our Goal
-					</NavLink>
-				</NavItem>
+				
 				<NavItem>
 					<NavLink
 						style={{ cursor: "pointer" }}

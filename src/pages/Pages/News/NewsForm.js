@@ -1,12 +1,32 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Card, CardBody, CardFooter, CardHeader, Col, Container, Form, FormFeedback, Input, Label, Row, Spinner } from "reactstrap";
+import {
+	Button,
+	Card,
+	CardBody,
+	CardFooter,
+	CardHeader,
+	Col,
+	Container,
+	Form,
+	FormFeedback,
+	FormGroup,
+	Input,
+	Label,
+	Nav,
+	NavItem,
+	NavLink,
+	Row,
+	Spinner,
+	TabContent,
+	TabPane,
+} from "reactstrap";
 import BreadCrumb from "../../../Components/Common/BreadCrumb";
 import { Link, useParams } from "react-router-dom";
 import TinymceEditor from "../../../Components/Common/TinymceEditor";
 
 import * as Yup from "yup";
 import { useFormik } from "formik";
-
+import classnames from "classnames";
 // Import React FilePond
 import { FilePond, registerPlugin } from "react-filepond";
 // Import FilePond styles
@@ -24,10 +44,17 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 const NewsForm = (props) => {
 	const { id } = useParams();
-	document.title = `News: ${id ? "Edit" : "create"} | Admin & Dashboards`;
+	document.title = `Article: ${id ? "Edit" : "create"} | Admin & Dashboards`;
 	const dispatch = useDispatch();
+	const [titleTap, settitleTap] = useState("ENG");
+	const titleTapToggle = (tab) => {
+		if (titleTap !== tab) {
+			settitleTap(tab);
+		}
+	};
 	const [file, setFile] = useState([]);
 	const [contentDesc, setContentDesc] = useState("");
+	const [contentDescKh, setContentDescKh] = useState("");
 
 	const createNewsSelector = createSelector(
 		(state) => state.CreateNewsReducer,
@@ -45,6 +72,9 @@ const NewsForm = (props) => {
 
 	const handleEditorChange = (e) => {
 		setContentDesc(e.target.getContent());
+	};
+	const handleEditorChangeKh = (e) => {
+		setContentDescKh(e.target.getContent());
 	};
 
 	useEffect(() => {
@@ -81,8 +111,12 @@ const NewsForm = (props) => {
 		initialValues: {
 			id: id || "",
 			title: news ? news.title : "",
+			titleKh: news ? news.titleKh : "",
 			summary: news ? news.summary : "",
+			summaryKh: news ? news.summaryKh : "",
 			content: news ? news.content : "",
+			contentKh: news ? news.contentKh : "",
+			type: news ? news.type : "",
 			ordering: news ? news.ordering : 0,
 			isActive: news ? (news.isActive === 1 ? true : false) : true,
 			isDisplayHomepage: news ? (news.isDisplayHomepage === 1 ? true : false) : false,
@@ -93,6 +127,7 @@ const NewsForm = (props) => {
 		}),
 		onSubmit: (values) => {
 			values.content = contentDesc;
+			values.contentKh = contentDescKh;
 			values.image = file?.length > 0 ? file[0]?.serverId : "";
 			dispatch(createNews(values, props.router.navigate));
 		},
@@ -102,14 +137,14 @@ const NewsForm = (props) => {
 		<React.Fragment>
 			<div className="page-content">
 				<Container fluid>
-					<BreadCrumb title="News Menu" pageTitle="Dashboard" pageLink="/news-menu" />
+					<BreadCrumb title="News & Event" pageTitle="Dashboard" pageLink="/news-menu" />
 					<Row>
 						<Col lg={12}>
 							<Card>
 								<CardHeader>
 									<Row className="justify-content-between align-items-center gy-3">
 										<Col lg={3}>
-											<h5 className="mt-2">{id ? "Edit" : "Create"} News</h5>
+											<h5 className="mt-2">{id ? "Edit" : "Create"} Article</h5>
 										</Col>
 										<Col className="col-lg-auto">
 											<div className="d-md-flex text-nowrap gap-2">
@@ -135,45 +170,120 @@ const NewsForm = (props) => {
 						<Row>
 							<Col lg={8}>
 								<Card>
+									<CardHeader>
+										<div className="align-items-center d-flex">
+											<div className="flex-shrink-0">
+												<Nav tabs className="nav justify-content-end nav-tabs-custom rounded card-header-tabs border-bottom-0">
+													<NavItem>
+														<NavLink
+															style={{ cursor: "pointer" }}
+															className={classnames({ active: titleTap === "ENG" })}
+															onClick={() => {
+																titleTapToggle("ENG");
+															}}
+														>
+															English
+														</NavLink>
+													</NavItem>
+													<NavItem>
+														<NavLink
+															style={{ cursor: "pointer" }}
+															className={classnames({ active: titleTap === "KHM" })}
+															onClick={() => {
+																titleTapToggle("KHM");
+															}}
+														>
+															Khmer
+														</NavLink>
+													</NavItem>
+												</Nav>
+											</div>
+										</div>
+									</CardHeader>
 									<CardBody>
-										<div className="mb-3">
-											<Label className="form-label" htmlFor="news-title-input">
-												News Title <small className="text-danger">(Required)</small>
-											</Label>
-											<Input
-												type="text"
-												className="form-control"
-												id="news-title-input"
-												placeholder="Enter news title"
-												name="title"
-												onChange={newsValidation.handleChange}
-												onBlur={newsValidation.handleBlur}
-												value={newsValidation.values.title}
-												invalid={newsValidation.touched.title && newsValidation.errors.title ? true : false}
-											/>
-											{newsValidation.touched.title && newsValidation.errors.title ? (
-												<FormFeedback type="invalid">{newsValidation.errors.title}</FormFeedback>
-											) : null}
-										</div>
-										<div className="mb-3">
-											<Label className="form-label" htmlFor="summary-input">
-												Summary
-											</Label>
-											<textarea
-												className="form-control"
-												id="summary-input"
-												rows="3"
-												placeholder="Enter summary"
-												name="summary"
-												onChange={newsValidation.handleChange}
-												onBlur={newsValidation.handleBlur}
-												value={newsValidation.values.summary}
-											></textarea>
-										</div>
-										<div className="mb-3">
-											<Label>Content</Label>
-											<TinymceEditor onUploadImage={handleEditorChange} initDataValue={contentDesc} />
-										</div>
+										<TabContent activeTab={titleTap}>
+											<TabPane tabId="ENG" id="eng">
+												<div className="mb-3">
+													<Label className="form-label" htmlFor="news-title-input">
+														News Title <small className="text-danger">(Required)</small>
+													</Label>
+													<Input
+														type="text"
+														className="form-control"
+														id="news-title-input"
+														placeholder="Enter news title"
+														name="title"
+														onChange={newsValidation.handleChange}
+														onBlur={newsValidation.handleBlur}
+														value={newsValidation.values.title}
+														invalid={newsValidation.touched.title && newsValidation.errors.title ? true : false}
+													/>
+													{newsValidation.touched.title && newsValidation.errors.title ? (
+														<FormFeedback type="invalid">{newsValidation.errors.title}</FormFeedback>
+													) : null}
+												</div>
+												<div className="mb-3">
+													<Label className="form-label" htmlFor="summary-input">
+														Summary
+													</Label>
+													<textarea
+														className="form-control"
+														id="summary-input"
+														rows="3"
+														placeholder="Enter summary"
+														name="summary"
+														onChange={newsValidation.handleChange}
+														onBlur={newsValidation.handleBlur}
+														value={newsValidation.values.summary}
+													></textarea>
+												</div>
+												<div className="mb-3">
+													<Label>Content</Label>
+													<TinymceEditor onUploadImage={handleEditorChange} initDataValue={contentDesc} />
+												</div>
+											</TabPane>
+											<TabPane tabId="KHM" id="khm">
+												<div className="mb-3">
+													<Label className="form-label" htmlFor="news-titleKh-input">
+														ចំណងជើង <small className="text-danger">(Required)</small>
+													</Label>
+													<Input
+														type="text"
+														className="form-control"
+														id="news-titleKh-input"
+														placeholder="ប​ញ្ចូ​ល​ចំ​ណង​ជើង"
+														name="titleKh"
+														onChange={newsValidation.handleChange}
+														onBlur={newsValidation.handleBlur}
+														value={newsValidation.values.titleKh}
+														invalid={newsValidation.touched.titleKh && newsValidation.errors.titleKh ? true : false}
+													/>
+													{newsValidation.touched.titleKh && newsValidation.errors.titleKh ? (
+														<FormFeedback type="invalid">{newsValidation.errors.titleKh}</FormFeedback>
+													) : null}
+												</div>
+												<div className="mb-3">
+													<Label className="form-label" htmlFor="summaryKh-input">
+														អត្ថបទសង្ខេប
+													</Label>
+													<textarea
+														className="form-control"
+														id="summaryKh-input"
+														rows="3"
+														placeholder="បញ្ចូលអត្ថបទសង្ខេប"
+														name="summaryKh"
+														onChange={newsValidation.handleChange}
+														onBlur={newsValidation.handleBlur}
+														value={newsValidation.values.summaryKh}
+													></textarea>
+												</div>
+												<div className="mb-3">
+													<Label>Content</Label>
+													<TinymceEditor onUploadImage={handleEditorChangeKh} initDataValue={contentDescKh} />
+												</div>
+											</TabPane>
+										</TabContent>
+
 										<div className="mb-3">
 											<Label className="form-label" htmlFor="thumbnail-input">
 												Thumbnail
@@ -200,6 +310,22 @@ const NewsForm = (props) => {
 							<Col lg={4}>
 								<Card>
 									<CardBody>
+										<FormGroup className="mb-3">
+											<Label for="select-news-type">Select Type</Label>
+											<Input
+												className="form-select p-2"
+												id="select-news-type"
+												name="type"
+												type="select"
+												onChange={newsValidation.handleChange}
+												value={newsValidation.values.type}
+											>
+												<option value="NEWS" selected>
+													NEWS
+												</option>
+												<option value="EVENT">EVENT</option>
+											</Input>
+										</FormGroup>
 										<div className="mb-3">
 											<Label className="form-label" htmlFor="news-ordering-input">
 												Ordering

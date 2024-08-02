@@ -45,16 +45,16 @@ const Navdata = () => {
 		// },
 		{
 			id: "performance-menu",
-			label: "Performance",
+			label: "How It Work",
 			icon: "mdi mdi-bullseye-arrow",
-			link: "/performance-menu",
+			link: "/how-it-work",
 			click: function (e) {
 				e.preventDefault();
 			},
 		},
 		{
 			id: "news-menu",
-			label: "News",
+			label: "News & Events",
 			icon: "mdi mdi-newspaper-variant-multiple",
 			link: "/news-menu",
 			click: function (e) {
@@ -84,28 +84,6 @@ const Navdata = () => {
 		// 	},
 		// },
 		{
-			id: "term-service",
-			label: "Term of Service",
-			icon: "mdi mdi-text-box-search-outline",
-			link: "/term-service",
-			click: function (e) {
-				e.preventDefault();
-			},
-		},
-		{
-			id: "privacy-policy",
-			label: "Privacy Policy",
-			icon: "mdi mdi-text-box-check-outline",
-			link: "/privacy-policy",
-			click: function (e) {
-				e.preventDefault();
-			},
-		},
-		{
-			label: "Management",
-			isHeader: true,
-		},
-		{
 			id: "site-setting",
 			label: "Site Setting",
 			icon: "mdi mdi-tune",
@@ -132,6 +110,29 @@ const Navdata = () => {
 				e.preventDefault();
 			},
 		},
+		{
+			id: "term-service",
+			label: "Term of Service",
+			icon: "mdi mdi-text-box-search-outline",
+			link: "/term-service",
+			click: function (e) {
+				e.preventDefault();
+			},
+		},
+		{
+			id: "privacy-policy",
+			label: "Privacy Policy",
+			icon: "mdi mdi-text-box-check-outline",
+			link: "/privacy-policy",
+			click: function (e) {
+				e.preventDefault();
+			},
+		},
+		{
+			label: "Management",
+			isHeader: true,
+		},
+		
 		{
 			id: "user",
 			label: "User",

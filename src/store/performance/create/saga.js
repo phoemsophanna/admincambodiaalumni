@@ -14,7 +14,7 @@ function* createPerformanceSaga({ payload: { performance, history } }) {
 		if (response.status === "success") {
 			toast.success(response.message, { autoClose: 3000 });
 			yield put(createPerformanceSuccessful(response.message));
-			history("/performance-menu");
+			history("/how-it-work");
 		} else {
 			toast.error(response.message, { autoClose: 3000 });
 			yield put(createPerformanceFailed(response.message));

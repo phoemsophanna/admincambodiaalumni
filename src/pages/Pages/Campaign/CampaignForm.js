@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
 	Button,
 	Card,
@@ -7,7 +7,6 @@ import {
 	Col,
 	Container,
 	Form,
-	FormFeedback,
 	FormGroup,
 	Input,
 	Label,
@@ -20,30 +19,17 @@ import {
 	Table,
 	TabPane,
 } from "reactstrap";
-import Select from "react-select";
-import Flatpickr from "react-flatpickr";
 import BreadCrumb from "../../../Components/Common/BreadCrumb";
 import { Link, useParams } from "react-router-dom";
-import TinymceEditor from "../../../Components/Common/TinymceEditor";
 import classnames from "classnames";
 
-import * as Yup from "yup";
 import { useFormik } from "formik";
 
-// Import React FilePond
-import { FilePond, registerPlugin } from "react-filepond";
-// Import FilePond styles
-import "filepond/dist/filepond.min.css";
-import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
-import FilePondPluginImagePreview from "filepond-plugin-image-preview";
-import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import { createSelector } from "reselect";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	createCampaign,
-	fetchCampaignCategoryList,
 	fetchCampaignDetail,
-	resetCampaignCategoryList,
 	resetCampaignShowDetail,
 } from "../../../store/actions";
 import withRouter from "../../../Components/Common/withRouter";
@@ -51,8 +37,6 @@ import { api } from "../../../config";
 import CountUp from "react-countup";
 import TableContainer from "../../../Components/Common/TableContainer";
 import Loader from "../../../Components/Common/Loader";
-// Register the plugins
-registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 const CampaignForm = (props) => {
 	const { id } = useParams();
@@ -65,11 +49,6 @@ const CampaignForm = (props) => {
 		}
 	};
 	const dispatch = useDispatch();
-	const [file, setFile] = useState([]);
-	const [contentDesc, setContentDesc] = useState("");
-	const [campaignCategory, setCampaignCategory] = useState("");
-	const [fromDate, setFromDate] = useState(null);
-	const [toDate, setToDate] = useState(null);
 
 	const createCampaignSelector = createSelector(
 		(state) => state.CreateCampaignReducer,
@@ -84,11 +63,6 @@ const CampaignForm = (props) => {
 		})
 	);
 	const { campaign, isLoading } = useSelector(createCampaignDetailSelector);
-	const campaignCategoryListSelector = createSelector(
-		(state) => state.CampaignCategoryListReducer,
-		(layout) => ({ campaignCategories: layout.campaignCategories })
-	);
-	const { campaignCategories } = useSelector(campaignCategoryListSelector);
 
 	useEffect(() => {
 		if (id) dispatch(fetchCampaignDetail(id));
@@ -98,21 +72,7 @@ const CampaignForm = (props) => {
 		};
 	}, [id, dispatch]);
 
-	const campaignValidation = useFormik({
-		enableReinitialize: true,
-
-		initialValues: {
-			id: id || "",
-			isInNeed: campaign?.isInNeed === 1 ? true : false,
-			isTrending: campaign?.isTrending === 1 ? true : false,
-			isLatest: campaign?.isLatest === 1 ? true : false,
-			status: campaign?.status || "",
-			ordering: campaign?.ordering || 0,
-		},
-		onSubmit: (values) => {
-			dispatch(createCampaign(values, props.router.navigate));
-		},
-	});
+	
 
 	const columns = useMemo(
 		() => [
@@ -130,8 +90,8 @@ const CampaignForm = (props) => {
 					<div className="d-flex align-items-center">
 						<div className="flex-shrink-0 me-3">
 							<div className="avatar-sm bg-light rounded p-1 d-flex align-items-center">
-								{donor.row.original.donor.image > 0 && donor.row.original.donor.image ? (
-									<img src={api.FILE_URI + donor.row.original.donor.image} alt="" className="img-fluid d-block" />
+								{donor.row.original.donor?.image ? (
+									<img src={api.FILE_URI + donor.row.original.donor?.image} alt="" className="img-fluid d-block" />
 								) : (
 									<div className="mx-auto w-100 h-100">
 										<div className="avatar-title bg-success-subtle text-success fs-24">
@@ -144,11 +104,11 @@ const CampaignForm = (props) => {
 						<div className="flex-grow-1">
 							<h5 className="fs-14 mb-1">
 								<Link to="#" className="text-body">
-									{donor.row.original.donor.name}
+									{donor.row.original.donor?.name || "Anonymous"}
 								</Link>
 							</h5>
-							<p className="text-muted mb-0 text-truncate" style={{ width: "100px" }}>
-								<span className="fw-medium ">{donor.row.original.donor.email} | {donor.row.original.donor.phoneNumber}</span>
+							<p className="text-muted mb-0 text-truncate" style={{ width: "200px" }}>
+								<span className="fw-medium ">{donor.row.original.donor?.email || "Undefined"} | {donor.row.original.donor?.phoneNumber || "Undefined"}</span>
 							</p>
 						</div>
 					</div>
@@ -197,6 +157,23 @@ const CampaignForm = (props) => {
 		],
 		[]
 	);
+
+	const campaignValidation = useFormik({
+		enableReinitialize: true,
+
+		initialValues: {
+			id: id || "",
+			isInNeed: campaign?.isInNeed === 1 ? true : false,
+			isTrending: campaign?.isTrending === 1 ? true : false,
+			isLatest: campaign?.isLatest === 1 ? true : false,
+			allowEdit: campaign?.allowEdit === 1 ? true : false,
+			status: campaign?.status || "",
+			ordering: campaign?.ordering || 0,
+		},
+		onSubmit: (values) => {
+			dispatch(createCampaign(values, props.router.navigate));
+		},
+	});
 
 	return (
 		<React.Fragment>
@@ -749,11 +726,12 @@ const CampaignForm = (props) => {
 												value={campaignValidation.values.status}
 												type="select"
 											>
-												<option value={campaignValidation.values.status} disabled>{campaignValidation.values.status}</option>
-												{campaignValidation.values.status == "PENDING" ? <option value="COMPLETE">Approve</option> : null}
-												{campaignValidation.values.status == "PENDING" ? <option value="REJECTED">REJECTED</option> : null}
-												{campaignValidation.values.status == "COMPLETE" ? <option value="FAILED">FAILED</option> : null}
-												{campaignValidation.values.status == "COMPLETE" ? <option value="INACTIVE">INACTIVE</option> : null}
+												<option disabled>{campaignValidation.values.status}</option>
+												<option value="COMPLETE">Approve</option>
+												<option value="REJECTED">REJECTED</option>
+												<option value="FAILED">FAILED</option>
+												<option value="INACTIVE">INACTIVE</option>
+												<option value="COMPLETE">ACTIVE</option>
 											</Input>
 										</FormGroup>
 										<div className="form-check form-switch form-switch-md" dir="ltr">
@@ -798,6 +776,20 @@ const CampaignForm = (props) => {
 												Is latest: <span className="fw-bolder">{campaignValidation.values.isLatest ? "TRUE" : "FALSE"}</span>
 											</Label>
 										</div>
+										<div className="form-check form-switch form-switch-md" dir="ltr">
+											<Input
+												type="checkbox"
+												className="form-check-input"
+												id="allowEdit"
+												name="allowEdit"
+												onChange={campaignValidation.handleChange}
+												onBlur={campaignValidation.handleBlur}
+												checked={campaignValidation.values.allowEdit}
+											/>
+											<Label className="form-check-label" for="allowEdit">
+												Allow Edit: <span className="fw-bolder">{campaignValidation.values.allowEdit ? "TRUE" : "FALSE"}</span>
+											</Label>
+										</div>
 										<div className="my-3">
 											<Label className="form-label" htmlFor="campaign-ordering-input">
 												Ordering
@@ -817,7 +809,7 @@ const CampaignForm = (props) => {
 								</Card>
 								<div className="text-start mb-4">
 									{useCampaignSelect.isLoading ? (
-										<Button color="primary" className="btn-load">
+										<Button type="button" color="primary" className="btn-load">
 											<span className="d-flex align-items-center">
 												<Spinner size="sm" className="flex-shrink-0">
 													Loading...
@@ -826,7 +818,7 @@ const CampaignForm = (props) => {
 											</span>
 										</Button>
 									) : (
-										<Button type="submit" color="primary" className="btn-label">
+										<Button type="button" color="primary" className="btn-label" onClick={() => campaignValidation.handleSubmit()}>
 											<i className="ri-save-3-line label-icon align-middle fs-16 me-2"></i> Save Campaign
 										</Button>
 									)}{" "}

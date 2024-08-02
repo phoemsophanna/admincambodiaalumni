@@ -1,11 +1,31 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Card, CardBody, CardFooter, CardHeader, Col, Container, Form, FormFeedback, Input, Label, Row, Spinner } from "reactstrap";
+import {
+	Button,
+	Card,
+	CardBody,
+	CardFooter,
+	CardHeader,
+	Col,
+	Container,
+	Form,
+	FormFeedback,
+	Input,
+	Label,
+	Nav,
+	NavItem,
+	NavLink,
+	Row,
+	Spinner,
+	TabContent,
+	TabPane,
+} from "reactstrap";
 import BreadCrumb from "../../../Components/Common/BreadCrumb";
 import { Link, useParams } from "react-router-dom";
 
 import * as Yup from "yup";
 import { useFormik } from "formik";
 
+import classnames from "classnames";
 // Import React FilePond
 import { FilePond, registerPlugin } from "react-filepond";
 // Import FilePond styles
@@ -23,9 +43,15 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 const PerformanceForm = (props) => {
 	const { id } = useParams();
-	document.title = `Performance: ${id ? "Edit" : "create"} | Admin & Dashboards`;
+	document.title = `How It Work: ${id ? "Edit" : "create"} | Admin & Dashboards`;
 	const dispatch = useDispatch();
 	const [file, setFile] = useState([]);
+	const [titleTap, settitleTap] = useState("ENG");
+	const titleTapToggle = (tab) => {
+		if (titleTap !== tab) {
+			settitleTap(tab);
+		}
+	};
 
 	const createPerformanceSelector = createSelector(
 		(state) => state.CreatePerformanceReducer,
@@ -72,7 +98,9 @@ const PerformanceForm = (props) => {
 		initialValues: {
 			id: id || "",
 			title: performance ? performance.title : "",
+			titleKh: performance ? performance.titleKh : "",
 			description: performance ? performance.description : "",
+			descriptionKh: performance ? performance.descriptionKh : "",
 			ordering: performance ? performance.ordering : 0,
 			isActive: performance ? (performance.isActive === 1 ? true : false) : true,
 			image: performance ? performance.image : "",
@@ -90,18 +118,18 @@ const PerformanceForm = (props) => {
 		<React.Fragment>
 			<div className="page-content">
 				<Container fluid>
-					<BreadCrumb title="Performance Menu" pageTitle="Dashboard" pageLink="/performance-menu" />
+					<BreadCrumb title="How It Work" pageTitle="Dashboard" pageLink="/how-it-work" />
 					<Row>
 						<Col lg={12}>
 							<Card>
 								<CardHeader>
 									<Row className="justify-content-between align-items-center gy-3">
 										<Col lg={3}>
-											<h5 className="mt-2">{id ? "Edit" : "Create"} Performance</h5>
+											<h5 className="mt-2">{id ? "Edit" : "Create"} Form</h5>
 										</Col>
 										<Col className="col-lg-auto">
 											<div className="d-md-flex text-nowrap gap-2">
-												<Link className="btn btn-outline-dark" to="/performance-menu">
+												<Link className="btn btn-outline-dark" to="/how-it-work">
 													<i className="ri-arrow-go-back-line me-1 align-bottom"></i> Back
 												</Link>
 											</div>
@@ -123,41 +151,112 @@ const PerformanceForm = (props) => {
 						<Row>
 							<Col lg={8}>
 								<Card>
+									<CardHeader>
+										<div className="align-items-center d-flex">
+											<div className="flex-shrink-0">
+												<Nav tabs className="nav justify-content-end nav-tabs-custom rounded card-header-tabs border-bottom-0">
+													<NavItem>
+														<NavLink
+															style={{ cursor: "pointer" }}
+															className={classnames({ active: titleTap === "ENG" })}
+															onClick={() => {
+																titleTapToggle("ENG");
+															}}
+														>
+															English
+														</NavLink>
+													</NavItem>
+													<NavItem>
+														<NavLink
+															style={{ cursor: "pointer" }}
+															className={classnames({ active: titleTap === "KHM" })}
+															onClick={() => {
+																titleTapToggle("KHM");
+															}}
+														>
+															Khmer
+														</NavLink>
+													</NavItem>
+												</Nav>
+											</div>
+										</div>
+									</CardHeader>
 									<CardBody>
-										<div className="mb-3">
-											<Label className="form-label" htmlFor="performance-title-input">
-												Performance Title <small className="text-danger">(Required)</small>
-											</Label>
-											<Input
-												type="text"
-												className="form-control"
-												id="performance-title-input"
-												placeholder="Enter performance title"
-												name="title"
-												onChange={performanceValidation.handleChange}
-												onBlur={performanceValidation.handleBlur}
-												value={performanceValidation.values.title}
-												invalid={performanceValidation.touched.title && performanceValidation.errors.title ? true : false}
-											/>
-											{performanceValidation.touched.title && performanceValidation.errors.title ? (
-												<FormFeedback type="invalid">{performanceValidation.errors.title}</FormFeedback>
-											) : null}
-										</div>
-										<div className="mb-3">
-											<Label className="form-label" htmlFor="description-input">
-												Description
-											</Label>
-											<textarea
-												className="form-control"
-												id="description-input"
-												rows="3"
-												placeholder="Enter description"
-												name="description"
-												onChange={performanceValidation.handleChange}
-												onBlur={performanceValidation.handleBlur}
-												value={performanceValidation.values.description}
-											></textarea>
-										</div>
+										<TabContent activeTab={titleTap}>
+											<TabPane tabId="ENG" id="eng">
+												<div className="mb-3">
+													<Label className="form-label" htmlFor="performance-title-input">
+														Title <small className="text-danger">(Required)</small>
+													</Label>
+													<Input
+														type="text"
+														className="form-control"
+														id="performance-title-input"
+														placeholder="Enter title"
+														name="title"
+														onChange={performanceValidation.handleChange}
+														onBlur={performanceValidation.handleBlur}
+														value={performanceValidation.values.title}
+														invalid={performanceValidation.touched.title && performanceValidation.errors.title ? true : false}
+													/>
+													{performanceValidation.touched.title && performanceValidation.errors.title ? (
+														<FormFeedback type="invalid">{performanceValidation.errors.title}</FormFeedback>
+													) : null}
+												</div>
+												<div className="mb-3">
+													<Label className="form-label" htmlFor="description-input">
+														Description
+													</Label>
+													<textarea
+														className="form-control"
+														id="description-input"
+														rows="3"
+														placeholder="Enter description"
+														name="description"
+														onChange={performanceValidation.handleChange}
+														onBlur={performanceValidation.handleBlur}
+														value={performanceValidation.values.description}
+													></textarea>
+												</div>
+											</TabPane>
+											<TabPane tabId="KHM" id="khm">
+												<div className="mb-3">
+													<Label className="form-label" htmlFor="performance-titleKh-input">
+														Title <small className="text-danger">(Required)</small>
+													</Label>
+													<Input
+														type="text"
+														className="form-control"
+														id="performance-titleKh-input"
+														placeholder="Enter title"
+														name="titleKh"
+														onChange={performanceValidation.handleChange}
+														onBlur={performanceValidation.handleBlur}
+														value={performanceValidation.values.titleKh}
+														invalid={performanceValidation.touched.titleKh && performanceValidation.errors.titleKh ? true : false}
+													/>
+													{performanceValidation.touched.titleKh && performanceValidation.errors.titleKh ? (
+														<FormFeedback type="invalid">{performanceValidation.errors.titleKh}</FormFeedback>
+													) : null}
+												</div>
+												<div className="mb-3">
+													<Label className="form-label" htmlFor="descriptionKh-input">
+														Description
+													</Label>
+													<textarea
+														className="form-control"
+														id="descriptionKh-input"
+														rows="3"
+														placeholder="Enter descriptionKh"
+														name="descriptionKh"
+														onChange={performanceValidation.handleChange}
+														onBlur={performanceValidation.handleBlur}
+														value={performanceValidation.values.descriptionKh}
+													></textarea>
+												</div>
+											</TabPane>
+										</TabContent>
+
 										<div className="mb-3">
 											<Label className="form-label" htmlFor="thumbnail-input">
 												Thumbnail
@@ -236,10 +335,10 @@ const PerformanceForm = (props) => {
 										</Button>
 									) : (
 										<Button type="submit" color="primary" className="btn-label">
-											<i className="ri-save-3-line label-icon align-middle fs-16 me-2"></i> Save Performance
+											<i className="ri-save-3-line label-icon align-middle fs-16 me-2"></i> Save
 										</Button>
 									)}{" "}
-									<Link className="btn btn-label btn-danger" to="/performance-menu">
+									<Link className="btn btn-label btn-danger" to="/how-it-work">
 										<i className="ri-close-line label-icon align-middle fs-16 me-2"></i> Discus
 									</Link>
 								</div>
