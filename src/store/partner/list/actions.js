@@ -6,33 +6,33 @@ import {
 	TECHNOLOGY_LIST_SUCCESSFUL,
 } from "./actionTypes";
 
-export const fetchTechnologyList = () => {
+export const fetchPartnerList = () => {
 	return {
 		type: TECHNOLOGY_LIST,
 	};
 };
 
-export const fetchTechnologyListSuccess = (technologies) => {
+export const fetchPartnerListSuccess = (partners) => {
 	return {
 		type: TECHNOLOGY_LIST_SUCCESSFUL,
-		payload: { technologies },
+		payload: { partners },
 	};
 };
 
-export const fetchTechnologyListFail = (error) => {
+export const fetchPartnerListFail = (error) => {
 	return {
 		type: TECHNOLOGY_LIST_FAILED,
 		payload: { error },
 	};
 };
 
-export const resetTechnologyList = () => {
+export const resetPartnerList = () => {
 	return {
 		type: RESET_TECHNOLOGY_LIST_FLAG,
 	};
 };
 
-export const refreshTechnologyList = () => {
+export const refreshPartnerList = () => {
 	return {
 		type: REFRESH_TECHNOLOGY_LIST_FLAG,
 	};

@@ -5,28 +5,28 @@ import {
 	TECHNOLOGY_SHOW_DETAIL_SUCCESSFUL,
 } from "./actionTypes";
 
-export const fetchTechnologyDetail = (technologyId) => {
+export const fetchPartnerDetail = (partnerId) => {
 	return {
 		type: TECHNOLOGY_SHOW_DETAIL,
-		payload: { technologyId },
+		payload: { partnerId },
 	};
 };
 
-export const fetchTechnologyDetailSuccess = (technology) => {
+export const fetchPartnerDetailSuccess = (partner) => {
 	return {
 		type: TECHNOLOGY_SHOW_DETAIL_SUCCESSFUL,
-		payload: { technology },
+		payload: { partner },
 	};
 };
 
-export const fetchTechnologyDetailFail = (error) => {
+export const fetchPartnerDetailFail = (error) => {
 	return {
 		type: TECHNOLOGY_SHOW_DETAIL_FAILED,
 		payload: { error },
 	};
 };
 
-export const resetTechnologyShowDetail = () => {
+export const resetPartnerShowDetail = () => {
 	return {
 		type: RESET_TECHNOLOGY_SHOW_DETAIL_FLAG,
 	};

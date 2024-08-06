@@ -15,7 +15,7 @@ const initialState = {
 	error: false,
 };
 
-const CreateTechnologyReducer = (state = initialState, action) => {
+const CreatePartnerReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case CREATE_TECHNOLOGY:
 			state = {
@@ -82,4 +82,4 @@ const CreateTechnologyReducer = (state = initialState, action) => {
 	return state;
 };
 
-export default CreateTechnologyReducer;
+export default CreatePartnerReducer;

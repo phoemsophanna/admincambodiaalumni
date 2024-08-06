@@ -35,10 +35,10 @@ import CampaignDetailSaga from "./campaign/detail/saga";
 import TestimonialListSaga from "./testimonial/list/saga";
 import CreateTestimonialMainSaga from "./testimonial/create/saga";
 import TestimonialDetailSaga from "./testimonial/detail/saga";
-// Technology
-import TechnologyListSaga from "./technology/list/saga";
-import CreateTechnologyMainSaga from "./technology/create/saga";
-import TechnologyDetailSaga from "./technology/detail/saga";
+// Partner
+import PartnerListSaga from "./partner/list/saga";
+import CreatePartnerMainSaga from "./partner/create/saga";
+import PartnerDetailSaga from "./partner/detail/saga";
 // Banner
 import BannerListSaga from "./banner/list/saga";
 import CreateBannerMainSaga from "./banner/create/saga";
@@ -80,9 +80,9 @@ export default function* rootSaga() {
 		fork(TestimonialListSaga),
 		fork(CreateTestimonialMainSaga),
 		fork(TestimonialDetailSaga),
-		fork(TechnologyListSaga),
-		fork(CreateTechnologyMainSaga),
-		fork(TechnologyDetailSaga),
+		fork(PartnerListSaga),
+		fork(CreatePartnerMainSaga),
+		fork(PartnerDetailSaga),
 		fork(BannerListSaga),
 		fork(CreateBannerMainSaga),
 		fork(BannerDetailSaga),

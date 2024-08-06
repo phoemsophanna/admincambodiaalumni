@@ -9,12 +9,12 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import {
-	createTechnology,
-	deleteTechnology,
-	fetchTechnologyDetail,
-	refreshTechnologyList,
-	resetCreateTechnologyFlag,
-	resetTechnologyShowDetail,
+	createPartner,
+	deletePartner,
+	fetchPartnerDetail,
+	refreshPartnerList,
+	resetCreatePartnerFlag,
+	resetPartnerShowDetail,
 } from "../../../store/actions";
 
 import { createSelector } from "reselect";
@@ -32,37 +32,37 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 // Register the plugins
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
-const Technology = () => {
-	document.title = "Technology | Admin & Dashboards";
+const Partner = () => {
+	document.title = "Partner | Admin & Dashboards";
 	const dispatch = useDispatch();
 	const [UID, setUID] = useState(null);
 	const [file, setFile] = useState([]);
 
-	const createTechnologySelector = createSelector(
-		(state) => state.CreateTechnologyReducer,
+	const createPartnerSelector = createSelector(
+		(state) => state.CreatePartnerReducer,
 		(layout) => layout
 	);
-	const createTechnologyDetailSelector = createSelector(
-		(state) => state.TechnologyDetailReducer,
+	const createPartnerDetailSelector = createSelector(
+		(state) => state.PartnerDetailReducer,
 		(layout) => layout
 	);
 
-	const useCreateTechnologySelect = useSelector(createTechnologySelector);
-	const technologyDetail = useSelector(createTechnologyDetailSelector);
+	const useCreatePartnerSelect = useSelector(createPartnerSelector);
+	const partnerDetail = useSelector(createPartnerDetailSelector);
 
-	const technologyValidation = useFormik({
+	const partnerValidation = useFormik({
 		enableReinitialize: true,
 
 		initialValues: {
-			id: technologyDetail.technology?.id || "",
-			title: technologyDetail.technology?.title || "",
-			ordering: technologyDetail.technology?.ordering || 0,
-			isActive: technologyDetail.technology ? (technologyDetail.technology.isActive ? true : false) : true,
-			image: technologyDetail.technology?.image || "",
+			id: partnerDetail.partner?.id || "",
+			title: partnerDetail.partner?.title || "",
+			ordering: partnerDetail.partner?.ordering || 0,
+			isActive: partnerDetail.partner ? (partnerDetail.partner.isActive ? true : false) : true,
+			image: partnerDetail.partner?.image || "",
 		},
 		onSubmit: (values) => {
 			values.image = file?.length > 0 ? file[0]?.serverId : "";
-			dispatch(createTechnology(values));
+			dispatch(createPartner(values));
 		},
 	});
 
@@ -71,43 +71,43 @@ const Technology = () => {
 
 	function closeModal() {
 		setmodal_backdrop(false);
-		technologyValidation.resetForm();
+		partnerValidation.resetForm();
 		setFile([]);
-		dispatch(resetTechnologyShowDetail());
+		dispatch(resetPartnerShowDetail());
 	}
 
 	const handleRefresh = () => {
-		dispatch(refreshTechnologyList());
+		dispatch(refreshPartnerList());
 	};
 
-	const handleShowTechnologyDetail = (technologyId) => {
+	const handleShowPartnerDetail = (partnerId) => {
 		setmodal_backdrop(true);
-		dispatch(fetchTechnologyDetail(technologyId));
+		dispatch(fetchPartnerDetail(partnerId));
 	};
 
-	const handleDeleteTechnology = () => {
+	const handleDeletePartner = () => {
 		if (UID) {
-			dispatch(deleteTechnology(UID));
+			dispatch(deletePartner(UID));
 		}
 	};
 
 	useEffect(() => {
-		if (useCreateTechnologySelect.success && !useCreateTechnologySelect.isLoading) {
-			dispatch(resetCreateTechnologyFlag());
+		if (useCreatePartnerSelect.success && !useCreatePartnerSelect.isLoading) {
+			dispatch(resetCreatePartnerFlag());
 			setmodal_backdrop(false);
-			technologyValidation.resetForm();
+			partnerValidation.resetForm();
 			setFile([]);
-			dispatch(resetTechnologyShowDetail());
+			dispatch(resetPartnerShowDetail());
 			setDeleteModal(false);
-			dispatch(refreshTechnologyList());
+			dispatch(refreshPartnerList());
 		}
-	}, [dispatch, technologyValidation, setDeleteModal, useCreateTechnologySelect, technologyDetail]);
+	}, [dispatch, partnerValidation, setDeleteModal, useCreatePartnerSelect, partnerDetail]);
 
 	useEffect(() => {
-		if (technologyDetail.technology && technologyDetail.technology.image) {
+		if (partnerDetail.partner && partnerDetail.partner.image) {
 			setFile([
 				{
-					source: technologyDetail.technology.image,
+					source: partnerDetail.partner.image,
 					options: {
 						type: "local",
 					},
@@ -116,13 +116,13 @@ const Technology = () => {
 		} else {
 			setFile([]);
 		}
-	}, [technologyDetail, setFile]);
+	}, [partnerDetail, setFile]);
 
 	return (
 		<React.Fragment>
 			<div className="page-content">
 				<Container fluid>
-					<BreadCrumb title="Technology Management" pageTitle="Dashboard" />
+					<BreadCrumb title="Partner Management" pageTitle="Dashboard" />
 					<Row>
 						<Col lg={12}>
 							<Card>
@@ -155,8 +155,8 @@ const Technology = () => {
 					<Row>
 						<Col lg={12}>
 							<TableList
-								onShowDetail={handleShowTechnologyDetail}
-								onDeleteTechnology={(id) => {
+								onShowDetail={handleShowPartnerDetail}
+								onDeletePartner={(id) => {
 									setDeleteModal(true);
 									setUID(id);
 								}}
@@ -167,9 +167,9 @@ const Technology = () => {
 			</div>
 			<DeleteModal
 				show={deleteModal}
-				onDeleteClick={handleDeleteTechnology}
+				onDeleteClick={handleDeletePartner}
 				onCloseClick={() => setDeleteModal(false)}
-				isLoading={useCreateTechnologySelect.isLoading}
+				isLoading={useCreatePartnerSelect.isLoading}
 			/>
 			<Modal
 				isOpen={modal_backdrop}
@@ -181,21 +181,21 @@ const Technology = () => {
 				centered
 			>
 				<ModalHeader className="bg-light p-3 text-light" toggle={closeModal}>
-					{technologyDetail.technology ? "Update Technology" : "Create Technology"}
+					{partnerDetail.partner ? "Update Partner" : "Create Partner"}
 				</ModalHeader>
 
 				<ModalBody>
 					<Form
 						onSubmit={(e) => {
 							e.preventDefault();
-							technologyValidation.handleSubmit();
+							partnerValidation.handleSubmit();
 							return false;
 						}}
 						action="#"
 						autoComplete="off"
 					>
 						<div className="text-center">
-							<div className="profile-technology position-relative d-inline-block mx-auto  mb-2">
+							<div className="profile-partner position-relative d-inline-block mx-auto  mb-2">
 								<div style={{ width: "120px", height: "120px" }}>
 									<FilePond
 										labelIdle='<span class="filepond--label-action">Choose Profile Image</span>'
@@ -204,7 +204,7 @@ const Technology = () => {
 										allowMultiple={false}
 										maxFiles={1}
 										name="file"
-										server={`${api.BASE_URL}/save-image/technology-profile`}
+										server={`${api.BASE_URL}/save-image/partner-profile`}
 										className="filepond filepond-input-multiple"
 										stylePanelLayout="compact circle"
 										styleLoadIndicatorPosition="center bottom"
@@ -224,9 +224,9 @@ const Technology = () => {
 								type="text"
 								className="form-control"
 								placeholder="Enter title"
-								onChange={technologyValidation.handleChange}
-								onBlur={technologyValidation.handleBlur}
-								value={technologyValidation.values.title || ""}
+								onChange={partnerValidation.handleChange}
+								onBlur={partnerValidation.handleBlur}
+								value={partnerValidation.values.title || ""}
 							/>
 						</div>
 
@@ -240,9 +240,9 @@ const Technology = () => {
 								id="ordering-input"
 								placeholder="Enter ordering"
 								name="ordering"
-								onChange={technologyValidation.handleChange}
-								onBlur={technologyValidation.handleBlur}
-								value={technologyValidation.values.ordering || ""}
+								onChange={partnerValidation.handleChange}
+								onBlur={partnerValidation.handleBlur}
+								value={partnerValidation.values.ordering || ""}
 							/>
 						</div>
 
@@ -252,12 +252,12 @@ const Technology = () => {
 								className="form-check-input"
 								id="isActive"
 								name="isActive"
-								onChange={technologyValidation.handleChange}
-								onBlur={technologyValidation.handleBlur}
-								checked={technologyValidation.values.isActive}
+								onChange={partnerValidation.handleChange}
+								onBlur={partnerValidation.handleBlur}
+								checked={partnerValidation.values.isActive}
 							/>
 							<Label className="form-check-label" for="isActive">
-								Status: <span className="fw-bolder">{technologyValidation.values.isActive ? "Active" : "In-Active"}</span>
+								Status: <span className="fw-bolder">{partnerValidation.values.isActive ? "Active" : "In-Active"}</span>
 							</Label>
 						</div>
 
@@ -265,7 +265,7 @@ const Technology = () => {
 							<Button type="button" color="light" className="btn-label" onClick={closeModal}>
 								<i className="ri-close-line label-icon align-middle fs-16 me-2"></i> Discus
 							</Button>{" "}
-							{useCreateTechnologySelect.isLoading ? (
+							{useCreatePartnerSelect.isLoading ? (
 								<Button color="primary" className="btn-load">
 									<span className="d-flex align-items-center">
 										<Spinner size="sm" className="flex-shrink-0">
@@ -287,4 +287,4 @@ const Technology = () => {
 	);
 };
 
-export default withRouter(Technology);
+export default withRouter(Partner);

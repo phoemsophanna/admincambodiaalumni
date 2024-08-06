@@ -35,10 +35,10 @@ export * from "./campaign/detail/actions";
 export * from "./testimonial/list/actions";
 export * from "./testimonial/create/actions";
 export * from "./testimonial/detail/actions";
-// Technology management
-export * from "./technology/list/actions";
-export * from "./technology/create/actions";
-export * from "./technology/detail/actions";
+// Partner management
+export * from "./partner/list/actions";
+export * from "./partner/create/actions";
+export * from "./partner/detail/actions";
 // Banner management
 export * from "./banner/list/actions";
 export * from "./banner/create/actions";

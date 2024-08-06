@@ -32,9 +32,9 @@ import CampaignDetailReducer from "./campaign/detail/reducer";
 import TestimonialListReducer from "./testimonial/list/reducer";
 import CreateTestimonialReducer from "./testimonial/create/reducer";
 import TestimonialDetailReducer from "./testimonial/detail/reducer";
-import TechnologyListReducer from "./technology/list/reducer";
-import CreateTechnologyReducer from "./technology/create/reducer";
-import TechnologyDetailReducer from "./technology/detail/reducer";
+import PartnerListReducer from "./partner/list/reducer";
+import CreatePartnerReducer from "./partner/create/reducer";
+import PartnerDetailReducer from "./partner/detail/reducer";
 import BannerListReducer from "./banner/list/reducer";
 import CreateBannerReducer from "./banner/create/reducer";
 import BannerDetailReducer from "./banner/detail/reducer";
@@ -79,10 +79,10 @@ const rootReducer = combineReducers({
 	TestimonialListReducer,
 	CreateTestimonialReducer,
 	TestimonialDetailReducer,
-	// Technology
-	TechnologyListReducer,
-	CreateTechnologyReducer,
-	TechnologyDetailReducer,
+	// Partner
+	PartnerListReducer,
+	CreatePartnerReducer,
+	PartnerDetailReducer,
 	// Banner
 	BannerListReducer,
 	CreateBannerReducer,

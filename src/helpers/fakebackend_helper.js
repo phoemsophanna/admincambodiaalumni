@@ -91,11 +91,11 @@ export const getTestimonialList = () => api.get(url.TESTIMONIAL_URI, null);
 export const postCreateTestimonial = (body) => api.create(url.TESTIMONIAL_URI, body);
 export const getTestimonialShowDetail = (param) => api.get(`${url.TESTIMONIAL_URI}/detail`, param);
 export const deleteTestimonial = (userId) => api.delete(`${url.TESTIMONIAL_URI}/delete/${userId}`, null);
-// Technology Management
-export const getTechnologyList = () => api.get(url.TECHNOLOGY_URI, null);
-export const postCreateTechnology = (body) => api.create(url.TECHNOLOGY_URI, body);
-export const getTechnologyShowDetail = (param) => api.get(`${url.TECHNOLOGY_URI}/detail`, param);
-export const deleteTechnology = (userId) => api.delete(`${url.TECHNOLOGY_URI}/delete/${userId}`, null);
+// Partner Management
+export const getPartnerList = () => api.get(url.TECHNOLOGY_URI, null);
+export const postCreatePartner = (body) => api.create(url.TECHNOLOGY_URI, body);
+export const getPartnerShowDetail = (param) => api.get(`${url.TECHNOLOGY_URI}/detail`, param);
+export const deletePartner = (userId) => api.delete(`${url.TECHNOLOGY_URI}/delete/${userId}`, null);
 // Banner Management
 export const getBannerList = () => api.get(url.BANNERS_URI, null);
 export const postCreateBanner = (body) => api.create(url.BANNERS_URI, body);

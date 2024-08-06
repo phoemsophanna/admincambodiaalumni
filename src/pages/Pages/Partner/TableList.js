@@ -10,25 +10,25 @@ import { Link } from "react-router-dom";
 import { createSelector } from "reselect";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchTechnologyList } from "../../../store/actions";
+import { fetchPartnerList } from "../../../store/actions";
 import DeleteModal from "../../../Components/Common/DeleteModal";
 
-const TableList = ({ onShowDetail, onDeleteTechnology }) => {
-	const TechnologyListSelector = createSelector(
-		(state) => state.TechnologyListReducer,
+const TableList = ({ onShowDetail, onDeletePartner }) => {
+	const PartnerListSelector = createSelector(
+		(state) => state.PartnerListReducer,
 		(layout) => ({
-			technologies: layout.technologies,
+			partners: layout.partners,
 			message: layout.message,
 			isLoading: layout.isLoading,
 			success: layout.success,
 			error: layout.error,
 		})
 	);
-	const { technologies, isLoading, success } = useSelector(TechnologyListSelector);
+	const { partners, isLoading, success } = useSelector(PartnerListSelector);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(fetchTechnologyList());
+		dispatch(fetchPartnerList());
 	}, [dispatch]);
 
 	// Column
@@ -41,16 +41,16 @@ const TableList = ({ onShowDetail, onDeleteTechnology }) => {
 				filterable: false,
 			},
 			{
-				Header: "Technology",
+				Header: "Partner",
 				accessor: "title",
 				filterable: false,
-				Cell: (Technology) => (
+				Cell: (Partner) => (
 					<>
 						<div className="d-flex align-items-center">
 							<div className="flex-shrink-0 me-3">
 								<div className="avatar-sm bg-light rounded p-1 d-flex align-items-center">
-									{Technology.row.original.image ? (
-										<img src={api.FILE_URI + Technology.row.original.image} alt="" className="img-fluid d-block" />
+									{Partner.row.original.image ? (
+										<img src={api.FILE_URI + Partner.row.original.image} alt="" className="img-fluid d-block" />
 									) : (
 										<div className="mx-auto w-100 h-100">
 											<div className="avatar-title bg-success-subtle text-success fs-24">
@@ -63,7 +63,7 @@ const TableList = ({ onShowDetail, onDeleteTechnology }) => {
 							<div className="flex-grow-1">
 								<h5 className="fs-14 mb-1">
 									<Link to="#" className="text-body">
-										{Technology.row.original.title}
+										{Partner.row.original.title}
 									</Link>
 								</h5>
 							</div>
@@ -76,9 +76,9 @@ const TableList = ({ onShowDetail, onDeleteTechnology }) => {
 				Header: "Status",
 				accessor: "isActive",
 				filterable: false,
-				Cell: (Technology) => (
+				Cell: (Partner) => (
 					<>
-						{Technology.row.original.isActive ? (
+						{Partner.row.original.isActive ? (
 							<span className="badge bg-success-subtle text-success">ACTIVE</span>
 						) : (
 							<span className="badge bg-danger-subtle text-danger">IN-ACTIVE</span>
@@ -102,7 +102,7 @@ const TableList = ({ onShowDetail, onDeleteTechnology }) => {
 								</Link>
 							</li>
 							<li className="list-inline-item" title="Delete">
-								<Link className="remove-item-btn" onClick={() => onDeleteTechnology(cellProps.row.original.id)} to="#">
+								<Link className="remove-item-btn" onClick={() => onDeletePartner(cellProps.row.original.id)} to="#">
 									<i className="ri-delete-bin-fill align-bottom text-muted"></i>
 								</Link>
 							</li>
@@ -111,7 +111,7 @@ const TableList = ({ onShowDetail, onDeleteTechnology }) => {
 				},
 			},
 		],
-		[onShowDetail, onDeleteTechnology]
+		[onShowDetail, onDeletePartner]
 	);
 	return (
 		<React.Fragment>
@@ -121,9 +121,9 @@ const TableList = ({ onShowDetail, onDeleteTechnology }) => {
 						{success && !isLoading ? (
 							<TableContainer
 								columns={columns}
-								data={technologies || []}
+								data={partners || []}
 								isGlobalFilter={true}
-								isAddTechnologyList={false}
+								isAddPartnerList={false}
 								customPageSize={8}
 								className="custom-header-css"
 								divClass="table-responsive table-card mb-2"

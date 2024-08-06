@@ -17,6 +17,39 @@ const LayoutNav = (props) => {
 				<NavItem>
 					<NavLink
 						style={{ cursor: "pointer" }}
+						className={classnames({ active: props.router.location.pathname === "/site-setting/home-page" })}
+						onClick={() => {
+							toggle("home-page");
+						}}
+					>
+						Home Page
+					</NavLink>
+				</NavItem>
+				<NavItem>
+					<NavLink
+						style={{ cursor: "pointer" }}
+						className={classnames({ active: props.router.location.pathname === "/site-setting/about-page" })}
+						onClick={() => {
+							toggle("about-page");
+						}}
+					>
+						About Page
+					</NavLink>
+				</NavItem>
+				<NavItem>
+					<NavLink
+						style={{ cursor: "pointer" }}
+						className={classnames({ active: props.router.location.pathname === "/site-setting/contact-us" })}
+						onClick={() => {
+							toggle("contact-us");
+						}}
+					>
+						Contact Us
+					</NavLink>
+				</NavItem>
+				{/* <NavItem>
+					<NavLink
+						style={{ cursor: "pointer" }}
 						className={classnames({ active: props.router.location.pathname === "/site-setting/about-company" })}
 						onClick={() => {
 							toggle("about-company");
@@ -35,19 +68,9 @@ const LayoutNav = (props) => {
 					>
 						Contact Us
 					</NavLink>
-				</NavItem>
-				<NavItem>
-					<NavLink
-						style={{ cursor: "pointer" }}
-						className={classnames({ active: props.router.location.pathname === "/site-setting/home-page" })}
-						onClick={() => {
-							toggle("home-page");
-						}}
-					>
-						Home Page
-					</NavLink>
-				</NavItem>
-				<NavItem>
+				</NavItem> */}
+				
+				{/* <NavItem>
 					<NavLink
 						style={{ cursor: "pointer" }}
 						className={classnames({ active: props.router.location.pathname === "/site-setting/who-we-are" })}
@@ -135,7 +158,7 @@ const LayoutNav = (props) => {
 					>
 						ព័ត៌មានបច្ចេកវិទ្យា
 					</NavLink>
-				</NavItem>
+				</NavItem> */}
 			</Nav>
 		</React.Fragment>
 	);

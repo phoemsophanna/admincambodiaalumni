@@ -61,15 +61,15 @@ const Navdata = () => {
 				e.preventDefault();
 			},
 		},
-		// {
-		// 	id: "technology",
-		// 	label: "Technology",
-		// 	icon: "mdi mdi-xml",
-		// 	link: "/technology",
-		// 	click: function (e) {
-		// 		e.preventDefault();
-		// 	},
-		// },
+		{
+			id: "partner",
+			label: "Partner",
+			icon: "mdi mdi-xml",
+			link: "/partner",
+			click: function (e) {
+				e.preventDefault();
+			},
+		},
 		{
 			label: "pages",
 			isHeader: true,
@@ -135,7 +135,16 @@ const Navdata = () => {
 		
 		{
 			id: "user",
-			label: "User",
+			label: "Admin User",
+			icon: "mdi mdi-account-group",
+			link: "/user-management",
+			click: function (e) {
+				e.preventDefault();
+			},
+		},
+		{
+			id: "user",
+			label: "Member User",
 			icon: "mdi mdi-account-group",
 			link: "/user-management",
 			click: function (e) {

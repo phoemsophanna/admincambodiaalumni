@@ -71,14 +71,7 @@ const AboutCompany = () => {
 	useEffect(() => {
 		if (siteSetting) {
 			if (siteSetting.thumbnail) {
-				setFile([
-					{
-						source: siteSetting.thumbnail,
-						options: {
-							type: "local",
-						},
-					},
-				]);
+				setFile([{source: siteSetting.thumbnail, options: { type: "local" }}]);
 			} else {
 				setFile([]);
 			}

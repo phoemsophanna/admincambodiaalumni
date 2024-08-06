@@ -6,14 +6,14 @@ import {
 } from "./actionTypes";
 
 const initialState = {
-	technology: null,
+	partner: null,
 	message: null,
 	isLoading: false,
 	success: false,
 	error: false,
 };
 
-const TechnologyDetailReducer = (state = initialState, action) => {
+const PartnerDetailReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case TECHNOLOGY_SHOW_DETAIL:
 			state = {
@@ -24,8 +24,8 @@ const TechnologyDetailReducer = (state = initialState, action) => {
 		case TECHNOLOGY_SHOW_DETAIL_SUCCESSFUL:
 			state = {
 				...state,
-				technology: action.payload.technology,
-				message: "Fetch technology successfully.",
+				partner: action.payload.partner,
+				message: "Fetch partner successfully.",
 				isLoading: false,
 				success: true,
 				error: false,
@@ -34,8 +34,8 @@ const TechnologyDetailReducer = (state = initialState, action) => {
 		case TECHNOLOGY_SHOW_DETAIL_FAILED:
 			state = {
 				...state,
-				technology: null,
-				message: "Fetch technology failed",
+				partner: null,
+				message: "Fetch partner failed",
 				isLoading: false,
 				success: false,
 				error: true,
@@ -44,7 +44,7 @@ const TechnologyDetailReducer = (state = initialState, action) => {
 		case RESET_TECHNOLOGY_SHOW_DETAIL_FLAG:
 			state = {
 				...state,
-				technology: null,
+				partner: null,
 				message: null,
 				isLoading: false,
 				success: false,
@@ -59,4 +59,4 @@ const TechnologyDetailReducer = (state = initialState, action) => {
 	return state;
 };
 
-export default TechnologyDetailReducer;
+export default PartnerDetailReducer;

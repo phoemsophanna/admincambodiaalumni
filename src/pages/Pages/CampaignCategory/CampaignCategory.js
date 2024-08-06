@@ -196,7 +196,7 @@ const CampaignCategory = () => {
 						autoComplete="off"
 					>
 						<div className="text-center">
-							<div className="profile-technology position-relative d-inline-block mx-auto  mb-2">
+							<div className="profile-partner position-relative d-inline-block mx-auto  mb-2">
 								<div style={{ width: "120px", height: "120px" }}>
 									<FilePond
 										labelIdle='<span class="filepond--label-action">600 x 600 <br/>pixel</span>'

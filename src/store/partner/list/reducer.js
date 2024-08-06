@@ -7,14 +7,14 @@ import {
 } from "./actionTypes";
 
 const initialState = {
-	technologies: [],
+	partners: [],
 	message: null,
 	isLoading: false,
 	success: false,
 	error: false,
 };
 
-const TechnologyListReducer = (state = initialState, action) => {
+const PartnerListReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case TECHNOLOGY_LIST:
 			state = {
@@ -25,8 +25,8 @@ const TechnologyListReducer = (state = initialState, action) => {
 		case TECHNOLOGY_LIST_SUCCESSFUL:
 			state = {
 				...state,
-				technologies: action.payload.technologies,
-				message: "Fetch technology successfully.",
+				partners: action.payload.partners,
+				message: "Fetch partner successfully.",
 				isLoading: false,
 				success: true,
 				error: false,
@@ -35,8 +35,8 @@ const TechnologyListReducer = (state = initialState, action) => {
 		case TECHNOLOGY_LIST_FAILED:
 			state = {
 				...state,
-				technologies: [],
-				message: "Fetch technology failed",
+				partners: [],
+				message: "Fetch partner failed",
 				isLoading: false,
 				success: false,
 				error: true,
@@ -45,7 +45,7 @@ const TechnologyListReducer = (state = initialState, action) => {
 		case RESET_TECHNOLOGY_LIST_FLAG:
 			state = {
 				...state,
-				technologies: [],
+				partners: [],
 				message: null,
 				isLoading: false,
 				success: false,
@@ -59,7 +59,7 @@ const TechnologyListReducer = (state = initialState, action) => {
 				success: false,
 				error: false,
 				message: null,
-				technologies: [],
+				partners: [],
 			};
 			break;
 		default:
@@ -70,4 +70,4 @@ const TechnologyListReducer = (state = initialState, action) => {
 	return state;
 };
 
-export default TechnologyListReducer;
+export default PartnerListReducer;

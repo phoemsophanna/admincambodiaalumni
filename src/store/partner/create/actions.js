@@ -8,49 +8,49 @@ import {
 	RESET_CREATE_TECHNOLOGY_FLAG,
 } from "./actionTypes";
 
-export const createTechnology = (technology) => {
+export const createPartner = (partner) => {
 	return {
 		type: CREATE_TECHNOLOGY,
-		payload: { technology },
+		payload: { partner },
 	};
 };
 
-export const createTechnologySuccessful = (message) => {
+export const createPartnerSuccessful = (message) => {
 	return {
 		type: CREATE_TECHNOLOGY_SUCCESSFUL,
 		payload: { message },
 	};
 };
 
-export const createTechnologyFailed = (error) => {
+export const createPartnerFailed = (error) => {
 	return {
 		type: CREATE_TECHNOLOGY_FAILED,
 		payload: { error },
 	};
 };
 
-export const deleteTechnology = (technologyId) => {
+export const deletePartner = (partnerId) => {
 	return {
 		type: DELETE_TECHNOLOGY,
-		payload: { technologyId },
+		payload: { partnerId },
 	};
 };
 
-export const deleteTechnologySuccessful = (message) => {
+export const deletePartnerSuccessful = (message) => {
 	return {
 		type: DELETE_TECHNOLOGY_SUCCESSFUL,
 		payload: { message },
 	};
 };
 
-export const deleteTechnologyFailed = (error) => {
+export const deletePartnerFailed = (error) => {
 	return {
 		type: DELETE_TECHNOLOGY_FAILED,
 		payload: { error },
 	};
 };
 
-export const resetCreateTechnologyFlag = () => {
+export const resetCreatePartnerFlag = () => {
 	return {
 		type: RESET_CREATE_TECHNOLOGY_FLAG,
 	};

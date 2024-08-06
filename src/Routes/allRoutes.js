@@ -24,7 +24,7 @@ import CampaignCategory from "../pages/Pages/CampaignCategory/CampaignCategory";
 import ProjectMenu from "../pages/Pages/Project";
 import ProjectForm from "../pages/Pages/Project/ProjectForm";
 import Testimonial from "../pages/Pages/Testimonial/Testimonial";
-import Technology from "../pages/Pages/Technology/Technology";
+import Partner from "../pages/Pages/Partner/Partner";
 import BannerMenu from "../pages/Pages/Banner";
 import BannerForm from "../pages/Pages/Banner/BannerForm";
 import AboutCompany from "../pages/Pages/SiteSetting/AboutCompany";
@@ -43,6 +43,7 @@ import PrivacyPolicy from "../pages/Pages/SiteSetting/PrivacyPolicy";
 import CampaignMenu from "../pages/Pages/Campaign";
 import CampaignForm from "../pages/Pages/Campaign/CampaignForm";
 import HomePage from "../pages/Pages/SiteSetting/HomePage";
+import AboutPage from "../pages/Pages/SiteSetting/AboutPage";
 
 const authProtectedRoutes = [
 	{ path: "/dashboard", component: <Dashboard /> },
@@ -68,13 +69,14 @@ const authProtectedRoutes = [
 	{ path: "/news-menu", component: <NewsMenu /> },
 	{ path: "/news-menu/create", component: <NewsForm /> },
 	{ path: "/news-menu/edit/:id", component: <NewsForm /> },
-	{ path: "/technology", component: <Technology /> },
+	{ path: "/partner", component: <Partner /> },
 	{ path: "/testimonial", component: <Testimonial /> },
 	{ path: "/term-service", component: <TermOfService /> },
 	{ path: "/privacy-policy", component: <PrivacyPolicy /> },
 	{ path: "/site-setting/about-company", component: <AboutCompany /> },
 	{ path: "/site-setting/who-we-are", component: <Whoweare /> },
 	{ path: "/site-setting/home-page", component: <HomePage /> },
+	{ path: "/site-setting/about-page", component: <AboutPage /> },
 	{ path: "/site-setting/service", component: <SiteService /> },
 	{ path: "/site-setting/why-choose-us", component: <WhyChooseUs /> },
 	{ path: "/site-setting/project", component: <SiteProject /> },
