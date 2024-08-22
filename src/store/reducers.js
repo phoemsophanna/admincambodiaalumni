@@ -14,6 +14,11 @@ import FileStorage from "./fileStorage/reducer";
 import UserListReducer from "./user/list/reducer";
 import CreateUserReducer from "./user/create/reducer";
 import UserDetailReducer from "./user/detail/reducer";
+// Member Management
+import MemberListReducer from "./member/list/reducer";
+import CreateMemberReducer from "./member/create/reducer";
+import MemberDetailReducer from "./member/detail/reducer";
+
 import PerformanceListReducer from "./performance/list/reducer";
 import CreatePerformanceReducer from "./performance/create/reducer";
 import PerformanceDetailReducer from "./performance/detail/reducer";
@@ -55,6 +60,10 @@ const rootReducer = combineReducers({
 	UserListReducer,
 	CreateUserReducer,
 	UserDetailReducer,
+	// Management
+	MemberListReducer,
+	CreateMemberReducer,
+	MemberDetailReducer,
 	// Performance
 	PerformanceListReducer,
 	CreatePerformanceReducer,

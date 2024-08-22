@@ -61,6 +61,11 @@ export const getUserList = () => api.get(url.USER_MANAGEMENT_URI, null);
 export const postCreateUser = (body) => api.create(url.USER_MANAGEMENT_URI, body);
 export const getUserShowDetail = (param) => api.get(`${url.USER_MANAGEMENT_URI}/detail`, param);
 export const deleteUser = (userId) => api.delete(`${url.USER_MANAGEMENT_URI}/delete/${userId}`, null);
+// Member Management
+export const getMemberList = () => api.get(url.MEMBER_MANAGEMENT_URI, null);
+export const postCreateMember = (body) => api.create(url.MEMBER_MANAGEMENT_URI, body);
+export const getMemberShowDetail = (param) => api.get(`${url.MEMBER_MANAGEMENT_URI}/detail`, param);
+export const deleteMember = (userId) => api.delete(`${url.MEMBER_MANAGEMENT_URI}/delete/${userId}`, null);
 // Performance Management
 export const getPerformanceList = () => api.get(url.PERFORMANCE_MANAGEMENT_URI, null);
 export const postCreatePerformance = (body) => api.create(url.PERFORMANCE_MANAGEMENT_URI, body);

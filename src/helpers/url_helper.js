@@ -20,6 +20,7 @@ export const UPDATE_PWD_USER = "/auth/change-password";
 export const FILE_STORAGE_UPLOAD = "/file-storage/save-image";
 // User Management
 export const USER_MANAGEMENT_URI = "/users";
+export const MEMBER_MANAGEMENT_URI = "/members";
 export const PERFORMANCE_MANAGEMENT_URI = "/performances";
 export const NEWS_MANAGEMENT_URI = "/news";
 export const PROJECT_CATEGORY_MANAGEMENT_URI = "/campaign-categories";

@@ -11,6 +11,10 @@ export * from "./fileStorage/actions";
 export * from "./user/list/actions";
 export * from "./user/create/actions";
 export * from "./user/detail/actions";
+// Member management
+export * from "./member/list/actions";
+export * from "./member/create/actions";
+export * from "./member/detail/actions";
 // Performance management
 export * from "./performance/list/actions";
 export * from "./performance/create/actions";

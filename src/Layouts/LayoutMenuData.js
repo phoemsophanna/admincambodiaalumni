@@ -143,10 +143,10 @@ const Navdata = () => {
 			},
 		},
 		{
-			id: "user",
+			id: "member-user",
 			label: "Member User",
 			icon: "mdi mdi-account-group",
-			link: "/user-management",
+			link: "/member-management",
 			click: function (e) {
 				e.preventDefault();
 			},

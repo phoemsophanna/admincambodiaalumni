@@ -1,6 +1,20 @@
 import { useFormik } from "formik";
 import React, { useEffect, useState } from "react";
-import { Button, Card, CardBody, Col, Container, Form, Input, Label, Row, Spinner } from "reactstrap";
+import {
+	Button,
+	Card,
+	CardBody,
+	CardHeader,
+	Col,
+	Container,
+	Form,
+	Input,
+	Label,
+	Nav,
+	NavItem, NavLink,
+	Row,
+	Spinner, TabContent, TabPane
+} from "reactstrap";
 import { api } from "../../../config";
 import { useDispatch, useSelector } from "react-redux";
 // Import React FilePond
@@ -16,15 +30,21 @@ import BreadCrumb from "../../../Components/Common/BreadCrumb";
 
 import withRouter from "../../../Components/Common/withRouter";
 import TinymceEditor from "../../../Components/Common/TinymceEditor";
+import classnames from "classnames";
 // Register the plugins
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 const TermOfService = () => {
 	document.title = "Term Of Service | Admin & Dashboard";
-
+	const [titleTap, settitleTap] = useState("ENG");
+	const titleTapToggle = (tab) => {
+		if (titleTap !== tab) {
+			settitleTap(tab);
+		}
+	};
 	const dispatch = useDispatch();
-	const [file, setFile] = useState([]);
 	const [contentDesc, setContentDesc] = useState("");
+	const [contentDescKh, setContentDescKh] = useState("");
 
 	const siteSettingSelector = createSelector(
 		(state) => state.SiteSettingReducer,
@@ -42,8 +62,11 @@ const TermOfService = () => {
 		setContentDesc(e.target.getContent());
 	};
 
+	const handleEditorChange2 = (e) => {
+		setContentDescKh(e.target.getContent());
+	};
+
 	useEffect(() => {
-		setFile([]);
 		dispatch(getSiteSetting("TERM_SERVICE"));
 		return () => {
 			dispatch(resetSiteSettingFlag());
@@ -56,11 +79,11 @@ const TermOfService = () => {
 		initialValues: {
 			type: "TERM_SERVICE",
 			description: siteSetting ? siteSetting.description : "",
-			thumbnail: siteSetting ? siteSetting.thumbnail : "",
+			descriptionKh: siteSetting ? siteSetting.descriptionKh : ""
 		},
 		onSubmit: (values) => {
-			values.thumbnail = file?.length > 0 ? file[0]?.serverId : siteSetting.thumbnail;
 			values.description = contentDesc;
+			values.descriptionKh = contentDescKh;
 			dispatch(saveSiteSetting(values));
 			if (!isLoading && success) {
 				refreshForm();
@@ -69,27 +92,16 @@ const TermOfService = () => {
 	});
 
 	const refreshForm = () => {
-		setFile([]);
 		dispatch(getSiteSetting("TERM_SERVICE"));
 	};
 
 	useEffect(() => {
 		if (siteSetting) {
 			setContentDesc(siteSetting.description);
-			if (siteSetting.thumbnail) {
-				setFile([
-					{
-						source: siteSetting.thumbnail,
-						options: {
-							type: "local",
-						},
-					},
-				]);
-			} else {
-				setFile([]);
-			}
+			setContentDescKh(siteSetting.descriptionKh);
 		} else {
 			setContentDesc("");
+			setContentDescKh("");
 		}
 	}, [siteSetting]);
 
@@ -110,6 +122,36 @@ const TermOfService = () => {
 							>
 								{/* <h5 className="fs-14 mb-3">General</h5> */}
 								<Card>
+									<CardHeader>
+										<div className="align-items-center d-flex">
+											<div className="flex-shrink-0">
+												<Nav tabs className="nav justify-content-end nav-tabs-custom rounded card-header-tabs border-bottom-0">
+													<NavItem>
+														<NavLink
+															style={{ cursor: "pointer" }}
+															className={classnames({ active: titleTap === "ENG" })}
+															onClick={() => {
+																titleTapToggle("ENG");
+															}}
+														>
+															English
+														</NavLink>
+													</NavItem>
+													<NavItem>
+														<NavLink
+															style={{ cursor: "pointer" }}
+															className={classnames({ active: titleTap === "KHM" })}
+															onClick={() => {
+																titleTapToggle("KHM");
+															}}
+														>
+															Khmer
+														</NavLink>
+													</NavItem>
+												</Nav>
+											</div>
+										</div>
+									</CardHeader>
 									<CardBody>
 										{isLoading ? (
 											<span className="d-flex align-items-center">
@@ -121,33 +163,25 @@ const TermOfService = () => {
 										) : (
 											<Row>
 												<Col xl={12}>
-													<div className="mb-3">
-														<Label className="form-label" htmlFor="thumbnail-input">
-															Thumbnail
-														</Label>
-														<div className="position-relative d-block mx-auto">
-															<div style={{ width: "100%" }}>
-																<FilePond
-																	labelIdle='<span class="filepond--label-action">Choose Image</span>'
-																	files={file}
-																	onupdatefiles={setFile}
-																	allowMultiple={false}
-																	maxFiles={1}
-																	name="file"
-																	server={`${api.BASE_URL}/save-image/site-setting`}
-																	className="filepond filepond-input-multiple"
-																/>
+													<TabContent activeTab={titleTap}>
+														<TabPane tabId="ENG" id="eng">
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="description-input">
+																	Description
+																</Label>
+																<TinymceEditor onUploadImage={handleEditorChange} initDataValue={contentDesc} />
 															</div>
-														</div>
-													</div>
-												</Col>
-												<Col xl={12}>
-													<div className="mb-3">
-														<Label className="form-label" htmlFor="description-input">
-															Description
-														</Label>
-														<TinymceEditor onUploadImage={handleEditorChange} initDataValue={contentDesc} />
-													</div>
+														</TabPane>
+														<TabPane tabId="KHM" id="khm">
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="description-input-Kh">
+																	Description
+																</Label>
+																<TinymceEditor onUploadImage={handleEditorChange2} initDataValue={contentDescKh} />
+															</div>
+														</TabPane>
+													</TabContent>
+
 												</Col>
 											</Row>
 										)}

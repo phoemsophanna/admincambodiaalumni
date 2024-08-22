@@ -20,7 +20,7 @@ import withRouter from "../../Components/Common/withRouter";
 import { createSelector } from "reselect";
 
 const Login = (props) => {
-	document.title = "Dashboard: login | Camgotech";
+	document.title = "Dashboard: login | CDA FUND";
 
 	const dispatch = useDispatch();
 	const selectLayoutState = (state) => state.Login;
@@ -80,7 +80,7 @@ const Login = (props) => {
 									<CardBody className="p-4">
 										<div className="text-center mt-2">
 											<h5 className="text-primary">Welcome Back !</h5>
-											<p className="text-muted">Sign in to continue to Camgotech.</p>
+											<p className="text-muted">Sign in to continue to CDA Fund.</p>
 										</div>
 
 										<div className="p-2 mt-4">

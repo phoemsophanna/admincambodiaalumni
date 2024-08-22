@@ -11,6 +11,10 @@ import FileStorageSaga from "./fileStorage/saga";
 import UserListSaga from "./user/list/saga";
 import CreateUserMainSaga from "./user/create/saga";
 import UserDetailSaga from "./user/detail/saga";
+// Member Management
+import MemberListSaga from "./member/list/saga";
+import CreateMemberMainSaga from "./member/create/saga";
+import MemberDetailSaga from "./member/detail/saga";
 // Performance
 import PerformanceListSaga from "./performance/list/saga";
 import CreatePerformanceMainSaga from "./performance/create/saga";
@@ -62,6 +66,9 @@ export default function* rootSaga() {
 		fork(UserListSaga),
 		fork(CreateUserMainSaga),
 		fork(UserDetailSaga),
+		fork(MemberListSaga),
+		fork(CreateMemberMainSaga),
+		fork(MemberDetailSaga),
 		fork(PerformanceListSaga),
 		fork(CreatePerformanceMainSaga),
 		fork(PerformanceDetailSaga),

@@ -52,7 +52,6 @@ const User = () => {
 			name: userDetail.user?.name || "",
 			email: userDetail.user?.email || "",
 			phoneNumber: userDetail.user?.phoneNumber || "",
-			userRole: userDetail.user?.userRole || "",
 			password: "",
 			isActive: userDetail.user ? (userDetail.user.isActive ? true : false) : true,
 			image: userDetail.user?.image || "",
@@ -304,21 +303,6 @@ const User = () => {
 								onChange={userValidation.handleChange}
 								onBlur={userValidation.handleBlur}
 								value={userValidation.values.phoneNumber || ""}
-							/>
-						</div>
-						<div className="mb-2">
-							<Label htmlFor="phoneNumber" className="form-label">
-								User's role
-							</Label>
-							<Input
-								type="text"
-								className="form-control"
-								id="userRole"
-								placeholder="Enter user's role"
-								name="userRole"
-								onChange={userValidation.handleChange}
-								onBlur={userValidation.handleBlur}
-								value={userValidation.values.userRole || ""}
 							/>
 						</div>
 

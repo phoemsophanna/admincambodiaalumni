@@ -44,6 +44,7 @@ import CampaignMenu from "../pages/Pages/Campaign";
 import CampaignForm from "../pages/Pages/Campaign/CampaignForm";
 import HomePage from "../pages/Pages/SiteSetting/HomePage";
 import AboutPage from "../pages/Pages/SiteSetting/AboutPage";
+import Member from "../pages/Pages/Member/Member";
 
 const authProtectedRoutes = [
 	{ path: "/dashboard", component: <Dashboard /> },
@@ -87,6 +88,7 @@ const authProtectedRoutes = [
 	{ path: "/site-setting/skillset", component: <SiteSkillset /> },
 	{ path: "/page-banner", component: <PageBanner /> },
 	{ path: "/user-management", component: <User /> },
+	{ path: "/member-management", component: <Member /> },
 	{
 		path: "/",
 		exact: true,

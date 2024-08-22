@@ -35,19 +35,19 @@ const Sidebar = ({ layoutType }) => {
 	return (
 		<React.Fragment>
 			<div className="app-menu navbar-menu">
-				<div className="navbar-brand-box">
+				<div className="navbar-brand-box" style={{textAlign: "left"}}>
 					<Link to="/" className="logo logo-dark">
 						<span className="logo-sm">
-							<img src={logoSm} alt="" height="22" />
+							<img src={logoSm} alt="" height="35" />
 						</span>
-						<span className="logo-lg fs-3 fw-bold">CAMGOTECH</span>
+						<div className="logo-lg fs-3 fw-bold m-0 p-0"><img src={logoSm} alt="" height="40" /> <strong style={{color: "#a3a6b7"}}>CDA FUND</strong></div>
 					</Link>
 
 					<Link to="/" className="logo logo-light">
 						<span className="logo-sm">
-							<img src={logoSm} alt="" height="22" />
+							<img src={logoSm} alt="" height="35" />
 						</span>
-						<span className="logo-lg fs-3 fw-bold">CAMGOTECH</span>
+						<div className="logo-lg fs-3 fw-bold m-0 p-0"><img src={logoSm} alt="" height="40" /> <strong style={{color: "#a3a6b7"}}>CDA FUND</strong></div>
 					</Link>
 					<button
 						onClick={addEventListenerOnSmHoverMenu}
