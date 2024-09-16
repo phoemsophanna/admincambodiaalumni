@@ -34,6 +34,15 @@ const Navdata = () => {
 				e.preventDefault();
 			},
 		},
+		{
+			id: "withdraw",
+			label: "Withdraw",
+			icon: "mdi mdi-briefcase-variant-outline",
+			link: "/withdraw-menu",
+			click: function (e) {
+				e.preventDefault();
+			},
+		},
 		// {
 		// 	id: "project",
 		// 	label: "Project",
@@ -70,6 +79,7 @@ const Navdata = () => {
 				e.preventDefault();
 			},
 		},
+		
 		{
 			label: "pages",
 			isHeader: true,
@@ -87,7 +97,7 @@ const Navdata = () => {
 			id: "site-setting",
 			label: "Site Setting",
 			icon: "mdi mdi-tune",
-			link: "/site-setting/about-company",
+			link: "/site-setting/home-page",
 			click: function (e) {
 				e.preventDefault();
 			},
@@ -132,7 +142,15 @@ const Navdata = () => {
 			label: "Management",
 			isHeader: true,
 		},
-		
+		{
+			id: "team",
+			label: "Team",
+			icon: "mdi mdi-account-group",
+			link: "/teams",
+			click: function (e) {
+				e.preventDefault();
+			},
+		},
 		{
 			id: "user",
 			label: "Admin User",

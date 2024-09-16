@@ -7,46 +7,46 @@ import Loader from "../../../Components/Common/Loader";
 import { Link } from "react-router-dom";
 import { createSelector } from "reselect";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCampaign, fetchCampaignList, refreshCampaignList } from "../../../store/actions";
+import { deleteWithdraw, fetchWithdrawList, refreshWithdrawList } from "../../../store/actions";
 import { api } from "../../../config";
 import DeleteModal from "../../../Components/Common/DeleteModal";
 
-const CampaignMenu = () => {
-	document.title = "Campaign | Admin & Dashboards";
+const WithdrawMenu = () => {
+	document.title = "Withdraw | Admin & Dashboards";
 	const [UID, setUID] = useState(null);
 	const [deleteModal, setDeleteModal] = useState(false);
 
-	const campaignListSelector = createSelector(
-		(state) => state.CampaignListReducer,
+	const withdrawListSelector = createSelector(
+		(state) => state.WithdrawListReducer,
 		(layout) => ({
-			campaigns: layout.campaigns,
+			withdraws: layout.withdraws,
 			isLoading: layout.isLoading,
 		})
 	);
-	const { campaigns, isLoading } = useSelector(campaignListSelector);
-	const deleteCampaignSelector = createSelector(
-		(state) => state.CampaignListReducer,
+	const { withdraws, isLoading } = useSelector(withdrawListSelector);
+	const deleteWithdrawSelector = createSelector(
+		(state) => state.WithdrawListReducer,
 		(layout) => layout
 	);
-	const campaignSelector = useSelector(deleteCampaignSelector);
+	const withdrawSelector = useSelector(deleteWithdrawSelector);
 	const dispatch = useDispatch();
 
 	const handleRefresh = () => {
-		dispatch(refreshCampaignList());
+		dispatch(refreshWithdrawList());
 	};
 
 	const handleDelete = () => {
 		if (UID) {
-			dispatch(deleteCampaign(UID));
-			if (!campaignSelector.isLoading) {
-				dispatch(fetchCampaignList());
+			dispatch(deleteWithdraw(UID));
+			if (!withdrawSelector.isLoading) {
+				dispatch(fetchWithdrawList());
 				setDeleteModal(false);
 			}
 		}
 	};
 
 	useEffect(() => {
-		dispatch(fetchCampaignList());
+		dispatch(fetchWithdrawList());
 	}, [dispatch]);
 
 	const columns = useMemo(
@@ -61,12 +61,12 @@ const CampaignMenu = () => {
 				Header: "Title",
 				accessor: "title",
 				filterable: false,
-				Cell: (campaign) => (
+				Cell: (withdraw) => (
 					<div className="d-flex align-items-center">
 						<div className="flex-shrink-0 me-3">
 							<div className="avatar-sm bg-light rounded p-1 d-flex align-items-center">
-								{campaign.row.original.campaignGallery?.length > 0 && campaign.row.original.campaignGallery[0] ? (
-									<img src={api.FILE_URI + campaign.row.original.campaignGallery[0]} alt="" className="img-fluid d-block" />
+								{withdraw.row.original.campaign.campaignGallery?.length > 0 && withdraw.row.original.campaign.campaignGallery[0] ? (
+									<img src={api.FILE_URI + withdraw.row.original.campaign.campaignGallery[0]} alt="" className="img-fluid d-block" />
 								) : (
 									<div className="mx-auto w-100 h-100">
 										<div className="avatar-title bg-success-subtle text-success fs-24">
@@ -79,85 +79,47 @@ const CampaignMenu = () => {
 						<div className="flex-grow-1">
 							<h5 className="fs-14 mb-1">
 								<Link to="#" className="text-body">
-									{campaign.row.original.campaignTile}
+									{withdraw.row.original.campaign.campaignTile}
 								</Link>
 							</h5>
 							<p className="text-muted mb-0 text-truncate" style={{ width: "100px" }}>
-								<span className="fw-medium ">{campaign.row.original.campaignTileKm}</span>
+								<span className="fw-medium ">{withdraw.row.original.campaign.campaignTileKm}</span>
 							</p>
 						</div>
 					</div>
 				),
 			},
 			{
-				Header: "Campaign Category",
-				accessor: "campaignCategoryId",
+				Header: "Request Amount",
+				accessor: "requestAmount",
 				filterable: false,
-				Cell: (campaign) => <span className="fw-semibold">{campaign.row.original.campaignCategory?.name}</span>,
+				Cell: (withdraw) => <span className="fw-semibold">${withdraw.row.original.requestAmount.toFixed(2) || "0.00s"} USD</span>,
 			},
 			{
-				Header: "Goal",
-				accessor: "goal",
+				Header: "Request By",
+				accessor: "requestFrom",
 				filterable: false,
-				Cell: (campaign) => <span className="fw-semibold">${campaign.row.original.goal?.toFixed(2)} USD</span>,
+				Cell: (withdraw) => <span className="fw-semibold">{withdraw.row.original.requestFrom?.name}</span>,
 			},
 			{
-				Header: "Total Raised",
-				accessor: "totalRaised",
+				Header: "Request Date",
+				accessor: "requestDate",
 				filterable: false,
-				Cell: (campaign) => <span className="fw-semibold">${campaign.row.original.totalRaised?.toFixed(2)} USD</span>,
-			},
-			{
-				Header: "Date",
-				accessor: "startDate",
-				filterable: false,
-				Cell: (campaign) => <div className="d-flex align-items-center">
-				<div className="flex-grow-1">
-					<p className="mb-0">
-						<strong>From:</strong>{" "}<span className="fw-medium text-muted">{campaign.row.original.startDate}</span>
-					</p>
-					<p className="mb-0">
-						<strong>To:</strong>{" "}<span className="fw-medium text-muted">{campaign.row.original.endDate}</span>
-					</p>
-				</div>
-			</div>,
-			},
-			{
-				Header: "Create by",
-				accessor: "creatorId",
-				filterable: false,
-				Cell: (campaign) => (
-					<div className="d-flex align-items-center">
-						<div className="flex-grow-1">
-							<h5 className="fs-14 mb-1">
-								<Link to="#" className="text-body">
-									{campaign.row.original.fullName}
-								</Link>
-							</h5>
-							<p className="text-muted mb-0 text-truncate" style={{ width: "100px" }}>
-								<span className="fw-medium ">{campaign.row.original.phoneNumber}</span>
-							</p>
-						</div>
-					</div>
-				),
+				Cell: (withdraw) => <span className="fw-medium text-muted">{withdraw.row.original.requestDate}</span>,
 			},
 			{
 				// End Table
 				Header: "Status",
 				accessor: "status",
 				filterable: false,
-				Cell: (campaign) => (
+				Cell: (withdraw) => (
 					<>
-						{campaign.row.original.status === "PENDING" ? (
+						{withdraw.row.original.withdrawStatus === "PENDING" ? (
 							<span className="badge bg-warning-subtle text-warning">PENDING</span>
-						) : campaign.row.original.status === "COMPLETE" ? (
-							<span className="badge bg-success-subtle text-success">APPROVE</span>
-						) : campaign.row.original.status === "REJECTED" ? (
+						) : withdraw.row.original.withdrawStatus === "APPROVE" ? (
+							<span className="badge bg-success-subtle text-success">APPROVED</span>
+						) : withdraw.row.original.withdrawStatus === "REJECT" ? (
 							<span className="badge bg-danger-subtle text-danger">REJECTED</span>
-						) : campaign.row.original.status === "FAILED" ? (
-							<span className="badge bg-danger-subtle text-danger">FAILED</span>
-						) : campaign.row.original.status === "INACTIVE" ? (
-							<span className="badge bg-danger-subtle text-danger">INACTIVE</span>
 						) : null}
 					</>
 				),
@@ -168,7 +130,7 @@ const CampaignMenu = () => {
 					return (
 						<ul className="list-inline hstack gap-2 mb-0">
 							<li className="list-inline-item" title="Edit">
-								<Link className="edit-item-btn" to={`/campaign-menu/edit/${cellProps.row.original.id}`}>
+								<Link className="edit-item-btn" to={`/withdraw-menu/edit/${cellProps.row.original.id}`}>
 									<i className="ri-eye-line align-bottom text-muted"></i>
 								</Link>
 							</li>
@@ -184,14 +146,14 @@ const CampaignMenu = () => {
 		<React.Fragment>
 			<div className="page-content">
 				<Container fluid>
-					<BreadCrumb title="Campaign Menu" pageTitle="Home" />
+					<BreadCrumb title="Withdraw Menu" pageTitle="Home" />
 					<Row>
 						<Col lg={12}>
 							<Card>
 								<CardHeader>
 									<Row className="justify-content-between align-items-center gy-3">
 										<Col lg={3}>
-											{/* <Link className="btn add-btn btn-primary" to="/campaign-menu/create">
+											{/* <Link className="btn add-btn btn-primary" to="/withdraw-menu/create">
 												<i className="ri-add-fill me-1 align-bottom"></i> Create New
 											</Link> */}
 										</Col>
@@ -214,7 +176,7 @@ const CampaignMenu = () => {
 										{!isLoading ? (
 											<TableContainer
 												columns={columns}
-												data={campaigns || []}
+												data={withdraws || []}
 												isGlobalFilter={true}
 												isAddUserList={false}
 												customPageSize={8}
@@ -240,10 +202,10 @@ const CampaignMenu = () => {
 				show={deleteModal}
 				onDeleteClick={handleDelete}
 				onCloseClick={() => setDeleteModal(false)}
-				isLoading={campaignSelector.isLoading}
+				isLoading={withdrawSelector.isLoading}
 			/>
 		</React.Fragment>
 	);
 };
 
-export default CampaignMenu;
+export default WithdrawMenu;

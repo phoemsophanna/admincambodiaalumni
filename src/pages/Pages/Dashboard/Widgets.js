@@ -1,16 +1,15 @@
 import React from "react";
-import { projectsWidgets } from "../../../common/data";
 import CountUp from "react-countup";
 
 //Import Icons
 import FeatherIcon from "feather-icons-react";
 import { Card, CardBody, Col, Row } from "reactstrap";
 
-const Widgets = () => {
+const Widgets = ({projectsWidgets = []}) => {
 	return (
 		<React.Fragment>
 			<Row>
-				{(projectsWidgets || []).map((item, key) => (
+				{projectsWidgets.map((item, key) => (
 					<Col xl={4} key={key}>
 						<Card className="card-animate">
 							<CardBody>

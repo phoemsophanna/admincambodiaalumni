@@ -35,6 +35,10 @@ export * from "./project/detail/actions";
 export * from "./campaign/list/actions";
 export * from "./campaign/create/actions";
 export * from "./campaign/detail/actions";
+// Withdraw management
+export * from "./withdraw/list/actions";
+export * from "./withdraw/create/actions";
+export * from "./withdraw/detail/actions";
 // Testimonial management
 export * from "./testimonial/list/actions";
 export * from "./testimonial/create/actions";
@@ -53,3 +57,8 @@ export * from "./siteSetting/actions";
 export * from "./pageBanner/list/actions";
 export * from "./pageBanner/create/actions";
 export * from "./pageBanner/detail/actions";
+// Career management
+export * from "./team/list/actions";
+export * from "./team/create/actions";
+export * from "./team/detail/actions";
+export * from "./dashboard/detail/actions";

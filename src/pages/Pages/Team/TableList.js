@@ -7,24 +7,24 @@ import { Link } from "react-router-dom";
 import { createSelector } from "reselect";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchCampaignCategoryList } from "../../../store/actions";
+import { fetchTeamList } from "../../../store/actions";
 
-const TableList = ({ onShowDetail, onDeleteCampaignCategory }) => {
-	const campaignCategoryListSelector = createSelector(
-		(state) => state.CampaignCategoryListReducer,
+const TableList = ({ onShowDetail, onDeleteTeam }) => {
+	const teamListSelector = createSelector(
+		(state) => state.TeamListReducer,
 		(layout) => ({
-			campaignCategories: layout.campaignCategories,
+			teams: layout.teams,
 			message: layout.message,
 			isLoading: layout.isLoading,
 			success: layout.success,
 			error: layout.error,
 		})
 	);
-	const { campaignCategories, isLoading, success } = useSelector(campaignCategoryListSelector);
+	const { teams, isLoading, success } = useSelector(teamListSelector);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(fetchCampaignCategoryList());
+		dispatch(fetchTeamList());
 	}, [dispatch]);
 
 	// Column
@@ -37,7 +37,7 @@ const TableList = ({ onShowDetail, onDeleteCampaignCategory }) => {
 				filterable: false,
 			},
 			{
-				Header: "Category's Name",
+				Header: "Team's Name",
 				accessor: "name",
 				filterable: false,
 				Cell: (item) => (
@@ -77,26 +77,12 @@ const TableList = ({ onShowDetail, onDeleteCampaignCategory }) => {
 				Header: "Status",
 				accessor: "isActive",
 				filterable: false,
-				Cell: (campaignCategory) => (
+				Cell: (team) => (
 					<>
-						{campaignCategory.row.original.isActive ? (
+						{team.row.original.isActive ? (
 							<span className="badge bg-success-subtle text-success">ACTIVE</span>
 						) : (
 							<span className="badge bg-danger-subtle text-danger">IN-ACTIVE</span>
-						)}
-					</>
-				),
-			},
-			{
-				Header: "Display on Homepage",
-				accessor: "isDisplayHomePage",
-				filterable: false,
-				Cell: (campaignCategory) => (
-					<>
-						{campaignCategory.row.original.isDisplayHomePage ? (
-							<span className="badge bg-success-subtle text-success">DISPLAY</span>
-						) : (
-							<span className="badge bg-danger-subtle text-danger">HIDE</span>
 						)}
 					</>
 				),
@@ -112,7 +98,7 @@ const TableList = ({ onShowDetail, onDeleteCampaignCategory }) => {
 								</Link>
 							</li>
 							<li className="list-inline-item" title="Delete">
-								<Link className="remove-item-btn" onClick={() => onDeleteCampaignCategory(cellProps.row.original.id)} to="#">
+								<Link className="remove-item-btn" onClick={() => onDeleteTeam(cellProps.row.original.id)} to="#">
 									<i className="ri-delete-bin-fill align-bottom text-muted"></i>
 								</Link>
 							</li>
@@ -121,7 +107,7 @@ const TableList = ({ onShowDetail, onDeleteCampaignCategory }) => {
 				},
 			},
 		],
-		[onShowDetail, onDeleteCampaignCategory]
+		[onShowDetail, onDeleteTeam]
 	);
 	return (
 		<React.Fragment>
@@ -131,9 +117,9 @@ const TableList = ({ onShowDetail, onDeleteCampaignCategory }) => {
 						{success && !isLoading ? (
 							<TableContainer
 								columns={columns}
-								data={campaignCategories || []}
+								data={teams || []}
 								isGlobalFilter={true}
-								isAddCampaignCategoryList={false}
+								isAddTeamList={false}
 								customPageSize={8}
 								className="custom-header-css"
 								divClass="table-responsive table-card mb-2"

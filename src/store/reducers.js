@@ -28,12 +28,18 @@ import NewsDetailReducer from "./news/detail/reducer";
 import CampaignCategoryListReducer from "./campaignCategory/list/reducer";
 import CreateCampaignCategoryReducer from "./campaignCategory/create/reducer";
 import CampaignCategoryDetailReducer from "./campaignCategory/detail/reducer";
+import TeamListReducer from "./team/list/reducer";
+import CreateTeamReducer from "./team/create/reducer";
+import TeamDetailReducer from "./team/detail/reducer";
 import ProjectListReducer from "./project/list/reducer";
 import CreateProjectReducer from "./project/create/reducer";
 import ProjectDetailReducer from "./project/detail/reducer";
 import CampaignListReducer from "./campaign/list/reducer";
 import CreateCampaignReducer from "./campaign/create/reducer";
 import CampaignDetailReducer from "./campaign/detail/reducer";
+import WithdrawListReducer from "./withdraw/list/reducer";
+import CreateWithdrawReducer from "./withdraw/create/reducer";
+import WithdrawDetailReducer from "./withdraw/detail/reducer";
 import TestimonialListReducer from "./testimonial/list/reducer";
 import CreateTestimonialReducer from "./testimonial/create/reducer";
 import TestimonialDetailReducer from "./testimonial/detail/reducer";
@@ -47,6 +53,7 @@ import SiteSettingReducer from "./siteSetting/reducer";
 import PageBannerListReducer from "./pageBanner/list/reducer";
 import CreatePageBannerReducer from "./pageBanner/create/reducer";
 import PageBannerDetailReducer from "./pageBanner/detail/reducer";
+import dashboardDetailReducer from "./dashboard/detail/reducer";
 
 const rootReducer = combineReducers({
 	// public
@@ -84,6 +91,10 @@ const rootReducer = combineReducers({
 	CampaignListReducer,
 	CreateCampaignReducer,
 	CampaignDetailReducer,
+	// Withdraw
+	WithdrawListReducer,
+	CreateWithdrawReducer,
+	WithdrawDetailReducer,
 	// Testimonial
 	TestimonialListReducer,
 	CreateTestimonialReducer,
@@ -102,6 +113,10 @@ const rootReducer = combineReducers({
 	PageBannerListReducer,
 	CreatePageBannerReducer,
 	PageBannerDetailReducer,
+	TeamListReducer,
+	CreateTeamReducer,
+	TeamDetailReducer,
+	dashboardDetailReducer
 });
 
 export default rootReducer;

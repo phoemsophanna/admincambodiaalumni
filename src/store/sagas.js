@@ -27,6 +27,10 @@ import NewsDetailSaga from "./news/detail/saga";
 import CampaignCategoryListSaga from "./campaignCategory/list/saga";
 import CreateCampaignCategoryMainSaga from "./campaignCategory/create/saga";
 import CampaignCategoryDetailSaga from "./campaignCategory/detail/saga";
+// Campaign Category
+import TeamListSaga from "./team/list/saga";
+import CreateTeamMainSaga from "./team/create/saga";
+import TeamDetailSaga from "./team/detail/saga";
 // Project
 import ProjectListSaga from "./project/list/saga";
 import CreateProjectMainSaga from "./project/create/saga";
@@ -35,6 +39,10 @@ import ProjectDetailSaga from "./project/detail/saga";
 import CampaignListSaga from "./campaign/list/saga";
 import CreateCampaignMainSaga from "./campaign/create/saga";
 import CampaignDetailSaga from "./campaign/detail/saga";
+// Withdraw
+import WithdrawListSaga from "./withdraw/list/saga";
+import CreateWithdrawMainSaga from "./withdraw/create/saga";
+import WithdrawDetailSaga from "./withdraw/detail/saga";
 // Testimonial
 import TestimonialListSaga from "./testimonial/list/saga";
 import CreateTestimonialMainSaga from "./testimonial/create/saga";
@@ -51,6 +59,7 @@ import BannerDetailSaga from "./banner/detail/saga";
 import PageBannerListSaga from "./pageBanner/list/saga";
 import CreatePageBannerMainSaga from "./pageBanner/create/saga";
 import PageBannerDetailSaga from "./pageBanner/detail/saga";
+import DashboardDetailSaga from "./dashboard/detail/saga";
 // Site Setting
 import SiteSettingSaga from "./siteSetting/saga";
 
@@ -78,12 +87,18 @@ export default function* rootSaga() {
 		fork(CampaignCategoryListSaga),
 		fork(CreateCampaignCategoryMainSaga),
 		fork(CampaignCategoryDetailSaga),
+		fork(TeamListSaga),
+		fork(CreateTeamMainSaga),
+		fork(TeamDetailSaga),
 		fork(ProjectListSaga),
 		fork(CreateProjectMainSaga),
 		fork(ProjectDetailSaga),
 		fork(CampaignListSaga),
 		fork(CreateCampaignMainSaga),
 		fork(CampaignDetailSaga),
+		fork(WithdrawListSaga),
+		fork(CreateWithdrawMainSaga),
+		fork(WithdrawDetailSaga),
 		fork(TestimonialListSaga),
 		fork(CreateTestimonialMainSaga),
 		fork(TestimonialDetailSaga),
@@ -97,5 +112,6 @@ export default function* rootSaga() {
 		fork(CreatePageBannerMainSaga),
 		fork(PageBannerDetailSaga),
 		fork(SiteSettingSaga),
+		fork(DashboardDetailSaga)
 	]);
 }

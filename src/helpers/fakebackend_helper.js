@@ -81,6 +81,11 @@ export const getCampaignCategoryList = () => api.get(url.PROJECT_CATEGORY_MANAGE
 export const postCreateCampaignCategory = (body) => api.create(url.PROJECT_CATEGORY_MANAGEMENT_URI, body);
 export const getCampaignCategoryShowDetail = (param) => api.get(`${url.PROJECT_CATEGORY_MANAGEMENT_URI}/detail`, param);
 export const deleteCampaignCategory = (userId) => api.delete(`${url.PROJECT_CATEGORY_MANAGEMENT_URI}/delete/${userId}`, null);
+// Campaign Category Management
+export const getTeamList = () => api.get(url.TEAM_MANAGEMENT_URI, null);
+export const postCreateTeam = (body) => api.create(url.TEAM_MANAGEMENT_URI, body);
+export const getTeamShowDetail = (param) => api.get(`${url.TEAM_MANAGEMENT_URI}/detail`, param);
+export const deleteTeam = (userId) => api.delete(`${url.TEAM_MANAGEMENT_URI}/delete/${userId}`, null);
 // Project Management
 export const getProjectList = () => api.get(url.PROJECT_MANAGEMENT_URI, null);
 export const postCreateProject = (body) => api.create(url.PROJECT_MANAGEMENT_URI, body);
@@ -91,6 +96,11 @@ export const getCampaignList = () => api.get(url.CAMPAIGN_MANAGEMENT_URI, null);
 export const postCreateCampaign = (body) => api.create(url.CAMPAIGN_MANAGEMENT_URI, body);
 export const getCampaignShowDetail = (param) => api.get(`${url.CAMPAIGN_MANAGEMENT_URI}/detail`, param);
 export const deleteCampaign = (userId) => api.delete(`${url.CAMPAIGN_MANAGEMENT_URI}/delete/${userId}`, null);
+// Withdraw Management
+export const getWithdrawList = () => api.get(url.WITHDRAW_MANAGEMENT_URI, null);
+export const postCreateWithdraw = (body) => api.create(url.WITHDRAW_MANAGEMENT_URI, body);
+export const getWithdrawShowDetail = (param) => api.get(`${url.WITHDRAW_MANAGEMENT_URI}/detail`, param);
+export const deleteWithdraw = (userId) => api.delete(`${url.WITHDRAW_MANAGEMENT_URI}/delete/${userId}`, null);
 // Testimonial Management
 export const getTestimonialList = () => api.get(url.TESTIMONIAL_URI, null);
 export const postCreateTestimonial = (body) => api.create(url.TESTIMONIAL_URI, body);
@@ -114,3 +124,4 @@ export const getPageBannerList = () => api.get(url.PAGE_BANNER_URI, null);
 export const postCreatePageBanner = (body) => api.create(url.PAGE_BANNER_URI, body);
 export const getPageBannerShowDetail = (param) => api.get(`${url.PAGE_BANNER_URI}/detail`, param);
 export const deletePageBanner = (userId) => api.delete(`${url.PAGE_BANNER_URI}/delete/${userId}`, null);
+export const getDashboardShowDetail = () => api.get(url.DASHBOARD_MANAGEMENT_URI, null);

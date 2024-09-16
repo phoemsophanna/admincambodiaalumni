@@ -629,14 +629,6 @@ const CampaignForm = (props) => {
 																			<CountUp start={0} end={campaign?.totalRaised} decimals={2} separator={","} prefix={"$"} duration={3} />
 																		</h4>
 																	</div>
-																	<div className="flex-shrink-0 align-self-end">
-																		<span className={`badge bg-success-subtle text-success`}>
-																			{(campaign?.totalRaised / campaign?.goal) * 100 > 0 ? (
-																				<i className={"align-middle me-1 ri-arrow-up-s-fill"}></i>
-																			) : null}
-																			{Math.round((campaign?.totalRaised / campaign?.goal) * 100)} %<span></span>
-																		</span>
-																	</div>
 																</div>
 															</CardBody>
 														</Card>
@@ -667,14 +659,14 @@ const CampaignForm = (props) => {
 																<div className="d-flex align-items-center">
 																	<div className="avatar-sm flex-shrink-0">
 																		<span className="avatar-title bg-light text-primary shadow rounded-circle fs-3">
-																			<i className={"align-middle ri-heart-line"}></i>
+																			<i className={"align-middle ri-coin-line"}></i>
 																		</span>
 																	</div>
 																	<div className="flex-grow-1 ms-3">
-																		<p className="text-uppercase fw-semibold fs-12 text-muted mb-1">Total Reaction</p>
+																		<p className="text-uppercase fw-semibold fs-12 text-muted mb-1">Total Tips</p>
 																		<h4 className=" mb-0">
 																			{" "}
-																			<CountUp start={0} end={campaign?.totalReaction} decimals={0} separator={","} prefix={""} duration={3} />
+																			<CountUp start={0} end={campaign?.totalTip} decimals={2} separator={","} prefix={"$"} duration={3} />
 																		</h4>
 																	</div>
 																</div>

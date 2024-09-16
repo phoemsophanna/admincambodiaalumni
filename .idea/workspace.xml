@@ -5,30 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="59297437-67e8-4d09-b9a8-3c44624d0501" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/public/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Layouts/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Layouts/Footer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Layouts/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Layouts/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Layouts/LayoutMenuData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Layouts/LayoutMenuData.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Layouts/Sidebar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Layouts/Sidebar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Routes/allRoutes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Routes/allRoutes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/images/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/images/favicon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/images/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/images/logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/scss/config/material/_variables-custom.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/scss/config/material/_variables-custom.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/scss/pages/_authentication.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/scss/pages/_authentication.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/scss/pages/_galaxy.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/scss/pages/_galaxy.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/fakebackend_helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/fakebackend_helper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helpers/url_helper.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/helpers/url_helper.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Authentication/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Authentication/Login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/AuthenticationInner/ParticlesAuth.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/AuthenticationInner/ParticlesAuth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Pages/SiteSetting/PrivacyPolicy.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Pages/SiteSetting/PrivacyPolicy.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Pages/SiteSetting/TermOfService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Pages/SiteSetting/TermOfService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Pages/User/User.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Pages/User/User.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/sagas.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/sagas.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Pages/CampaignCategory/CampaignCategory.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Pages/CampaignCategory/CampaignCategory.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Pages/CampaignCategory/TableList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Pages/CampaignCategory/TableList.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +59,9 @@
       <workItem from="1722516772178" duration="564000" />
       <workItem from="1722563067220" duration="548000" />
       <workItem from="1724230374839" duration="386000" />
-      <workItem from="1724230807551" duration="5250000" />
+      <workItem from="1724230807551" duration="6526000" />
+      <workItem from="1724668319679" duration="6002000" />
+      <workItem from="1724724288194" duration="22000" />
     </task>
     <servers />
   </component>

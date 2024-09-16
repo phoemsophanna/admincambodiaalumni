@@ -42,9 +42,12 @@ import TermOfService from "../pages/Pages/SiteSetting/TermOfService";
 import PrivacyPolicy from "../pages/Pages/SiteSetting/PrivacyPolicy";
 import CampaignMenu from "../pages/Pages/Campaign";
 import CampaignForm from "../pages/Pages/Campaign/CampaignForm";
+import WithdrawMenu from "../pages/Pages/Withdraw";
+import WithdrawForm from "../pages/Pages/Withdraw/WithdrawForm";
 import HomePage from "../pages/Pages/SiteSetting/HomePage";
 import AboutPage from "../pages/Pages/SiteSetting/AboutPage";
 import Member from "../pages/Pages/Member/Member";
+import Team from "../pages/Pages/Team/Team";
 
 const authProtectedRoutes = [
 	{ path: "/dashboard", component: <Dashboard /> },
@@ -58,12 +61,16 @@ const authProtectedRoutes = [
 	{ path: "/slider-menu/create", component: <BannerForm /> },
 	{ path: "/slider-menu/edit/:id", component: <BannerForm /> },
 	{ path: "/campaign-categories", component: <CampaignCategory /> },
+	{ path: "/teams", component: <Team /> },
 	{ path: "/project-menu", component: <ProjectMenu /> },
 	{ path: "/project-menu/create", component: <ProjectForm /> },
 	{ path: "/project-menu/edit/:id", component: <ProjectForm /> },
 	{ path: "/campaign-menu", component: <CampaignMenu /> },
 	{ path: "/campaign-menu/create", component: <CampaignForm /> },
 	{ path: "/campaign-menu/edit/:id", component: <CampaignForm /> },
+	{ path: "/withdraw-menu", component: <WithdrawMenu /> },
+	{ path: "/withdraw-menu/create", component: <WithdrawForm /> },
+	{ path: "/withdraw-menu/edit/:id", component: <WithdrawForm /> },
 	{ path: "/how-it-work", component: <PerformanceMenu /> },
 	{ path: "/how-it-work/create", component: <PerformanceForm /> },
 	{ path: "/how-it-work/edit/:id", component: <PerformanceForm /> },
