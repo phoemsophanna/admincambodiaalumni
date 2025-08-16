@@ -1000,7 +1000,7 @@ const AboutPage = () => {
 														<TabPane tabId="ENG" id="eng1">
 															<div className="mb-3">
 																<Label className="form-label" htmlFor="professionalVolunteer-input">
-																	Professional Volunteer
+																	Our Team
 																</Label>
 																<Input
 																	type="text"
@@ -1017,7 +1017,7 @@ const AboutPage = () => {
 														<TabPane tabId="KHM" id="khm1">
 															<div className="mb-3">
 																<Label className="form-label" htmlFor="professionalVolunteerKh-input">
-																	Professional Volunteer
+																	Our Team
 																</Label>
 																<Input
 																	type="text"
