@@ -50,7 +50,7 @@ import classnames from "classnames";
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 const CampaignCategory = () => {
-	document.title = "Campaign Category | Admin & Dashboards";
+	document.title = "Project Category | Admin & Dashboards";
 	const dispatch = useDispatch();
 	const [titleTap, settitleTap] = useState("ENG");
 	const titleTapToggle = (tab) => {
@@ -81,14 +81,16 @@ const CampaignCategory = () => {
 			id: campaignCategoryDetail.campaignCategory?.id || "",
 			name: campaignCategoryDetail.campaignCategory?.name || "",
 			nameKh: campaignCategoryDetail.campaignCategory?.nameKh || "",
+			nameCh: campaignCategoryDetail.campaignCategory?.nameCh || "",
 			desc: campaignCategoryDetail.campaignCategory?.desc || "",
 			descKh: campaignCategoryDetail.campaignCategory?.descKh || "",
+			descCh: campaignCategoryDetail.campaignCategory?.descCh || "",
 			image: campaignCategoryDetail.campaignCategory?.image || "",
 			thumbnail: campaignCategoryDetail.campaignCategory?.thumbnail || "",
 			color: campaignCategoryDetail.campaignCategory?.color || "",
 			ordering: campaignCategoryDetail.campaignCategory?.ordering || "",
-			isActive: campaignCategoryDetail.campaignCategory ? (campaignCategoryDetail.campaignCategory.isActive ? true : false) : true,
-			isDisplayHomePage: campaignCategoryDetail.campaignCategory ? (campaignCategoryDetail.campaignCategory.isDisplayHomePage ? true : false) : true,
+			isActive: campaignCategoryDetail.campaignCategory ? (campaignCategoryDetail.campaignCategory.isActive == 1 ? true : false) : true,
+			isDisplayHomePage: campaignCategoryDetail.campaignCategory ? (campaignCategoryDetail.campaignCategory.isDisplayHomePage == 1 ? true : false) : true,
 		},
 		onSubmit: (values) => {
 			values.image = file?.length > 0 ? file[0]?.serverId : "";
@@ -171,7 +173,7 @@ const CampaignCategory = () => {
 		<React.Fragment>
 			<div className="page-content">
 				<Container fluid>
-					<BreadCrumb title="Campaign Category" pageTitle="Dashboard" />
+					<BreadCrumb title="Project Category" pageTitle="Dashboard" />
 					<Row>
 						<Col lg={12}>
 							<Card>
@@ -231,7 +233,7 @@ const CampaignCategory = () => {
 				size="md"
 			>
 				<ModalHeader className="bg-light p-3 text-light" toggle={closeModal}>
-					{campaignCategoryDetail.campaignCategory ? "Update Campaign Category" : "Create Campaign Category"}
+					{campaignCategoryDetail.campaignCategory ? "Update Project Category" : "Create Project Category"}
 				</ModalHeader>
 
 				<ModalBody>
@@ -269,6 +271,17 @@ const CampaignCategory = () => {
 													}}
 												>
 													Khmer
+												</NavLink>
+											</NavItem>
+											<NavItem>
+												<NavLink
+													style={{ cursor: "pointer" }}
+													className={classnames({ active: titleTap === "CH" })}
+													onClick={() => {
+														titleTapToggle("CH");
+													}}
+												>
+													Chinese
 												</NavLink>
 											</NavItem>
 										</Nav>
@@ -338,6 +351,38 @@ const CampaignCategory = () => {
 												onChange={campaignCategoryValidation.handleChange}
 												onBlur={campaignCategoryValidation.handleBlur}
 												value={campaignCategoryValidation.values.descKh}
+											></textarea>
+										</div>
+									</TabPane>
+									<TabPane tabId="CH" id="ch">
+										<div className="mb-2">
+											<Label htmlFor="name" className="form-label">
+												Name in Chinese
+											</Label>
+											<Input
+												id="name"
+												name="nameCh"
+												type="text"
+												className="form-control"
+												placeholder="Enter name"
+												onChange={campaignCategoryValidation.handleChange}
+												onBlur={campaignCategoryValidation.handleBlur}
+												value={campaignCategoryValidation.values.nameCh || ""}
+											/>
+										</div>
+										<div className="mb-3">
+											<Label className="form-label" htmlFor="description-input">
+												Description
+											</Label>
+											<textarea
+												className="form-control"
+												id="description-input"
+												rows="3"
+												placeholder="Enter description"
+												name="descCh"
+												onChange={campaignCategoryValidation.handleChange}
+												onBlur={campaignCategoryValidation.handleBlur}
+												value={campaignCategoryValidation.values.descCh}
 											></textarea>
 										</div>
 									</TabPane>

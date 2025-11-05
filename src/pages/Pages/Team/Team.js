@@ -34,6 +34,7 @@ import { createSelector } from "reselect";
 import { useEffect } from "react";
 import DeleteModal from "../../../Components/Common/DeleteModal";
 import { api } from "../../../config";
+import TinymceEditor from "../../../Components/Common/TinymceEditor";
 
 // Import React FilePond
 import { FilePond, registerPlugin } from "react-filepond";
@@ -58,6 +59,21 @@ const Team = () => {
 	const [UID, setUID] = useState(null);
 	const [file, setFile] = useState([]);
 	const [file2, setFile2] = useState([]);
+	const [des, setDes] = useState("");
+	const [desKh, setDesKh] = useState("");
+	const [desCh, setDesCh] = useState("");
+
+	const handleEditorChange = (e) => {
+		setDes(e.target.getContent());
+	};
+
+	const handleEditorKhChange = (e) => {
+		setDesKh(e.target.getContent());
+	};
+
+	const handleEditorChChange = (e) => {
+		setDesCh(e.target.getContent());
+	};
 
 	const createTeamSelector = createSelector(
 		(state) => state.CreateTeamReducer,
@@ -77,10 +93,13 @@ const Team = () => {
 			id: teamDetail.team?.id || "",
 			name: teamDetail.team?.name || "",
 			nameKh: teamDetail.team?.nameKh || "",
+			nameCh: teamDetail.team?.nameCh || "",
 			position: teamDetail.team?.position || "",
 			positionKh: teamDetail.team?.positionKh || "",
+			positionCh: teamDetail.team?.positionCh || "",
 			desc: teamDetail.team?.desc || "",
 			descKh: teamDetail.team?.descKh || "",
+			descCh: teamDetail.team?.descCh || "",
 			image: teamDetail.team?.image || "",
 			facebookLink: teamDetail.team?.facebookLink || "",
 			instagramLink: teamDetail.team?.instagramLink || "",
@@ -90,6 +109,9 @@ const Team = () => {
 			isActive: teamDetail.team ? (teamDetail.team.isActive ? true : false) : true,
 		},
 		onSubmit: (values) => {
+			values.desc = des;
+			values.descKh = desKh;
+			values.descCh = desCh;
 			values.image = file?.length > 0 ? file[0]?.serverId : "";
 			values.thumbnail = file2?.length > 0 ? file2[0]?.serverId : "";
 			dispatch(createTeam(values));
@@ -104,6 +126,9 @@ const Team = () => {
 		teamValidation.resetForm();
 		setFile([]);
 		setFile2([]);
+		setDes("");
+		setDesKh("");
+		setDesCh("");
 		settitleTap("ENG");
 		dispatch(resetTeamShowDetail());
 	}
@@ -130,6 +155,9 @@ const Team = () => {
 			teamValidation.resetForm();
 			setFile([]);
 			setFile2([]);
+			setDes("");
+			setDesKh("");
+			setDesCh("");
 			settitleTap("ENG");
 			dispatch(resetTeamShowDetail());
 			setDeleteModal(false);
@@ -150,7 +178,14 @@ const Team = () => {
 		} else {
 			setFile([]);
 		}
+
 	}, [teamDetail, setFile]);
+
+	useEffect(()=>{
+		setDes(teamDetail?.team?.desc ? teamDetail.team.desc : "");
+		setDesKh(teamDetail?.team?.descKh ? teamDetail.team.descKh : "");
+		setDesCh(teamDetail?.team?.descCh ? teamDetail.team.descCh : "");
+	}, [teamDetail])
 
 	return (
 		<React.Fragment>
@@ -276,6 +311,17 @@ const Team = () => {
 													Khmer
 												</NavLink>
 											</NavItem>
+											<NavItem>
+												<NavLink
+													style={{ cursor: "pointer" }}
+													className={classnames({ active: titleTap === "CH" })}
+													onClick={() => {
+														titleTapToggle("CH");
+													}}
+												>
+													Chinese
+												</NavLink>
+											</NavItem>
 										</Nav>
 									</div>
 								</div>
@@ -323,7 +369,8 @@ const Team = () => {
 											<Label className="form-label" htmlFor="description-input">
 												Description
 											</Label>
-											<textarea
+											<TinymceEditor onUploadImage={handleEditorChange} initDataValue={des} />
+											{/* <textarea
 												className="form-control"
 												id="description-input"
 												rows="5"
@@ -332,7 +379,7 @@ const Team = () => {
 												onChange={teamValidation.handleChange}
 												onBlur={teamValidation.handleBlur}
 												value={teamValidation.values.desc}
-											></textarea>
+											></textarea> */}
 										</div>
 									</TabPane>
 									<TabPane tabId="KHM" id="khm">
@@ -376,7 +423,8 @@ const Team = () => {
 											<Label className="form-label" htmlFor="description-input">
 												Description
 											</Label>
-											<textarea
+											<TinymceEditor onUploadImage={handleEditorKhChange} initDataValue={desKh} />
+											{/* <textarea
 												className="form-control"
 												id="description-input"
 												rows="2"
@@ -385,7 +433,61 @@ const Team = () => {
 												onChange={teamValidation.handleChange}
 												onBlur={teamValidation.handleBlur}
 												value={teamValidation.values.descKh}
-											></textarea>
+											></textarea> */}
+										</div>
+									</TabPane>
+									<TabPane tabId="CH" id="ch">
+										<Row>
+											<Col md={6}>
+												<div className="mb-2">
+													<Label htmlFor="nameCh" className="form-label">
+														Full Name
+													</Label>
+													<Input
+														id="nameCh"
+														name="nameCh"
+														type="text"
+														className="form-control"
+														placeholder="Enter name"
+														onChange={teamValidation.handleChange}
+														onBlur={teamValidation.handleBlur}
+														value={teamValidation.values.nameCh || ""}
+													/>
+												</div>
+											</Col>
+											<Col md={6}>
+												<div className="mb-2">
+													<Label htmlFor="positionCh" className="form-label">
+														Position
+													</Label>
+													<Input
+														id="positionCh"
+														name="positionCh"
+														type="text"
+														className="form-control"
+														placeholder="Enter positionCh"
+														onChange={teamValidation.handleChange}
+														onBlur={teamValidation.handleBlur}
+														value={teamValidation.values.positionCh || ""}
+													/>
+												</div>
+											</Col>
+										</Row>
+										<div className="mb-3">
+											<Label className="form-label" htmlFor="description-input">
+												Description
+											</Label>
+											<TinymceEditor onUploadImage={handleEditorChChange} initDataValue={desCh} />
+											{/* <textarea
+												className="form-control"
+												id="description-input"
+												rows="2"
+												placeholder="Enter description"
+												name="descKh"
+												onChange={teamValidation.handleChange}
+												onBlur={teamValidation.handleBlur}
+												value={teamValidation.values.descKh}
+											></textarea> */}
 										</div>
 									</TabPane>
 								</TabContent>

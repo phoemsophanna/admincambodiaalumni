@@ -55,6 +55,7 @@ const NewsForm = (props) => {
 	const [file, setFile] = useState([]);
 	const [contentDesc, setContentDesc] = useState("");
 	const [contentDescKh, setContentDescKh] = useState("");
+	const [contentDescCh, setContentDescCh] = useState("");
 
 	const createNewsSelector = createSelector(
 		(state) => state.CreateNewsReducer,
@@ -76,6 +77,9 @@ const NewsForm = (props) => {
 	const handleEditorChangeKh = (e) => {
 		setContentDescKh(e.target.getContent());
 	};
+	const handleEditorChangeCh = (e) => {
+		setContentDescCh(e.target.getContent());
+	};
 
 	useEffect(() => {
 		if (id) dispatch(fetchNewsDetail(id));
@@ -88,6 +92,8 @@ const NewsForm = (props) => {
 	useEffect(() => {
 		if (news) {
 			setContentDesc(news.content);
+			setContentDescKh(news.contentKh);
+			setContentDescCh(news.contentCh);
 			if (news.image) {
 				setFile([
 					{
@@ -102,6 +108,8 @@ const NewsForm = (props) => {
 			}
 		} else {
 			setContentDesc("");
+			setContentDescKh("");
+			setContentDescCh("");
 		}
 	}, [news]);
 
@@ -112,14 +120,18 @@ const NewsForm = (props) => {
 			id: id || "",
 			title: news ? news.title : "",
 			titleKh: news ? news.titleKh : "",
+			titleCh: news ? news.titleCh : "",
 			summary: news ? news.summary : "",
 			summaryKh: news ? news.summaryKh : "",
+			summaryCh: news ? news.summaryCh : "",
 			content: news ? news.content : "",
 			contentKh: news ? news.contentKh : "",
+			contentCh: news ? news.contentCh : "",
 			type: news ? news.type : "",
+			date: news ? news.date : "",
 			ordering: news ? news.ordering : 0,
-			isActive: news ? (news.isActive === 1 ? true : false) : true,
-			isDisplayHomepage: news ? (news.isDisplayHomepage === 1 ? true : false) : false,
+			isActive: news ? (news.isActive == 1 ? true : false) : true,
+			isDisplayHomepage: news ? (news.isDisplayHomepage == 1 ? true : false) : false,
 			image: news ? news.image : "",
 		},
 		validationSchema: Yup.object({
@@ -128,6 +140,7 @@ const NewsForm = (props) => {
 		onSubmit: (values) => {
 			values.content = contentDesc;
 			values.contentKh = contentDescKh;
+			values.contentCh = contentDescCh;
 			values.image = file?.length > 0 ? file[0]?.serverId : "";
 			dispatch(createNews(values, props.router.navigate));
 		},
@@ -194,6 +207,17 @@ const NewsForm = (props) => {
 															}}
 														>
 															Khmer
+														</NavLink>
+													</NavItem>
+													<NavItem>
+														<NavLink
+															style={{ cursor: "pointer" }}
+															className={classnames({ active: titleTap === "CH" })}
+															onClick={() => {
+																titleTapToggle("CH");
+															}}
+														>
+															Chinese
 														</NavLink>
 													</NavItem>
 												</Nav>
@@ -282,11 +306,51 @@ const NewsForm = (props) => {
 													<TinymceEditor onUploadImage={handleEditorChangeKh} initDataValue={contentDescKh} />
 												</div>
 											</TabPane>
+											<TabPane tabId="CH" id="ch">
+												<div className="mb-3">
+													<Label className="form-label" htmlFor="news-titleCh-input">
+														Title Chinese
+													</Label>
+													<Input
+														type="text"
+														className="form-control"
+														id="news-titleCh-input"
+														placeholder="Enter title chinese"
+														name="titleCh"
+														onChange={newsValidation.handleChange}
+														onBlur={newsValidation.handleBlur}
+														value={newsValidation.values.titleCh}
+														invalid={newsValidation.touched.titleCh && newsValidation.errors.titleCh ? true : false}
+													/>
+													{newsValidation.touched.titleCh && newsValidation.errors.titleCh ? (
+														<FormFeedback type="invalid">{newsValidation.errors.titleCh}</FormFeedback>
+													) : null}
+												</div>
+												<div className="mb-3">
+													<Label className="form-label" htmlFor="summaryCh-input">
+														Summary Chinese
+													</Label>
+													<textarea
+														className="form-control"
+														id="summaryCh-input"
+														rows="3"
+														placeholder="Enter summary Chinese"
+														name="summaryCh"
+														onChange={newsValidation.handleChange}
+														onBlur={newsValidation.handleBlur}
+														value={newsValidation.values.summaryCh}
+													></textarea>
+												</div>
+												<div className="mb-3">
+													<Label>Content</Label>
+													<TinymceEditor onUploadImage={handleEditorChangeCh} initDataValue={contentDescCh} />
+												</div>
+											</TabPane>
 										</TabContent>
 
 										<div className="mb-3">
 											<Label className="form-label" htmlFor="thumbnail-input">
-												Thumbnail
+												Thumbnail (1920x1280 px)
 											</Label>
 											<div className="position-relative d-block mx-auto">
 												<div style={{ width: "100%" }}>
@@ -310,7 +374,7 @@ const NewsForm = (props) => {
 							<Col lg={4}>
 								<Card>
 									<CardBody>
-										<FormGroup className="mb-3">
+										<FormGroup className="mb-3" hidden>
 											<Label for="select-news-type">Select Type</Label>
 											<Input
 												className="form-select p-2"
@@ -326,6 +390,21 @@ const NewsForm = (props) => {
 												<option value="EVENT">EVENT</option>
 											</Input>
 										</FormGroup>
+										<div className="mb-3">
+											<Label className="form-label" htmlFor="news-date-input">
+												Date
+											</Label>
+											<Input
+												type="date"
+												className="form-control"
+												id="news-date-input"
+												placeholder="Enter news date"
+												name="date"
+												onChange={newsValidation.handleChange}
+												onBlur={newsValidation.handleBlur}
+												value={newsValidation.values.date}
+											/>
+										</div>
 										<div className="mb-3">
 											<Label className="form-label" htmlFor="news-ordering-input">
 												Ordering

@@ -76,14 +76,14 @@ const Header = ({ onChangeLayoutMode, layoutModeType, headerClass }) => {
 									<span className="logo-sm">
 										<img src={logoSm} alt="" height="22" />
 									</span>
-									<span className="logo-lg">CDA FUND ADMIN</span>
+									<span className="logo-lg">Alumni ADMIN</span>
 								</Link>
 
 								<Link to="/" className="logo logo-light">
 									<span className="logo-sm">
 										<img src={logoSm} alt="" height="22" />
 									</span>
-									<span className="logo-lg">CDA FUND ADMIN</span>
+									<span className="logo-lg">Alumni ADMIN</span>
 								</Link>
 							</div>
 

@@ -15,6 +15,9 @@ import UserDetailSaga from "./user/detail/saga";
 import MemberListSaga from "./member/list/saga";
 import CreateMemberMainSaga from "./member/create/saga";
 import MemberDetailSaga from "./member/detail/saga";
+// Member Information
+import CreateMemberInformationMainSaga from "./memberInformation/create/saga";
+import MemberInformationDetailSaga from "./memberInformation/detail/saga";
 // Performance
 import PerformanceListSaga from "./performance/list/saga";
 import CreatePerformanceMainSaga from "./performance/create/saga";
@@ -35,6 +38,14 @@ import TeamDetailSaga from "./team/detail/saga";
 import ProjectListSaga from "./project/list/saga";
 import CreateProjectMainSaga from "./project/create/saga";
 import ProjectDetailSaga from "./project/detail/saga";
+// Service 
+import ServiceListSaga from "./service/list/saga";
+import CreateServiceMainSaga from "./service/create/saga";
+import ServiceDetailSaga from "./service/detail/saga";
+// Portfilo
+import PortfolioListSaga from "./portfolio/list/saga";
+import CreatePortfolioMainSaga from "./portfolio/create/saga";
+import PortfolioDetailSaga from "./portfolio/detail/saga";
 // Campaign
 import CampaignListSaga from "./campaign/list/saga";
 import CreateCampaignMainSaga from "./campaign/create/saga";
@@ -62,6 +73,12 @@ import PageBannerDetailSaga from "./pageBanner/detail/saga";
 import DashboardDetailSaga from "./dashboard/detail/saga";
 // Site Setting
 import SiteSettingSaga from "./siteSetting/saga";
+import GalleryDetailSaga from "./gallery/detail/saga";
+import GalleryListSaga from "./gallery/list/saga";
+import CreateGalleryMainSaga from "./gallery/create/saga";
+import VideoDetailSaga from "./video/detail/saga";
+import VideoListSaga from "./video/list/saga";
+import CreateVideoMainSaga from "./video/create/saga";
 
 export default function* rootSaga() {
 	yield all([
@@ -78,6 +95,10 @@ export default function* rootSaga() {
 		fork(MemberListSaga),
 		fork(CreateMemberMainSaga),
 		fork(MemberDetailSaga),
+		// Member Information
+		fork(MemberInformationDetailSaga),
+		fork(CreateMemberInformationMainSaga),
+		
 		fork(PerformanceListSaga),
 		fork(CreatePerformanceMainSaga),
 		fork(PerformanceDetailSaga),
@@ -112,6 +133,21 @@ export default function* rootSaga() {
 		fork(CreatePageBannerMainSaga),
 		fork(PageBannerDetailSaga),
 		fork(SiteSettingSaga),
-		fork(DashboardDetailSaga)
+		fork(DashboardDetailSaga),
+		// Service
+		fork(ServiceDetailSaga),
+		fork(ServiceListSaga),
+		fork(CreateServiceMainSaga),
+		// Project 
+		fork(PortfolioListSaga),
+		fork(PortfolioDetailSaga),
+		fork(CreatePortfolioMainSaga),
+		// Gallery
+		fork(GalleryDetailSaga),
+		fork(GalleryListSaga),
+		fork(CreateGalleryMainSaga),
+		fork(VideoDetailSaga),
+		fork(VideoListSaga),
+		fork(CreateVideoMainSaga)
 	]);
 }

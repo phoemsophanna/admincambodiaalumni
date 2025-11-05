@@ -31,6 +31,7 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import { getSiteSetting, resetSiteSettingFlag, saveSiteSetting } from "../../../store/actions";
 import { createSelector } from "reselect";
 import BreadCrumb from "../../../Components/Common/BreadCrumb";
+import TinymceEditor from "../../../Components/Common/TinymceEditor";
 
 import withRouter from "../../../Components/Common/withRouter";
 import LayoutNav from "./LayoutNav";
@@ -49,6 +50,21 @@ const AboutPage = () => {
 	const [file, setFile] = useState([]);
 	const [fileTwo, setFileTwo] = useState([]);
 	const [fileFive, setFileFive] = useState([]);
+	const [des, setDes] = useState("");
+	const [desKh, setDesKh] = useState("");
+	const [desCh, setDesCh] = useState("");
+
+	const handleEditorChange = (e) => {
+		setDes(e.target.getContent());
+	};
+
+	const handleEditorKhChange = (e) => {
+		setDesKh(e.target.getContent());
+	};
+
+	const handleEditorChChange = (e) => {
+		setDesCh(e.target.getContent());
+	};
 
 	const siteSettingSelector = createSelector(
 		(state) => state.SiteSettingReducer,
@@ -66,6 +82,9 @@ const AboutPage = () => {
 		setFile([]);
 		setFileTwo([]);
 		setFileFive([]);
+		setDes("");
+		setDesKh("");
+		setDesCh("");
 		dispatch(getSiteSetting("ABOUT_PAGE"));
 		return () => {
 			dispatch(resetSiteSettingFlag());
@@ -79,10 +98,13 @@ const AboutPage = () => {
 			type: "ABOUT_PAGE",
 			introTitle: siteSetting ? siteSetting.introTitle : "",
 			introTitleKh: siteSetting ? siteSetting.introTitleKh : "",
+			introTitleCh: siteSetting ? siteSetting.introTitleCh : "",
 			introDesc: siteSetting ? siteSetting.introDesc : "",
 			introDescKh: siteSetting ? siteSetting.introDescKh : "",
+			introDescCh: siteSetting ? siteSetting.introDescCh : "",
 			introHighlight: siteSetting ? siteSetting.introHighlight : "",
 			introHighlightKh: siteSetting ? siteSetting.introHighlightKh : "",
+			introHighlightCh: siteSetting ? siteSetting.introHighlightCh : "",
 			successfulCampaign: siteSetting ? siteSetting.successfulCampaign : 0,
 			amazingDonors: siteSetting ? siteSetting.amazingDonors : 0,
 			donorTrusted: siteSetting ? siteSetting.donorTrusted : 0,
@@ -90,26 +112,34 @@ const AboutPage = () => {
 
 			cardTitle1: siteSetting ? siteSetting.cardTitle1 : "",
 			cardTitleKh1: siteSetting ? siteSetting.cardTitleKh1 : "",
+			cardTitleCh1: siteSetting ? siteSetting.cardTitleCh1 : "",
 			cardDesc1: siteSetting ? siteSetting.cardDesc1 : "",
 			cardDescKh1: siteSetting ? siteSetting.cardDescKh1 : "",
+			cardDescCh1: siteSetting ? siteSetting.cardDescCh1 : "",
 			cardIcon1: siteSetting ? siteSetting.cardIcon1 : "",
 
 			cardTitle2: siteSetting ? siteSetting.cardTitle2 : "",
 			cardTitleKh2: siteSetting ? siteSetting.cardTitleKh2 : "",
+			cardTitleCh2: siteSetting ? siteSetting.cardTitleCh2 : "",
 			cardDesc2: siteSetting ? siteSetting.cardDesc2 : "",
 			cardDescKh2: siteSetting ? siteSetting.cardDescKh2 : "",
+			cardDescCh2: siteSetting ? siteSetting.cardDescCh2 : "",
 			cardIcon2: siteSetting ? siteSetting.cardIcon2 : "",
 
 			cardTitle3: siteSetting ? siteSetting.cardTitle3 : "",
 			cardTitleKh3: siteSetting ? siteSetting.cardTitleKh3 : "",
+			cardTitleCh3: siteSetting ? siteSetting.cardTitleCh3 : "",
 			cardDesc3: siteSetting ? siteSetting.cardDesc3 : "",
 			cardDescKh3: siteSetting ? siteSetting.cardDescKh3 : "",
+			cardDescCh3: siteSetting ? siteSetting.cardDescCh3 : "",
 			cardIcon3: siteSetting ? siteSetting.cardIcon3 : "",
 
 			bannerDesc: siteSetting ? siteSetting.bannerDesc : "",
 			bannerDescKh: siteSetting ? siteSetting.bannerDescKh : "",
+			bannerDescCh: siteSetting ? siteSetting.bannerDescCh : "",
 			bannerLabel: siteSetting ? siteSetting.bannerLabel : "",
 			bannerLabelKh: siteSetting ? siteSetting.bannerLabelKh : "",
+			bannerLabelCh: siteSetting ? siteSetting.bannerLabelCh : "",
 			bannerLinkTo: siteSetting ? siteSetting.bannerLinkTo : "",
 			thumbnail: siteSetting ? siteSetting.thumbnail : "",
 
@@ -120,12 +150,17 @@ const AboutPage = () => {
 
 			professionalVolunteer: siteSetting ? siteSetting.professionalVolunteer : "",
 			professionalVolunteerKh: siteSetting ? siteSetting.professionalVolunteerKh : "",
+			professionalVolunteerCh: siteSetting ? siteSetting.professionalVolunteerCh : "",
 
 			ourDonors: siteSetting ? siteSetting.ourDonors : "",
 			ourDonorsKh: siteSetting ? siteSetting.ourDonorsKh : "",
+			ourDonorsCh: siteSetting ? siteSetting.ourDonorsCh : "",
 			thumbnailFive: siteSetting ? siteSetting.thumbnailFive : "",
 		},
 		onSubmit: (values) => {
+			values.introDesc = des;
+			values.introDescKh = desKh;
+			values.introDescCh = desCh;
 			values.thumbnail = file?.length > 0 ? file[0]?.serverId : siteSetting.thumbnail;
 			values.thumbnailTwo = fileTwo?.length > 0 ? fileTwo[0]?.serverId : siteSetting.thumbnailTwo;
 			values.thumbnailFive = fileFive?.length > 0 ? fileFive[0]?.serverId : siteSetting.thumbnailFive;
@@ -140,6 +175,9 @@ const AboutPage = () => {
 		setFile([]);
 		setFileTwo([]);
 		setFileFive([]);
+		setDes("");
+		setDesKh("");
+		setDesCh("");
 		dispatch(getSiteSetting("ABOUT_PAGE"));
 	};
 
@@ -160,6 +198,9 @@ const AboutPage = () => {
 			} else {
 				setFileFive([]);
 			}
+			setDes(siteSetting.introDesc);
+			setDesKh(siteSetting.introDescKh);
+			setDesCh(siteSetting.introDescCh);
 		}
 	}, [siteSetting]);
 
@@ -213,6 +254,17 @@ const AboutPage = () => {
 															Khmer
 														</NavLink>
 													</NavItem>
+													<NavItem>
+														<NavLink
+															style={{ cursor: "pointer" }}
+															className={classnames({ active: titleTap === "CH" })}
+															onClick={() => {
+																titleTapToggle("CH");
+															}}
+														>
+															Chinese
+														</NavLink>
+													</NavItem>
 												</Nav>
 											</div>
 										</div>
@@ -251,7 +303,8 @@ const AboutPage = () => {
 																<Label className="form-label" htmlFor="introDesc-input">
 																	Intro Description
 																</Label>
-																<textarea
+																<TinymceEditor onUploadImage={handleEditorChange} initDataValue={des} />
+																{/* <textarea
 																	className="form-control"
 																	id="introDesc-input"
 																	rows="5"
@@ -260,7 +313,7 @@ const AboutPage = () => {
 																	onChange={settingForm.handleChange}
 																	onBlur={settingForm.handleBlur}
 																	value={settingForm.values.introDesc}
-																></textarea>
+																></textarea> */}
 															</div>
 															<div className="mb-3">
 																<Label className="form-label" htmlFor="introHighlight-input">
@@ -298,7 +351,8 @@ const AboutPage = () => {
 																<Label className="form-label" htmlFor="introDescKh-input">
 																	Intro Description
 																</Label>
-																<textarea
+																<TinymceEditor onUploadImage={handleEditorKhChange} initDataValue={desKh} />
+																{/* <textarea
 																	className="form-control"
 																	id="introDescKh-input"
 																	rows="5"
@@ -307,7 +361,7 @@ const AboutPage = () => {
 																	onChange={settingForm.handleChange}
 																	onBlur={settingForm.handleBlur}
 																	value={settingForm.values.introDescKh}
-																></textarea>
+																></textarea> */}
 															</div>
 															<div className="mb-3">
 																<Label className="form-label" htmlFor="introHighlightKh-input">
@@ -322,6 +376,54 @@ const AboutPage = () => {
 																	onChange={settingForm.handleChange}
 																	onBlur={settingForm.handleBlur}
 																	value={settingForm.values.introHighlightKh}
+																/>
+															</div>
+														</TabPane>
+														<TabPane tabId="CH" id="ch-i">
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="introTitleCh-input">
+																	Intro Title
+																</Label>
+																<Input
+																	type="text"
+																	className="form-control"
+																	id="introTitleCh-input"
+																	placeholder="Enter text"
+																	name="introTitleCh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.introTitleCh}
+																/>
+															</div>
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="introDescCh-input">
+																	Intro Description
+																</Label>
+																<TinymceEditor onUploadImage={handleEditorChChange} initDataValue={desCh} />
+																{/* <textarea
+																	className="form-control"
+																	id="introDescKh-input"
+																	rows="5"
+																	placeholder="Enter text"
+																	name="introDescCh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.introDescCh}
+																></textarea> */}
+															</div>
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="introHighlightCh-input">
+																	Intro Highlight
+																</Label>
+																<Input
+																	type="text"
+																	className="form-control"
+																	id="introHighlightCh-input"
+																	placeholder="Enter text"
+																	name="introHighlightCh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.introHighlightCh}
 																/>
 															</div>
 														</TabPane>
@@ -376,7 +478,7 @@ const AboutPage = () => {
 												<Col xl={4}>
 													<div className="mb-3">
 														<Label className="form-label" htmlFor="thumbnail-input">
-															Thumbnail
+															Thumbnail (1920x960 px)
 														</Label>
 														<div className="position-relative d-block mx-auto">
 															<div style={{ width: "100%" }}>
@@ -478,6 +580,38 @@ const AboutPage = () => {
 																		></textarea>
 																	</div>
 																</TabPane>
+																<TabPane tabId="CH" id="ch1">
+																	<div className="mb-3">
+																		<Label className="form-label" htmlFor="cardTitleCh1-input">
+																			Title
+																		</Label>
+																		<Input
+																			type="text"
+																			className="form-control"
+																			id="cardTitleCh1-input"
+																			placeholder="Enter text"
+																			name="cardTitleCh1"
+																			onChange={settingForm.handleChange}
+																			onBlur={settingForm.handleBlur}
+																			value={settingForm.values.cardTitleCh1}
+																		/>
+																	</div>
+																	<div className="mb-3">
+																		<Label className="form-label" htmlFor="cardDescCh1-input">
+																			Description
+																		</Label>
+																		<textarea
+																			className="form-control"
+																			id="cardDescCh1-input"
+																			rows="5"
+																			placeholder="Enter text"
+																			name="cardDescCh1"
+																			onChange={settingForm.handleChange}
+																			onBlur={settingForm.handleBlur}
+																			value={settingForm.values.cardDescCh1}
+																		></textarea>
+																	</div>
+																</TabPane>
 															</TabContent>
 															<div className="mb-3">
 																<Label className="form-label" htmlFor="cardIcon1-input">
@@ -575,6 +709,38 @@ const AboutPage = () => {
 																			onChange={settingForm.handleChange}
 																			onBlur={settingForm.handleBlur}
 																			value={settingForm.values.cardDescKh2}
+																		></textarea>
+																	</div>
+																</TabPane>
+																<TabPane tabId="CH" id="ch1">
+																	<div className="mb-3">
+																		<Label className="form-label" htmlFor="cardTitleCh2-input">
+																			Title
+																		</Label>
+																		<Input
+																			type="text"
+																			className="form-control"
+																			id="cardTitleCh2-input"
+																			placeholder="Enter text"
+																			name="cardTitleCh2"
+																			onChange={settingForm.handleChange}
+																			onBlur={settingForm.handleBlur}
+																			value={settingForm.values.cardTitleCh2}
+																		/>
+																	</div>
+																	<div className="mb-3">
+																		<Label className="form-label" htmlFor="cardDescCh2-input">
+																			Description
+																		</Label>
+																		<textarea
+																			className="form-control"
+																			id="cardDescCh2-input"
+																			rows="5"
+																			placeholder="Enter text"
+																			name="cardDescCh2"
+																			onChange={settingForm.handleChange}
+																			onBlur={settingForm.handleBlur}
+																			value={settingForm.values.cardDescCh2}
 																		></textarea>
 																	</div>
 																</TabPane>
@@ -679,6 +845,38 @@ const AboutPage = () => {
 																		></textarea>
 																	</div>
 																</TabPane>
+																<TabPane tabId="CH" id="ch1">
+																	<div className="mb-3">
+																		<Label className="form-label" htmlFor="cardTitleCh3-input">
+																			Title
+																		</Label>
+																		<Input
+																			type="text"
+																			className="form-control"
+																			id="cardTitleCh3-input"
+																			placeholder="Enter text"
+																			name="cardTitleCh3"
+																			onChange={settingForm.handleChange}
+																			onBlur={settingForm.handleBlur}
+																			value={settingForm.values.cardTitleCh3}
+																		/>
+																	</div>
+																	<div className="mb-3">
+																		<Label className="form-label" htmlFor="cardDescCh3-input">
+																			Description
+																		</Label>
+																		<textarea
+																			className="form-control"
+																			id="cardDescCh3-input"
+																			rows="5"
+																			placeholder="Enter text"
+																			name="cardDescCh3"
+																			onChange={settingForm.handleChange}
+																			onBlur={settingForm.handleBlur}
+																			value={settingForm.values.cardDescCh3}
+																		></textarea>
+																	</div>
+																</TabPane>
 															</TabContent>
 
 															<div className="mb-3">
@@ -751,12 +949,29 @@ const AboutPage = () => {
 																/>
 															</div>
 														</TabPane>
+														<TabPane tabId="CH" id="ch1">
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="ourDonorsCh-input">
+																	Our Donors
+																</Label>
+																<Input
+																	type="text"
+																	className="form-control"
+																	id="ourDonorsCh-input"
+																	placeholder="Enter text"
+																	name="ourDonorsCh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.ourDonorsCh}
+																/>
+															</div>
+														</TabPane>
 													</TabContent>
 												</Col>
 												<Col xl={12}>
 													<div className="mb-3">
 														<Label className="form-label" htmlFor="thumbnail-input">
-															Thumbnail
+															Thumbnail (1920x960 px)
 														</Label>
 														<div className="position-relative d-block mx-auto">
 															<div style={{ width: "100%" }}>
@@ -856,6 +1071,38 @@ const AboutPage = () => {
 																/>
 															</div>
 														</TabPane>
+														<TabPane tabId="CH" id="ch">
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="bannerDesc-input">
+																	Banner Description
+																</Label>
+																<textarea
+																	className="form-control"
+																	id="bannerDesc-input"
+																	rows="5"
+																	placeholder="Enter text"
+																	name="bannerDescCh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.bannerDescCh}
+																></textarea>
+															</div>
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="bannerLabel-input">
+																	Banner Label
+																</Label>
+																<Input
+																	type="text"
+																	className="form-control"
+																	id="bannerLabel-input"
+																	placeholder="Enter text"
+																	name="bannerLabelCh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.bannerLabelCh}
+																/>
+															</div>
+														</TabPane>
 													</TabContent>
 
 													<div className="mb-3">
@@ -877,7 +1124,7 @@ const AboutPage = () => {
 												<Col xl={4}>
 													<div className="mb-3">
 														<Label className="form-label" htmlFor="thumbnail-input">
-															Thumbnail
+															Thumbnail (1920x1200 px)
 														</Label>
 														<div className="position-relative d-block mx-auto">
 															<div style={{ width: "100%" }}>
@@ -1028,6 +1275,23 @@ const AboutPage = () => {
 																	onChange={settingForm.handleChange}
 																	onBlur={settingForm.handleBlur}
 																	value={settingForm.values.professionalVolunteerKh}
+																/>
+															</div>
+														</TabPane>
+														<TabPane tabId="KHM" id="khm1">
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="professionalVolunteerCh-input">
+																	Our Team
+																</Label>
+																<Input
+																	type="text"
+																	className="form-control"
+																	id="professionalVolunteerCh-input"
+																	placeholder="Enter text"
+																	name="professionalVolunteerCh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.professionalVolunteerCh}
 																/>
 															</div>
 														</TabPane>

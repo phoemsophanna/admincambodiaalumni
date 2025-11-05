@@ -125,10 +125,23 @@ const TableList = ({ onShowDetail, onDeleteMember }) => {
 			{
 				Header: "Action",
 				Cell: (cellProps) => {
+					console.log(cellProps);
 					return (
 						<ul className="list-inline hstack gap-2 mb-0">
+							{
+								cellProps.row.original.isMember == 1 ? (
+									<li className="list-inline-item" title="Information">
+										{/* <Link className="edit-item-btn" to="#" onClick={() => onShowDetail(cellProps.row.original.id)}>
+											<i className="ri-file-user-line align-bottom text-muted"></i>
+										</Link> */}
+										<Link className="edit-item-btn" to={`/member-detail/${cellProps.row.original.id}`}>
+											<i className="ri-file-user-line align-bottom text-muted"></i>
+										</Link>
+									</li>
+								) : ""
+							}
 							<li className="list-inline-item" title="Edit">
-								<Link className="edit-item-btn" to="#" onClick={() => onShowDetail(cellProps.row.original.id)}>
+								<Link className="edit-item-btn" to={`/member-information/${cellProps.row.original.id}`} >
 									<i className="ri-pencil-fill align-bottom text-muted"></i>
 								</Link>
 							</li>

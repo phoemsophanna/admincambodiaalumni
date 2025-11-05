@@ -18,7 +18,7 @@ const Navdata = () => {
 
 		{
 			id: "campaign-categories",
-			label: "Campaign Category",
+			label: "Project Category",
 			icon: "mdi mdi-shape-plus",
 			link: "/campaign-categories",
 			click: function (e) {
@@ -27,7 +27,7 @@ const Navdata = () => {
 		},
 		{
 			id: "campaign",
-			label: "Campaign",
+			label: "Project",
 			icon: "mdi mdi-briefcase-variant-outline",
 			link: "/campaign-menu",
 			click: function (e) {
@@ -35,14 +35,32 @@ const Navdata = () => {
 			},
 		},
 		{
-			id: "withdraw",
-			label: "Withdraw",
-			icon: "mdi mdi-briefcase-variant-outline",
-			link: "/withdraw-menu",
+			id: "gallery",
+			label: "Gallery",
+			icon: "mdi mdi-image",
+			link: "/gallery",
 			click: function (e) {
 				e.preventDefault();
 			},
 		},
+		{
+			id: "video",
+			label: "Video",
+			icon: "mdi mdi-video-outline",
+			link: "/video",
+			click: function (e) {
+				e.preventDefault();
+			},
+		},
+		// {
+		// 	id: "withdraw",
+		// 	label: "Withdraw",
+		// 	icon: "mdi mdi-briefcase-variant-outline",
+		// 	link: "/withdraw-menu",
+		// 	click: function (e) {
+		// 		e.preventDefault();
+		// 	},
+		// },
 		// {
 		// 	id: "project",
 		// 	label: "Project",
@@ -52,15 +70,33 @@ const Navdata = () => {
 		// 		e.preventDefault();
 		// 	},
 		// },
-		{
-			id: "performance-menu",
-			label: "How It Work",
-			icon: "mdi mdi-bullseye-arrow",
-			link: "/how-it-work",
-			click: function (e) {
-				e.preventDefault();
-			},
-		},
+		// {
+		// 	id: "services",
+		// 	label: "Service",
+		// 	icon: "mdi mdi-file-settings-outline",
+		// 	link: "/services-menu",
+		// 	click: function (e) {
+		// 		e.preventDefault();
+		// 	},
+		// },
+		// {
+		// 	id: "projects",
+		// 	label: "Project",
+		// 	icon: "mdi mdi-post",
+		// 	link: "/portfolios-menu",
+		// 	click: function (e) {
+		// 		e.preventDefault();
+		// 	},
+		// },
+		// {
+		// 	id: "performance-menu",
+		// 	label: "How It Work",
+		// 	icon: "mdi mdi-bullseye-arrow",
+		// 	link: "/how-it-work",
+		// 	click: function (e) {
+		// 		e.preventDefault();
+		// 	},
+		// },
 		{
 			id: "news-menu",
 			label: "News & Events",
@@ -134,6 +170,15 @@ const Navdata = () => {
 			label: "Privacy Policy",
 			icon: "mdi mdi-text-box-check-outline",
 			link: "/privacy-policy",
+			click: function (e) {
+				e.preventDefault();
+			},
+		},
+		{
+			id: "donation-term",
+			label: "Donation Terms and Privacy",
+			icon: "mdi mdi-text-box-check-outline",
+			link: "/donation-term",
 			click: function (e) {
 				e.preventDefault();
 			},

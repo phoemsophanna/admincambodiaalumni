@@ -63,6 +63,7 @@ const ContactUs = () => {
 			phoneNumber2: siteSetting ? siteSetting.phoneNumber2 : "",
 			address: siteSetting ? siteSetting.address : "",
 			addressKh: siteSetting ? siteSetting.addressKh : "",
+			addressCh: siteSetting ? siteSetting.addressCh : "",
 			embedMap: siteSetting ? siteSetting.embedMap : "",
 			facebookLink: siteSetting ? siteSetting.facebookLink : "",
 			instagramLink: siteSetting ? siteSetting.instagramLink : "",
@@ -70,8 +71,10 @@ const ContactUs = () => {
 			linkedinLink: siteSetting ? siteSetting.linkedinLink : "",
 			pageTitle: siteSetting ? siteSetting.pageTitle : "",
 			pageTitleKh: siteSetting ? siteSetting.pageTitleKh : "",
+			pageTitleCh: siteSetting ? siteSetting.pageTitleCh : "",
 			pageDescription: siteSetting ? siteSetting.pageDescription : "",
 			pageDescriptionKh: siteSetting ? siteSetting.pageDescriptionKh : "",
+			pageDescriptionCh: siteSetting ? siteSetting.pageDescriptionCh : "",
 			thumbnail: siteSetting ? siteSetting.thumbnail : "",
 		},
 		onSubmit: (values) => {
@@ -174,6 +177,17 @@ const ContactUs = () => {
 																		Khmer
 																	</NavLink>
 																</NavItem>
+																<NavItem>
+																	<NavLink
+																		style={{ cursor: "pointer" }}
+																		className={classnames({ active: titleTap === "CH" })}
+																		onClick={() => {
+																			titleTapToggle("CH");
+																		}}
+																	>
+																		Chinese
+																	</NavLink>
+																</NavItem>
 															</Nav>
 														</div>
 													</div>
@@ -274,6 +288,53 @@ const ContactUs = () => {
 																></textarea>
 															</div>
 														</TabPane>
+														<TabPane tabId="CH" id="ch">
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="contact-title-input">
+																	Page Title
+																</Label>
+																<Input
+																	type="text"
+																	className="form-control"
+																	id="contact-title-input"
+																	placeholder="Enter title"
+																	name="pageTitleCh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.pageTitleCh}
+																/>
+															</div>
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="description-input">
+																	Description
+																</Label>
+																<textarea
+																	className="form-control"
+																	id="description-input"
+																	rows="3"
+																	placeholder="Enter description"
+																	name="pageDescriptionCh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.pageDescriptionCh}
+																></textarea>
+															</div>
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="address-input">
+																	Address
+																</Label>
+																<textarea
+																	className="form-control"
+																	id="address-input"
+																	rows="3"
+																	placeholder="Enter address"
+																	name="addressCh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.addressCh}
+																></textarea>
+															</div>
+														</TabPane>
 													</TabContent>
 
 													<div className="mb-3">
@@ -292,17 +353,22 @@ const ContactUs = () => {
 														/>
 													</div>
 													<div className="mb-3">
-														<iframe
-															title="google map"
-															src={
-																settingForm.values.embedMap ||
-																"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d102948.35266648312!2d-115.15540073403864!3d36.26047650441708!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c8c2b00ad43d33%3A0x22c7fa13f5acf526!2sNorth%20Las%20Vegas%2C%20NV%2C%20USA!5e0!3m2!1sen!2sbd!4v1639919075838!5m2!1sen!2sbd"
-															}
-															width="100%"
-															height="450"
-															allowFullScreen=""
-															loading="lazy"
-														></iframe>
+														{
+															settingForm.values.embedMap && (settingForm.values.embedMap).split("src").length > 1 ? (
+																<div className="fs-16 fw-5 text-gray mb-4 pb-lg-2" dangerouslySetInnerHTML={{__html: settingForm.values.embedMap}}></div>
+															) : (
+																<iframe
+																	title="google map"
+																	src={ 
+																		"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d102948.35266648312!2d-115.15540073403864!3d36.26047650441708!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c8c2b00ad43d33%3A0x22c7fa13f5acf526!2sNorth%20Las%20Vegas%2C%20NV%2C%20USA!5e0!3m2!1sen!2sbd!4v1639919075838!5m2!1sen!2sbd"
+																	}
+																	width="100%"
+																	height="450"
+																	allowFullScreen=""
+																	loading="lazy"
+																></iframe>
+															)
+														}
 													</div>
 												</CardBody>
 											</Card>
@@ -310,7 +376,7 @@ const ContactUs = () => {
 										<Col xl={4}>
 											<Card>
 												<CardHeader>
-													<div className="fw-bold">Thumbnail Contact</div>
+													<div className="fw-bold">Thumbnail Contact (500x180 px)</div>
 												</CardHeader>
 												<CardBody>
 													<div className="mb-3">

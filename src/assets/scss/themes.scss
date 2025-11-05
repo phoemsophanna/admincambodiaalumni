@@ -342,3 +342,60 @@ input:-webkit-autofill:active {
     }
   }
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&family=Moul&family=Roboto:ital,wght@0,100..900;1,100..900&family=Siemreap&display=swap');
+
+.member-information form, .member-information h4, .member-information li {
+  font-family: "Roboto", "Siemreap";
+  font-weight: 500;
+}
+
+.member-information label {
+  font-family: "Roboto", "Siemreap";
+  font-weight: 500;
+}
+
+.custom-check span {
+  width: 25px;
+  height: 25px;
+  border: 1px solid #000;
+  display: inline-block;
+  position: relative;
+  border-radius: 3px;
+  opacity: 1;
+  margin-left: 10px;
+  vertical-align: text-bottom;
+}
+
+
+
+.custom-check span.active::after {
+  content: "✔";
+  font-size: 20px;
+  font-weight: 100;
+  color: #000;
+  position: absolute;
+  top: -3px;
+  left: 4px;
+  opacity: .8;
+}
+
+.member-information ul {
+  list-style: none;
+  font-size: 18px;
+}
+
+@media print {
+  .member-information ul {
+    list-style: none;
+    font-size: 18px;
+  }
+}
+
+.member-information .card {
+  padding-bottom: 100px;
+}
+
+.member-information .card-header {
+  border-bottom: none;
+}

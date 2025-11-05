@@ -21,6 +21,7 @@ export const FILE_STORAGE_UPLOAD = "/file-storage/save-image";
 // User Management
 export const USER_MANAGEMENT_URI = "/users";
 export const MEMBER_MANAGEMENT_URI = "/members";
+export const MEMBERINFORMATION_MANAGEMENT_URI = "/member-informations";
 export const PERFORMANCE_MANAGEMENT_URI = "/performances";
 export const NEWS_MANAGEMENT_URI = "/news";
 export const PROJECT_CATEGORY_MANAGEMENT_URI = "/campaign-categories";
@@ -34,3 +35,7 @@ export const BANNERS_URI = "/banners";
 export const SITE_SETTING_URI = "/site-setting";
 export const PAGE_BANNER_URI = "/page-banners";
 export const DASHBOARD_MANAGEMENT_URI = "/dashboard";
+export const SERVICE_MANAGEMENT_URI = "/services";
+export const PORTFOLIO_MANAGEMENT_URI = "/portfolios";
+export const GALLERY_MANAGEMENT_URL = "/galleries";
+export const VIDEO_MANAGEMENT_URL = "/video";

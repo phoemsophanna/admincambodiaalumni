@@ -102,7 +102,7 @@ const PerformanceForm = (props) => {
 			description: performance ? performance.description : "",
 			descriptionKh: performance ? performance.descriptionKh : "",
 			ordering: performance ? performance.ordering : 0,
-			isActive: performance ? (performance.isActive === 1 ? true : false) : true,
+			isActive: performance ? (performance.isActive == 1 ? true : false) : true,
 			image: performance ? performance.image : "",
 		},
 		validationSchema: Yup.object({

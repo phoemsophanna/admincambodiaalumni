@@ -1,7 +1,15 @@
 /**
- * TinyMCE version 6.7.0 (2023-08-30)
+ * TinyMCE version 6.8.6 (TBD)
  */
 
+/**
+ * Prism: Lightweight, robust, elegant syntax highlighting
+ *
+ * @license MIT <https://opensource.org/licenses/MIT>
+ * @author Lea Verou <https://lea.verou.me>
+ * @namespace
+ * @public
+ */
 (function () {
     'use strict';
 

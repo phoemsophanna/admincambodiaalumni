@@ -31,6 +31,7 @@ import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import { getSiteSetting, resetSiteSettingFlag, saveSiteSetting } from "../../../store/actions";
 import { createSelector } from "reselect";
 import BreadCrumb from "../../../Components/Common/BreadCrumb";
+import TinymceEditor from "../../../Components/Common/TinymceEditor";
 
 import withRouter from "../../../Components/Common/withRouter";
 import LayoutNav from "./LayoutNav";
@@ -51,6 +52,19 @@ const HomePage = () => {
 	const [fileThree, setFileThree] = useState([]);
 	const [fileFour, setFileFour] = useState([]);
 	const [fileFive, setFileFive] = useState([]);
+	const [fileSix, setFileSix] = useState([]);
+	const [fileSeven, setFileSeven] = useState([]);
+	const [des, setDes] = useState("");
+	const [desKh, setDesKh] = useState("");
+	const [desCh, setDesCh] = useState("");
+
+	const handleEditorChange = (e) => {
+		setDes(e.target.getContent());
+	};
+
+	const handleEditorKhChange = (e) => {
+		setDesKh(e.target.getContent());
+	};
 
 	const siteSettingSelector = createSelector(
 		(state) => state.SiteSettingReducer,
@@ -70,67 +84,107 @@ const HomePage = () => {
 		setFileThree([]);
 		setFileFour([]);
 		setFileFive([]);
+		setFileSix([]);
+		setFileSeven([]);
 		dispatch(getSiteSetting("HOME_PAGE"));
 		return () => {
 			dispatch(resetSiteSettingFlag());
 		};
 	}, [dispatch]);
 
+	// const handleEditorChange = (e) => {
+	// 	setContentDesc(e.target.getContent());
+	// };
+
 	const settingForm = useFormik({
 		enableReinitialize: true,
 
 		initialValues: {
 			type: "HOME_PAGE",
+			subtitle: siteSetting ? siteSetting.subtitle : "",
+			subtitleKh: siteSetting ? siteSetting.subtitleKh : "",
+			subtitleCh: siteSetting ? siteSetting.subtitleCh : "",
+			title: siteSetting ? siteSetting.title : "",
+			titleKh: siteSetting ? siteSetting.titleKh : "",
+			titleCh: siteSetting ? siteSetting.titleCh : "",
+			des: siteSetting ? siteSetting.des : "",
+			desKh: siteSetting ? siteSetting.desKh : "",
+			desCh: siteSetting ? siteSetting.desCh : "",
 			latestProject: siteSetting ? siteSetting.latestProject : "",
 			latestProjectKh: siteSetting ? siteSetting.latestProjectKh : "",
+			latestProjectCh: siteSetting ? siteSetting.latestProjectCh : "",
 			bannerDesc: siteSetting ? siteSetting.bannerDesc : "",
 			bannerDescKh: siteSetting ? siteSetting.bannerDescKh : "",
+			bannerDescCh: siteSetting ? siteSetting.bannerDescCh : "",
 			bannerLabel: siteSetting ? siteSetting.bannerLabel : "",
 			bannerLabelKh: siteSetting ? siteSetting.bannerLabelKh : "",
+			bannerLabelCh: siteSetting ? siteSetting.bannerLabelCh : "",
 			bannerLinkTo: siteSetting ? siteSetting.bannerLinkTo : "",
 			thumbnail: siteSetting ? siteSetting.thumbnail : "",
 			cardTitle1: siteSetting ? siteSetting.cardTitle1 : "",
 			cardTitleKh1: siteSetting ? siteSetting.cardTitleKh1 : "",
+			cardTitleCh1: siteSetting ? siteSetting.cardTitleCh1 : "",
 			cardDesc1: siteSetting ? siteSetting.cardDesc1 : "",
 			cardDescKh1: siteSetting ? siteSetting.cardDescKh1 : "",
+			cardDescCh1: siteSetting ? siteSetting.cardDescCh1 : "",
 			cardLabel1: siteSetting ? siteSetting.cardLabel1 : "",
 			cardLabelKh1: siteSetting ? siteSetting.cardLabelKh1 : "",
+			cardLabelCh1: siteSetting ? siteSetting.cardLabelCh1 : "",
 			cardIcon1: siteSetting ? siteSetting.cardIcon1 : "",
 			cardLinkTo1: siteSetting ? siteSetting.cardLinkTo1 : "",
 			cardIsShow1: siteSetting ? (siteSetting.cardIsShow1 === 1 || siteSetting.cardIsShow1 === true ? true : false) : true,
 			thumbnailTwo: siteSetting ? siteSetting.thumbnailTwo : "",
 			cardTitle2: siteSetting ? siteSetting.cardTitle2 : "",
 			cardTitleKh2: siteSetting ? siteSetting.cardTitleKh2 : "",
+			cardTitleCh2: siteSetting ? siteSetting.cardTitleCh2 : "",
 			cardDesc2: siteSetting ? siteSetting.cardDesc2 : "",
 			cardDescKh2: siteSetting ? siteSetting.cardDescKh2 : "",
+			cardDescCh2: siteSetting ? siteSetting.cardDescCh2 : "",
 			cardLabel2: siteSetting ? siteSetting.cardLabel2 : "",
 			cardLabelKh2: siteSetting ? siteSetting.cardLabelKh2 : "",
+			cardLabelCh2: siteSetting ? siteSetting.cardLabelCh2 : "",
 			cardIcon2: siteSetting ? siteSetting.cardIcon2 : "",
 			cardLinkTo2: siteSetting ? siteSetting.cardLinkTo2 : "",
 			cardIsShow2: siteSetting ? (siteSetting.cardIsShow2 === 1 || siteSetting.cardIsShow2 === true ? true : false) : true,
 			thumbnailThree: siteSetting ? siteSetting.thumbnailThree : "",
 			cardTitle3: siteSetting ? siteSetting.cardTitle3 : "",
 			cardTitleKh3: siteSetting ? siteSetting.cardTitleKh3 : "",
+			cardTitleCh3: siteSetting ? siteSetting.cardTitleCh3 : "",
 			cardDesc3: siteSetting ? siteSetting.cardDesc3 : "",
 			cardDescKh3: siteSetting ? siteSetting.cardDescKh3 : "",
+			cardDescCh3: siteSetting ? siteSetting.cardDescCh3 : "",
 			cardLabel3: siteSetting ? siteSetting.cardLabel3 : "",
 			cardLabelKh3: siteSetting ? siteSetting.cardLabelKh3 : "",
+			cardLabelCh3: siteSetting ? siteSetting.cardLabelCh3 : "",
 			cardIcon3: siteSetting ? siteSetting.cardIcon3 : "",
 			cardLinkTo3: siteSetting ? siteSetting.cardLinkTo3 : "",
 			cardIsShow3: siteSetting ? (siteSetting.cardIsShow3 === 1 || siteSetting.cardIsShow3 === true ? true : false) : true,
 			thumbnailFour: siteSetting ? siteSetting.thumbnailFour : "",
 			ourDonors: siteSetting ? siteSetting.ourDonors : "",
 			ourDonorsKh: siteSetting ? siteSetting.ourDonorsKh : "",
+			ourDonorsCh: siteSetting ? siteSetting.ourDonorsCh : "",
 			thumbnailFive: siteSetting ? siteSetting.thumbnailFive : "",
+			thumbnailSix: siteSetting ? siteSetting.thumbnailSix : "",
+			thumbnailSeven: siteSetting ? siteSetting.thumbnailSeven : "",
 			getDailyUpdate: siteSetting ? siteSetting.getDailyUpdate : "",
 			getDailyUpdateKh: siteSetting ? siteSetting.getDailyUpdateKh : "",
+			getDailyUpdateCh: siteSetting ? siteSetting.getDailyUpdateCh : "",
+			footerDesc: siteSetting ? siteSetting.footerDesc : "",
+			footerDescKh: siteSetting ? siteSetting.footerDescKh : "",
+			footerDescCh: siteSetting ? siteSetting.footerDescCh : "",
 		},
 		onSubmit: (values) => {
+			values.des = des;
+			values.desKh = desKh;
+			values.desCh = desCh;
 			values.thumbnail = file?.length > 0 ? file[0]?.serverId : siteSetting.thumbnail;
 			values.thumbnailTwo = fileTwo?.length > 0 ? fileTwo[0]?.serverId : siteSetting.thumbnailTwo;
 			values.thumbnailThree = fileThree?.length > 0 ? fileThree[0]?.serverId : siteSetting.thumbnailThree;
 			values.thumbnailFour = fileFour?.length > 0 ? fileFour[0]?.serverId : siteSetting.thumbnailFour;
 			values.thumbnailFive = fileFive?.length > 0 ? fileFive[0]?.serverId : siteSetting.thumbnailFive;
+			values.thumbnailSix = fileSix?.length > 0 ? fileSix[0]?.serverId : siteSetting.thumbnailSix;
+			values.thumbnailSeven = fileSeven?.length > 0 ? fileSeven[0]?.serverId : siteSetting.thumbnailSeven;
+			console.log(values);
 			dispatch(saveSiteSetting(values));
 			if (!isLoading && success) {
 				refreshForm();
@@ -144,6 +198,8 @@ const HomePage = () => {
 		setFileThree([]);
 		setFileFour([]);
 		setFileFive([]);
+		setFileSix([]);
+		setFileSeven([]);
 		dispatch(getSiteSetting("HOME_PAGE"));
 	};
 
@@ -174,6 +230,18 @@ const HomePage = () => {
 			} else {
 				setFileFive([]);
 			}
+			if (siteSetting.thumbnailSix) {
+				setFileSix([{ source: siteSetting.thumbnailSix, options: { type: "local" } }]);
+			} else {
+				setFileSix([]);
+			}
+			if (siteSetting.thumbnailSix) {
+				setFileSeven([{ source: siteSetting.thumbnailSeven, options: { type: "local" } }]);
+			} else {
+				setFileSeven([]);
+			}
+			setDes(siteSetting.des);
+			setDesKh(siteSetting.desKh);
 		}
 	}, [siteSetting]);
 
@@ -227,10 +295,211 @@ const HomePage = () => {
 															Khmer
 														</NavLink>
 													</NavItem>
+													<NavItem>
+														<NavLink
+															style={{ cursor: "pointer" }}
+															className={classnames({ active: titleTap === "CH" })}
+															onClick={() => {
+																titleTapToggle("CH");
+															}}
+														>
+															Chinese
+														</NavLink>
+													</NavItem>
 												</Nav>
 											</div>
 										</div>
 									</CardHeader>
+								</Card>
+								<Card>
+									<CardBody>
+										{isLoading ? (
+											<span className="d-flex align-items-center">
+												<Spinner size="sm" className="flex-shrink-0">
+													Loading...
+												</Spinner>
+												<span className="flex-grow-1 ms-2">Loading...</span>
+											</span>
+										) : (
+											<Row>
+												<Col xl={8}>
+													<TabContent activeTab={titleTap}>
+														<TabPane tabId="ENG" id="eng1">
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="subtitle-input">
+																	Subtitle
+																</Label>
+																<Input
+																	type="text"
+																	className="form-control"
+																	id="subtitle-input"
+																	placeholder="Enter text"
+																	name="subtitle"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.subtitle}
+																/>
+															</div>
+
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="title-input">
+																	Title
+																</Label>
+																<Input
+																	type="text"
+																	className="form-control"
+																	id="title-input"
+																	placeholder="Enter text"
+																	name="title"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.title}
+																/>
+															</div>
+
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="des-input">
+																	Description
+																</Label>
+																<TinymceEditor onUploadImage={handleEditorChange} initDataValue={des} />
+																{/* <textarea
+																	className="form-control"
+																	id="des-input"
+																	rows="5"
+																	placeholder="Enter text"
+																	name="des"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.des}
+																></textarea> */}
+															</div>
+														</TabPane>
+														<TabPane tabId="KHM" id="khm1">
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="subtitleKh-input">
+																	Subtitle
+																</Label>
+																<Input
+																	type="text"
+																	className="form-control"
+																	id="subtitleKh-input"
+																	placeholder="Enter text"
+																	name="subtitleKh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.subtitleKh}
+																/>
+															</div>
+
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="titleKh-input">
+																	Title
+																</Label>
+																<Input
+																	type="text"
+																	className="form-control"
+																	id="titleKh-input"
+																	placeholder="Enter text"
+																	name="titleKh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.titleKh}
+																/>
+															</div>
+
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="deskh-input">
+																	Description
+																</Label>
+																<TinymceEditor onUploadImage={handleEditorKhChange} initDataValue={desKh} />
+																{/* <textarea
+																	className="form-control"
+																	id="deskh-input"
+																	rows="5"
+																	placeholder="Enter text"
+																	name="desKh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.desKh}
+																></textarea> */}
+															</div>
+														</TabPane>
+														<TabPane tabId="CH" id="ch1">
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="subtitleCh-input">
+																	Subtitle
+																</Label>
+																<Input
+																	type="text"
+																	className="form-control"
+																	id="subtitleCh-input"
+																	placeholder="Enter text"
+																	name="subtitleCh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.subtitleCh}
+																/>
+															</div>
+
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="titleCh-input">
+																	Title
+																</Label>
+																<Input
+																	type="text"
+																	className="form-control"
+																	id="titleCh-input"
+																	placeholder="Enter text"
+																	name="titleCh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.titleCh}
+																/>
+															</div>
+
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="desch-input">
+																	Description
+																</Label>
+																<TinymceEditor onUploadImage={handleEditorKhChange} initDataValue={desCh} />
+																{/* <textarea
+																	className="form-control"
+																	id="deskh-input"
+																	rows="5"
+																	placeholder="Enter text"
+																	name="desKh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.desKh}
+																></textarea> */}
+															</div>
+														</TabPane>
+													</TabContent>
+												</Col>
+												<Col xl={4}>
+													<div className="mb-3">
+														<Label className="form-label" htmlFor="thumbnail-input">
+															Thumbnail (550x640 px)
+														</Label>
+														<div className="position-relative d-block mx-auto">
+															<div style={{ width: "100%" }}>
+																<FilePond
+																	labelIdle='<span class="filepond--label-action">Choose Image</span>'
+																	files={fileTwo}
+																	onupdatefiles={setFileTwo}
+																	allowMultiple={false}
+																	maxFiles={1}
+																	name="file"
+																	server={`${api.BASE_URL}/save-image/site-setting`}
+																	className="filepond filepond-input-multiple"
+																/>
+															</div>
+														</div>
+													</div>
+												</Col>
+											</Row>
+										)}
+									</CardBody>
 								</Card>
 								<Card>
 									<CardBody>
@@ -276,6 +545,23 @@ const HomePage = () => {
 																	onChange={settingForm.handleChange}
 																	onBlur={settingForm.handleBlur}
 																	value={settingForm.values.latestProjectKh}
+																/>
+															</div>
+														</TabPane>
+														<TabPane tabId="CH" id="ch1">
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="latestProjectCh-input">
+																	Latest Project
+																</Label>
+																<Input
+																	type="text"
+																	className="form-control"
+																	id="latestProjectCh-input"
+																	placeholder="Enter text"
+																	name="latestProjectCh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.latestProjectCh}
 																/>
 															</div>
 														</TabPane>
@@ -362,6 +648,38 @@ const HomePage = () => {
 																/>
 															</div>
 														</TabPane>
+														<TabPane tabId="CH" id="ch">
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="bannerDesc-input">
+																	Banner Description
+																</Label>
+																<textarea
+																	className="form-control"
+																	id="bannerDesc-input"
+																	rows="5"
+																	placeholder="Enter text"
+																	name="bannerDescCh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.bannerDescCh}
+																></textarea>
+															</div>
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="bannerLabel-input">
+																	Banner Label
+																</Label>
+																<Input
+																	type="text"
+																	className="form-control"
+																	id="bannerLabel-input"
+																	placeholder="Enter text"
+																	name="bannerLabelCh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.bannerLabelCh}
+																/>
+															</div>
+														</TabPane>
 													</TabContent>
 
 													<div className="mb-3">
@@ -383,7 +701,7 @@ const HomePage = () => {
 												<Col xl={4}>
 													<div className="mb-3">
 														<Label className="form-label" htmlFor="thumbnail-input">
-															Thumbnail
+															Thumbnail (1920x1200 px)
 														</Label>
 														<div className="position-relative d-block mx-auto">
 															<div style={{ width: "100%" }}>
@@ -405,7 +723,7 @@ const HomePage = () => {
 										)}
 									</CardBody>
 								</Card>
-								<Row>
+								<Row hidden>
 									<Col xl={4}>
 										<Card>
 											<CardBody>
@@ -514,6 +832,53 @@ const HomePage = () => {
 																		/>
 																	</div>
 																</TabPane>
+																<TabPane tabId="CH" id="ch1">
+																	<div className="mb-3">
+																		<Label className="form-label" htmlFor="cardTitleCh1-input">
+																			Title
+																		</Label>
+																		<Input
+																			type="text"
+																			className="form-control"
+																			id="cardTitleCh1-input"
+																			placeholder="Enter text"
+																			name="cardTitleCh1"
+																			onChange={settingForm.handleChange}
+																			onBlur={settingForm.handleBlur}
+																			value={settingForm.values.cardTitleCh1}
+																		/>
+																	</div>
+																	<div className="mb-3">
+																		<Label className="form-label" htmlFor="cardDescCh1-input">
+																			Description
+																		</Label>
+																		<textarea
+																			className="form-control"
+																			id="cardDescCh1-input"
+																			rows="5"
+																			placeholder="Enter text"
+																			name="cardDescCh1"
+																			onChange={settingForm.handleChange}
+																			onBlur={settingForm.handleBlur}
+																			value={settingForm.values.cardDescCh1}
+																		></textarea>
+																	</div>
+																	<div className="mb-3">
+																		<Label className="form-label" htmlFor="cardLabelCh1-input">
+																			Label
+																		</Label>
+																		<Input
+																			type="text"
+																			className="form-control"
+																			id="cardLabelCh1-input"
+																			placeholder="Enter text"
+																			name="cardLabelCh1"
+																			onChange={settingForm.handleChange}
+																			onBlur={settingForm.handleBlur}
+																			value={settingForm.values.cardLabelCh1}
+																		/>
+																	</div>
+																</TabPane>
 															</TabContent>
 
 															<div className="mb-3">
@@ -564,7 +929,7 @@ const HomePage = () => {
 														<Col xl={12}>
 															<div className="mb-3">
 																<Label className="form-label" htmlFor="thumbnail-input">
-																	Thumbnail
+																	Thumbnail (630x375 px)
 																</Label>
 																<div className="position-relative d-block mx-auto">
 																	<div style={{ width: "100%" }}>
@@ -695,6 +1060,53 @@ const HomePage = () => {
 																		/>
 																	</div>
 																</TabPane>
+																<TabPane tabId="CH" id="ch1">
+																	<div className="mb-3">
+																		<Label className="form-label" htmlFor="cardTitleCh2-input">
+																			Title
+																		</Label>
+																		<Input
+																			type="text"
+																			className="form-control"
+																			id="cardTitleCh2-input"
+																			placeholder="Enter text"
+																			name="cardTitleCh2"
+																			onChange={settingForm.handleChange}
+																			onBlur={settingForm.handleBlur}
+																			value={settingForm.values.cardTitleCh2}
+																		/>
+																	</div>
+																	<div className="mb-3">
+																		<Label className="form-label" htmlFor="cardDescCh2-input">
+																			Description
+																		</Label>
+																		<textarea
+																			className="form-control"
+																			id="cardDescCh2-input"
+																			rows="5"
+																			placeholder="Enter text"
+																			name="cardDescCh2"
+																			onChange={settingForm.handleChange}
+																			onBlur={settingForm.handleBlur}
+																			value={settingForm.values.cardDescCh2}
+																		></textarea>
+																	</div>
+																	<div className="mb-3">
+																		<Label className="form-label" htmlFor="cardLabelCh2-input">
+																			Label
+																		</Label>
+																		<Input
+																			type="text"
+																			className="form-control"
+																			id="cardLabelCh2-input"
+																			placeholder="Enter text"
+																			name="cardLabelCh2"
+																			onChange={settingForm.handleChange}
+																			onBlur={settingForm.handleBlur}
+																			value={settingForm.values.cardLabelCh2}
+																		/>
+																	</div>
+																</TabPane>
 															</TabContent>
 
 															<div className="mb-3">
@@ -745,7 +1157,7 @@ const HomePage = () => {
 														<Col xl={12}>
 															<div className="mb-3">
 																<Label className="form-label" htmlFor="thumbnail-input">
-																	Thumbnail
+																	Thumbnail (630x375 px)
 																</Label>
 																<div className="position-relative d-block mx-auto">
 																	<div style={{ width: "100%" }}>
@@ -876,6 +1288,53 @@ const HomePage = () => {
 																		/>
 																	</div>
 																</TabPane>
+																<TabPane tabId="CH" id="ch1">
+																	<div className="mb-3">
+																		<Label className="form-label" htmlFor="cardTitleCh3-input">
+																			Title
+																		</Label>
+																		<Input
+																			type="text"
+																			className="form-control"
+																			id="cardTitleCh3-input"
+																			placeholder="Enter text"
+																			name="cardTitleCh3"
+																			onChange={settingForm.handleChange}
+																			onBlur={settingForm.handleBlur}
+																			value={settingForm.values.cardTitleCh3}
+																		/>
+																	</div>
+																	<div className="mb-3">
+																		<Label className="form-label" htmlFor="cardDescCh3-input">
+																			Description
+																		</Label>
+																		<textarea
+																			className="form-control"
+																			id="cardDescCh3-input"
+																			rows="5"
+																			placeholder="Enter text"
+																			name="cardDescCh3"
+																			onChange={settingForm.handleChange}
+																			onBlur={settingForm.handleBlur}
+																			value={settingForm.values.cardDescCh3}
+																		></textarea>
+																	</div>
+																	<div className="mb-3">
+																		<Label className="form-label" htmlFor="cardLabelCh3-input">
+																			Label
+																		</Label>
+																		<Input
+																			type="text"
+																			className="form-control"
+																			id="cardLabelCh3-input"
+																			placeholder="Enter text"
+																			name="cardLabelCh3"
+																			onChange={settingForm.handleChange}
+																			onBlur={settingForm.handleBlur}
+																			value={settingForm.values.cardLabelCh3}
+																		/>
+																	</div>
+																</TabPane>
 															</TabContent>
 
 															<div className="mb-3">
@@ -926,7 +1385,7 @@ const HomePage = () => {
 														<Col xl={12}>
 															<div className="mb-3">
 																<Label className="form-label" htmlFor="thumbnail-input">
-																	Thumbnail
+																	Thumbnail (630x375 px)
 																</Label>
 																<div className="position-relative d-block mx-auto">
 																	<div style={{ width: "100%" }}>
@@ -998,12 +1457,29 @@ const HomePage = () => {
 																/>
 															</div>
 														</TabPane>
+														<TabPane tabId="CH" id="ch1">
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="ourDonorsCh-input">
+																	Our Donors
+																</Label>
+																<Input
+																	type="text"
+																	className="form-control"
+																	id="ourDonorsCh-input"
+																	placeholder="Enter text"
+																	name="ourDonorsCh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.ourDonorsCh}
+																/>
+															</div>
+														</TabPane>
 													</TabContent>
 												</Col>
 												<Col xl={12}>
 													<div className="mb-3">
 														<Label className="form-label" htmlFor="thumbnail-input">
-															Thumbnail
+															Thumbnail (1280x768 px)
 														</Label>
 														<div className="position-relative d-block mx-auto">
 															<div style={{ width: "100%" }}>
@@ -1073,10 +1549,137 @@ const HomePage = () => {
 																/>
 															</div>
 														</TabPane>
+														<TabPane tabId="CH" id="ch1">
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="getDailyUpdateCh-input">
+																	Get Daily Updates
+																</Label>
+																<Input
+																	type="text"
+																	className="form-control"
+																	id="getDailyUpdateCh-input"
+																	placeholder="Enter text"
+																	name="getDailyUpdateCh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.getDailyUpdateCh}
+																/>
+															</div>
+														</TabPane>
 													</TabContent>
 												</Col>
 											</Row>
 										)}
+									</CardBody>
+								</Card>
+
+								<Card>
+									<CardBody>
+										<Row>
+											<Col xl={12}>
+												<div className="mb-3">
+													<Label className="form-label" htmlFor="thumbnail-input">
+														Footer Thumbnail (1920x768 px)
+													</Label>
+													<div className="position-relative d-block mx-auto">
+														<div style={{ width: "100%" }}>
+															<FilePond
+																labelIdle='<span class="filepond--label-action">Choose Image</span>'
+																files={fileSix}
+																onupdatefiles={setFileSix}
+																allowMultiple={false}
+																maxFiles={1}
+																name="file"
+																server={`${api.BASE_URL}/save-image/site-setting`}
+																className="filepond filepond-input-multiple"
+															/>
+														</div>
+													</div>
+												</div>
+
+												<TabContent activeTab={titleTap}>
+													<TabPane tabId="ENG" id="eng1">
+														<div className="mb-3">
+															<Label className="form-label" htmlFor="des-footer-input">
+																Description
+															</Label>
+															<textarea
+																className="form-control"
+																id="des-footer-input"
+																rows="5"
+																placeholder="Enter text"
+																name="footerDesc"
+																onChange={settingForm.handleChange}
+																onBlur={settingForm.handleBlur}
+																value={settingForm.values.footerDesc}
+															></textarea>
+														</div>
+													</TabPane>
+													<TabPane tabId="KHM" id="khm1">
+														<div className="mb-3">
+															<Label className="form-label" htmlFor="des-footer-kh-input">
+																Description
+															</Label>
+															<textarea
+																className="form-control"
+																id="des-footer-kh-input"
+																rows="5"
+																placeholder="Enter text"
+																name="footerDescKh"
+																onChange={settingForm.handleChange}
+																onBlur={settingForm.handleBlur}
+																value={settingForm.values.footerDescKh}
+															></textarea>
+														</div>
+													</TabPane>
+													<TabPane tabId="CH" id="ch1">
+														<div className="mb-3">
+															<Label className="form-label" htmlFor="des-footer-ch-input">
+																Description
+															</Label>
+															<textarea
+																className="form-control"
+																id="des-footer-ch-input"
+																rows="5"
+																placeholder="Enter text"
+																name="footerDescCh"
+																onChange={settingForm.handleChange}
+																onBlur={settingForm.handleBlur}
+																value={settingForm.values.footerDescCh}
+															></textarea>
+														</div>
+													</TabPane>
+												</TabContent>
+											</Col>
+										</Row>
+									</CardBody>
+								</Card>
+
+								<Card>
+									<CardBody>
+										<Row>
+											<Col xl={12}>
+												<div className="mb-3">
+													<Label className="form-label" htmlFor="thumbnail-input">
+														Login Thumbnail (860x660 px)
+													</Label>
+													<div className="position-relative d-block mx-auto">
+														<div style={{ width: "100%" }}>
+															<FilePond
+																labelIdle='<span class="filepond--label-action">Choose Image</span>'
+																files={fileSeven}
+																onupdatefiles={setFileSeven}
+																allowMultiple={false}
+																maxFiles={1}
+																name="file"
+																server={`${api.BASE_URL}/save-image/site-setting`}
+																className="filepond filepond-input-multiple"
+															/>
+														</div>
+													</div>
+												</div>
+											</Col>
+										</Row>
 									</CardBody>
 								</Card>
 

@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Siemreap&display=swap');
+
+.member-information form, .member-information h4, .member-information li {
+  font-family: "Roboto", "Siemreap";
+  font-weight: 500;
+}
+
+@media print {
+  .member-information form, .member-information h4, .member-information li {
+    font-family: "Roboto", "Siemreap";
+    font-weight: 500;
+  }
+}

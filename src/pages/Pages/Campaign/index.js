@@ -90,7 +90,7 @@ const CampaignMenu = () => {
 				),
 			},
 			{
-				Header: "Campaign Category",
+				Header: "Project Category",
 				accessor: "campaignCategoryId",
 				filterable: false,
 				Cell: (campaign) => <span className="fw-semibold">{campaign.row.original.campaignCategory?.name}</span>,
@@ -99,13 +99,13 @@ const CampaignMenu = () => {
 				Header: "Goal",
 				accessor: "goal",
 				filterable: false,
-				Cell: (campaign) => <span className="fw-semibold">${campaign.row.original.goal?.toFixed(2)} USD</span>,
+				Cell: (campaign) => <span className="fw-semibold">${parseFloat(campaign.row.original.goal).toFixed(2)} USD</span>,
 			},
 			{
 				Header: "Total Raised",
 				accessor: "totalRaised",
 				filterable: false,
-				Cell: (campaign) => <span className="fw-semibold">${campaign.row.original.totalRaised?.toFixed(2)} USD</span>,
+				Cell: (campaign) => <span className="fw-semibold">${parseFloat(campaign.row.original.totalRaised).toFixed(2)} USD</span>,
 			},
 			{
 				Header: "Date",
@@ -134,9 +134,6 @@ const CampaignMenu = () => {
 									{campaign.row.original.fullName}
 								</Link>
 							</h5>
-							<p className="text-muted mb-0 text-truncate" style={{ width: "100px" }}>
-								<span className="fw-medium ">{campaign.row.original.phoneNumber}</span>
-							</p>
 						</div>
 					</div>
 				),
@@ -172,6 +169,19 @@ const CampaignMenu = () => {
 									<i className="ri-eye-line align-bottom text-muted"></i>
 								</Link>
 							</li>
+							<li className="list-inline-item" title="Delete">
+								<Link
+									className="remove-item-btn"
+									onClick={() => {
+										const LeadData = cellProps.row.original;
+										setDeleteModal(true);
+										setUID(LeadData.id);
+									}}
+									to="#"
+								>
+									<i className="ri-delete-bin-fill align-bottom text-muted"></i>
+								</Link>
+							</li>
 						</ul>
 					);
 				},
@@ -184,16 +194,16 @@ const CampaignMenu = () => {
 		<React.Fragment>
 			<div className="page-content">
 				<Container fluid>
-					<BreadCrumb title="Campaign Menu" pageTitle="Home" />
+					<BreadCrumb title="Project Menu" pageTitle="Home" />
 					<Row>
 						<Col lg={12}>
 							<Card>
 								<CardHeader>
 									<Row className="justify-content-between align-items-center gy-3">
 										<Col lg={3}>
-											{/* <Link className="btn add-btn btn-primary" to="/campaign-menu/create">
+											<Link className="btn add-btn btn-primary" to="/campaign-menu/create">
 												<i className="ri-add-fill me-1 align-bottom"></i> Create New
-											</Link> */}
+											</Link>
 										</Col>
 										<Col className="col-lg-auto">
 											<div className="d-md-flex text-nowrap gap-2">

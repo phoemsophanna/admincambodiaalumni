@@ -92,6 +92,8 @@ const BannerForm = (props) => {
 		}
 	}, [banner]);
 
+	console.log(banner);
+
 	const bannerValidation = useFormik({
 		enableReinitialize: true,
 
@@ -99,16 +101,20 @@ const BannerForm = (props) => {
 			id: id || "",
 			title: banner ? banner.title : "",
 			titleKh: banner ? banner.titleKh : "",
+			titleCh: banner ? banner.titleCh : "",
 			subtitle: banner ? banner.subtitle : "",
 			subtitleKh: banner ? banner.subtitleKh : "",
+			subtitleCh: banner ? banner.subtitleCh : "",
 			linkLabel: banner ? banner.linkLabel : "",
 			linkLabelKh: banner ? banner.linkLabelKh : "",
+			linkLabelCh: banner ? banner.linkLabelCh : "",
 			linkTo: banner ? banner.linkTo : "",
 			redirectNewTap: banner ? (banner.redirectNewTap === 1 ? true : false) : false,
 			description: banner ? banner.description : "",
 			descriptionKh: banner ? banner.descriptionKh : "",
+			descriptionCh: banner ? banner.descriptionCh : "",
 			ordering: banner ? banner.ordering : 0,
-			isActive: banner ? (banner.isActive === 1 ? true : false) : true,
+			isActive: banner ? (banner.isActive == 1 ? true : false) : true,
 			image: banner ? banner.image : "",
 		},
 		onSubmit: (values) => {
@@ -178,6 +184,17 @@ const BannerForm = (props) => {
 															}}
 														>
 															Khmer
+														</NavLink>
+													</NavItem>
+													<NavItem>
+														<NavLink
+															style={{ cursor: "pointer" }}
+															className={classnames({ active: titleTap === "CH" })}
+															onClick={() => {
+																titleTapToggle("CH");
+															}}
+														>
+															Chinese
 														</NavLink>
 													</NavItem>
 												</Nav>
@@ -314,6 +331,68 @@ const BannerForm = (props) => {
 													/>
 												</div>
 											</TabPane>
+											<TabPane tabId="CH" id="ch">
+												<div className="mb-3">
+													<Label className="form-label" htmlFor="banner-titleCh-input">
+														Slider Title
+													</Label>
+													<Input
+														type="text"
+														className="form-control"
+														id="banner-titleCh-input"
+														placeholder="Enter banner title"
+														name="titleCh"
+														onChange={bannerValidation.handleChange}
+														onBlur={bannerValidation.handleBlur}
+														value={bannerValidation.values.titleCh}
+													/>
+												</div>
+												<div className="mb-3">
+													<Label className="form-label" htmlFor="banner-subtitleCh-input">
+														Subtitle
+													</Label>
+													<Input
+														type="text"
+														className="form-control"
+														id="banner-subtitleCh-input"
+														placeholder="Enter banner subtitle"
+														name="subtitleCh"
+														onChange={bannerValidation.handleChange}
+														onBlur={bannerValidation.handleBlur}
+														value={bannerValidation.values.subtitleCh}
+													/>
+												</div>
+												<div className="mb-3">
+													<Label className="form-label" htmlFor="descriptionCh-input">
+														Description
+													</Label>
+													<textarea
+														className="form-control"
+														id="descriptionCh-input"
+														rows="3"
+														placeholder="Enter description"
+														name="descriptionCh"
+														onChange={bannerValidation.handleChange}
+														onBlur={bannerValidation.handleBlur}
+														value={bannerValidation.values.descriptionCh}
+													></textarea>
+												</div>
+												<div className="mb-3">
+													<Label className="form-label" htmlFor="banner-linkLabelCh-input">
+														Label
+													</Label>
+													<Input
+														type="text"
+														className="form-control"
+														id="banner-linkLabelCh-input"
+														placeholder="Enter banner label"
+														name="linkLabelCh"
+														onChange={bannerValidation.handleChange}
+														onBlur={bannerValidation.handleBlur}
+														value={bannerValidation.values.linkLabelCh}
+													/>
+												</div>
+											</TabPane>
 										</TabContent>
 										<div className="mb-3">
 											<Label className="form-label" htmlFor="banner-linkTo-input">
@@ -347,7 +426,7 @@ const BannerForm = (props) => {
 
 										<div className="mb-3">
 											<Label className="form-label" htmlFor="thumbnail-input">
-												Thumbnail
+												Thumbnail (1920x800 px)
 											</Label>
 											<div className="position-relative d-block mx-auto">
 												<div style={{ width: "100%" }}>

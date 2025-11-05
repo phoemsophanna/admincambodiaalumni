@@ -148,7 +148,7 @@ const AboutCompany = () => {
 												<Col xl={4}>
 													<div className="mb-3">
 														<Label className="form-label" htmlFor="thumbnail-input">
-															Thumbnail
+															Thumbnail 
 														</Label>
 														<div className="position-relative d-block mx-auto">
 															<div style={{ width: "100%" }}>

@@ -7,7 +7,7 @@ const Footer = () => {
 			<footer className="footer">
 				<Container fluid>
 					<Row>
-						<Col sm={6}>{new Date().getFullYear()} © CDA Fund.</Col>
+						<Col sm={6}>{new Date().getFullYear()} © Alumni.</Col>
 						<Col sm={6}>
 							<div className="text-sm-end d-none d-sm-block">Design & Develop by Camogotech</div>
 						</Col>

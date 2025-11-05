@@ -24,7 +24,7 @@ const ParticlesAuth = ({ children }) => {
 							<div className="col-lg-12">
 								<div className="text-center">
 									<p className="mb-0 text-muted">
-										&copy; {new Date().getFullYear()} CDA FUND. Design by{" "}
+										&copy; {new Date().getFullYear()} CAA. Design by{" "}
 										<a href="https://www.camgotech.com/" target="_blank" rel="noreferrer">
 											www.camgotech.com
 										</a>

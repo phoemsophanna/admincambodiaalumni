@@ -93,7 +93,7 @@ const WithdrawMenu = () => {
 				Header: "Request Amount",
 				accessor: "requestAmount",
 				filterable: false,
-				Cell: (withdraw) => <span className="fw-semibold">${withdraw.row.original.requestAmount.toFixed(2) || "0.00s"} USD</span>,
+				Cell: (withdraw) => <span className="fw-semibold">${parseFloat(withdraw.row.original.requestAmount).toFixed(2) || "0.00s"} USD</span>,
 			},
 			{
 				Header: "Request By",

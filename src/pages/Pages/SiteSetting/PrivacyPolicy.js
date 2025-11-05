@@ -45,6 +45,7 @@ const PrivacyPolicy = () => {
 	const dispatch = useDispatch();
 	const [contentDesc, setContentDesc] = useState("");
 	const [contentDescKh, setContentDescKh] = useState("");
+	const [contentDescCh, setContentDescCh] = useState("");
 
 	const siteSettingSelector = createSelector(
 		(state) => state.SiteSettingReducer,
@@ -64,6 +65,9 @@ const PrivacyPolicy = () => {
 	const handleEditorChange2 = (e) => {
 		setContentDescKh(e.target.getContent());
 	};
+	const handleEditorChange3 = (e) => {
+		setContentDescCh(e.target.getContent());
+	};
 
 	useEffect(() => {
 		dispatch(getSiteSetting("PRIVACY_POLICY"));
@@ -81,11 +85,13 @@ const PrivacyPolicy = () => {
 		initialValues: {
 			type: "PRIVACY_POLICY",
 			description: siteSetting ? siteSetting.description : "",
-			descriptionKh: siteSetting ? siteSetting.descriptionKh : ""
+			descriptionKh: siteSetting ? siteSetting.descriptionKh : "",
+			descriptionCh: siteSetting ? siteSetting.descriptionCh : ""
 		},
 		onSubmit: (values) => {
 			values.description = contentDesc;
 			values.descriptionKh = contentDescKh;
+			values.descriptionCh = contentDescCh;
 			dispatch(saveSiteSetting(values));
 			if (!isLoading && success) {
 				refreshForm();
@@ -97,9 +103,11 @@ const PrivacyPolicy = () => {
 		if (siteSetting) {
 			setContentDesc(siteSetting.description);
 			setContentDescKh(siteSetting.descriptionKh);
+			setContentDescCh(siteSetting.descriptionCh);
 		} else {
 			setContentDesc("");
 			setContentDescKh("");
+			setContentDescCh("");
 		}
 	}, [siteSetting]);
 
@@ -146,6 +154,17 @@ const PrivacyPolicy = () => {
 															Khmer
 														</NavLink>
 													</NavItem>
+													<NavItem>
+														<NavLink
+															style={{ cursor: "pointer" }}
+															className={classnames({ active: titleTap === "CH" })}
+															onClick={() => {
+																titleTapToggle("CH");
+															}}
+														>
+															Chinese
+														</NavLink>
+													</NavItem>
 												</Nav>
 											</div>
 										</div>
@@ -176,6 +195,14 @@ const PrivacyPolicy = () => {
 																	Description
 																</Label>
 																<TinymceEditor onUploadImage={handleEditorChange2} initDataValue={contentDescKh} />
+															</div>
+														</TabPane>
+														<TabPane tabId="CH" id="ch">
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="description-input-ch">
+																	Description
+																</Label>
+																<TinymceEditor onUploadImage={handleEditorChange3} initDataValue={contentDescCh} />
 															</div>
 														</TabPane>
 													</TabContent>

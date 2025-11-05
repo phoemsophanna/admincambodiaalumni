@@ -66,6 +66,9 @@ export const getMemberList = () => api.get(url.MEMBER_MANAGEMENT_URI, null);
 export const postCreateMember = (body) => api.create(url.MEMBER_MANAGEMENT_URI, body);
 export const getMemberShowDetail = (param) => api.get(`${url.MEMBER_MANAGEMENT_URI}/detail`, param);
 export const deleteMember = (userId) => api.delete(`${url.MEMBER_MANAGEMENT_URI}/delete/${userId}`, null);
+// Member Information 
+export const postCreateMemberInformation = (body) => api.create(url.MEMBERINFORMATION_MANAGEMENT_URI, body);
+export const getMemberInformationShowDetail = (param) => api.get(`${url.MEMBERINFORMATION_MANAGEMENT_URI}/detail`, param);
 // Performance Management
 export const getPerformanceList = () => api.get(url.PERFORMANCE_MANAGEMENT_URI, null);
 export const postCreatePerformance = (body) => api.create(url.PERFORMANCE_MANAGEMENT_URI, body);
@@ -76,6 +79,16 @@ export const getNewsList = () => api.get(url.NEWS_MANAGEMENT_URI, null);
 export const postCreateNews = (body) => api.create(url.NEWS_MANAGEMENT_URI, body);
 export const getNewsShowDetail = (param) => api.get(`${url.NEWS_MANAGEMENT_URI}/detail`, param);
 export const deleteNews = (userId) => api.delete(`${url.NEWS_MANAGEMENT_URI}/delete/${userId}`, null);
+// Gallery Management
+export const getGalleryList = () => api.get(url.GALLERY_MANAGEMENT_URL, null);
+export const postCreateGallery = (body) => api.create(url.GALLERY_MANAGEMENT_URL, body);
+export const getGalleryShowDetail = (param) => api.get(`${url.GALLERY_MANAGEMENT_URL}/detail`, param);
+export const deleteGallery = (userId) => api.delete(`${url.GALLERY_MANAGEMENT_URL}/delete/${userId}`, null);
+// Video Management
+export const getVideoList = () => api.get(url.VIDEO_MANAGEMENT_URL, null);
+export const postCreateVideo = (body) => api.create(url.VIDEO_MANAGEMENT_URL, body);
+export const getVideoShowDetail = (param) => api.get(`${url.VIDEO_MANAGEMENT_URL}/detail`, param);
+export const deleteVideo = (userId) => api.delete(`${url.VIDEO_MANAGEMENT_URL}/delete/${userId}`, null);
 // Campaign Category Management
 export const getCampaignCategoryList = () => api.get(url.PROJECT_CATEGORY_MANAGEMENT_URI, null);
 export const postCreateCampaignCategory = (body) => api.create(url.PROJECT_CATEGORY_MANAGEMENT_URI, body);
@@ -91,6 +104,16 @@ export const getProjectList = () => api.get(url.PROJECT_MANAGEMENT_URI, null);
 export const postCreateProject = (body) => api.create(url.PROJECT_MANAGEMENT_URI, body);
 export const getProjectShowDetail = (param) => api.get(`${url.PROJECT_MANAGEMENT_URI}/detail`, param);
 export const deleteProject = (userId) => api.delete(`${url.PROJECT_MANAGEMENT_URI}/delete/${userId}`, null);
+// Services Management
+export const getServiceList = () => api.get(url.SERVICE_MANAGEMENT_URI, null);
+export const postCreateService = (body) => api.create(url.SERVICE_MANAGEMENT_URI, body);
+export const getServiceShowDetail = (param) => api.get(`${url.SERVICE_MANAGEMENT_URI}/detail`, param);
+export const deleteService = (userId) => api.delete(`${url.SERVICE_MANAGEMENT_URI}/delete/${userId}`, null);
+// Portfolios Management
+export const getPortfolioList = () => api.get(url.PORTFOLIO_MANAGEMENT_URI, null);
+export const postCreatePortfolio = (body) => api.create(url.PORTFOLIO_MANAGEMENT_URI, body);
+export const getPortfolioShowDetail = (param) => api.get(`${url.PORTFOLIO_MANAGEMENT_URI}/detail`, param);
+export const deletePortfolio = (userId) => api.delete(`${url.PORTFOLIO_MANAGEMENT_URI}/delete/${userId}`, null);
 // Campaign Management
 export const getCampaignList = () => api.get(url.CAMPAIGN_MANAGEMENT_URI, null);
 export const postCreateCampaign = (body) => api.create(url.CAMPAIGN_MANAGEMENT_URI, body);

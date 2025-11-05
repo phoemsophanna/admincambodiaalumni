@@ -23,6 +23,8 @@ const TableList = ({ onShowDetail, onDeleteCampaignCategory }) => {
 	const { campaignCategories, isLoading, success } = useSelector(campaignCategoryListSelector);
 	const dispatch = useDispatch();
 
+	console.log(campaignCategories);
+
 	useEffect(() => {
 		dispatch(fetchCampaignCategoryList());
 	}, [dispatch]);
@@ -79,7 +81,7 @@ const TableList = ({ onShowDetail, onDeleteCampaignCategory }) => {
 				filterable: false,
 				Cell: (campaignCategory) => (
 					<>
-						{campaignCategory.row.original.isActive ? (
+						{campaignCategory.row.original.isActive == 1 ? (
 							<span className="badge bg-success-subtle text-success">ACTIVE</span>
 						) : (
 							<span className="badge bg-danger-subtle text-danger">IN-ACTIVE</span>

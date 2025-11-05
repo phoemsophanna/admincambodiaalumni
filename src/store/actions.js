@@ -15,6 +15,9 @@ export * from "./user/detail/actions";
 export * from "./member/list/actions";
 export * from "./member/create/actions";
 export * from "./member/detail/actions";
+// Member Information management
+export * from "./memberInformation/create/actions";
+export * from "./memberInformation/detail/actions";
 // Performance management
 export * from "./performance/list/actions";
 export * from "./performance/create/actions";
@@ -62,3 +65,24 @@ export * from "./team/list/actions";
 export * from "./team/create/actions";
 export * from "./team/detail/actions";
 export * from "./dashboard/detail/actions";
+// Services
+export * from "./service/list/actions";
+export * from "./service/create/actions";
+export * from "./service/detail/actions";
+
+// Project
+export * from "./portfolio/list/actions";
+export * from "./portfolio/create/actions";
+export * from "./portfolio/detail/actions";
+
+// Gallery 
+
+export * from "./gallery/create/actions";
+export * from "./gallery/detail/actions";
+export * from "./gallery/list/actions";
+
+// Video 
+
+export * from "./video/create/actions";
+export * from "./video/detail/actions";
+export * from "./video/list/actions";

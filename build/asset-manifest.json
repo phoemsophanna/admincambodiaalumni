@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/static/css/main.c56df80e.css",
-    "main.js": "/static/js/main.8db463a9.js",
-    "static/js/522.bec1583b.chunk.js": "/static/js/522.bec1583b.chunk.js",
+    "main.css": "/static/css/main.b300d482.css",
+    "main.js": "/static/js/main.d1b5698e.js",
+    "static/js/685.b1071471.chunk.js": "/static/js/685.b1071471.chunk.js",
     "static/media/remixicon.svg?t=1590207869815": "/static/media/remixicon.1664a258a7e7714f6f8d.svg",
     "static/media/boxicons.svg": "/static/media/boxicons.f80cc694af79b88fde78.svg",
     "static/media/materialdesignicons-webfont.eot": "/static/media/materialdesignicons-webfont.e044ed23c047e571c550.eot",
@@ -10,6 +10,7 @@
     "static/media/la-brands-400.svg": "/static/media/la-brands-400.331115337bc9be66667a.svg",
     "static/media/la-solid-900.svg": "/static/media/la-solid-900.0f874d69730f8631d632.svg",
     "static/media/bg-home.jpg": "/static/media/bg-home.a875087c0ac22dd0cffe.jpg",
+    "static/media/logo.png": "/static/media/logo.65070c789c1c0cffab02.png",
     "static/media/materialdesignicons-webfont.woff?v=6.5.95": "/static/media/materialdesignicons-webfont.5dff34d5fed607519dcb.woff",
     "static/media/remixicon.eot?t=1590207869815": "/static/media/remixicon.5cb99e6cba5a4619063f.eot",
     "static/media/remixicon.ttf?t=1590207869815": "/static/media/remixicon.f2616f597cf98f38d234.ttf",
@@ -29,10 +30,12 @@
     "static/media/la-brands-400.ttf": "/static/media/la-brands-400.6ecea4826b87fafb97be.ttf",
     "static/media/hkgrotesk-semibold.eot": "/static/media/hkgrotesk-semibold.e51918649afb22bbd2ed.eot",
     "static/media/hkgrotesk-regular.eot": "/static/media/hkgrotesk-regular.87639503b6d2caff5b6d.eot",
+    "static/media/history.png": "/static/media/history.84863715d0b64dcb7a89.png",
     "static/media/la-solid-900.woff": "/static/media/la-solid-900.893634871a6cbff72157.woff",
     "static/media/remixicon.woff2?t=1590207869815": "/static/media/remixicon.90668f6f9b3c2c18a090.woff2",
     "static/media/boxicons.woff2": "/static/media/boxicons.60f603cccbdff82a523c.woff2",
     "static/media/la-regular-400.svg": "/static/media/la-regular-400.5b8ad6f4ffe812a4eb26.svg",
+    "static/media/application.png": "/static/media/application.128ccfab5786a34a60db.png",
     "static/media/bg-pattern.png": "/static/media/bg-pattern.d84a545991260916b9c9.png",
     "static/media/la-brands-400.woff": "/static/media/la-brands-400.925b340f49e65e8bab10.woff",
     "static/media/la-solid-900.woff2": "/static/media/la-solid-900.3efd5ba15a279377d224.woff2",
@@ -41,12 +44,11 @@
     "static/media/la-brands-400.woff2": "/static/media/la-brands-400.3a8109c4ac75662f8355.woff2",
     "static/media/file.png": "/static/media/file.7460d341c4220363ca42.png",
     "static/media/hkgrotesk-semibold.woff": "/static/media/hkgrotesk-semibold.59387fcce7c52054d89f.woff",
-    "static/media/logo.png": "/static/media/logo.3740b57a26e8fd6fc478.png",
     "static/media/hkgrotesk-regular.woff": "/static/media/hkgrotesk-regular.24ff70bdc6ea8999be5c.woff",
     "static/media/comingsoon.png": "/static/media/comingsoon.525686be687133d3e37b.png",
     "static/media/hkgrotesk-medium.woff": "/static/media/hkgrotesk-medium.f7632bb9c315727585a3.woff",
+    "static/media/axios.cjs": "/static/media/axios.f5e5c4d2ad3bc47a8000.cjs",
     "static/media/hkgrotesk-light.woff": "/static/media/hkgrotesk-light.9780da4b0e23acec0b59.woff",
-    "static/media/axios.cjs": "/static/media/axios.168a8201bde99748ed3c.cjs",
     "static/media/la-regular-400.eot": "/static/media/la-regular-400.77111476f05dd3443047.eot",
     "static/media/la-regular-400.ttf": "/static/media/la-regular-400.cf246e21218cab398b3d.ttf",
     "static/media/maintenance.png": "/static/media/maintenance.6ac379cdf9d6e10ab6b0.png",
@@ -57,7 +59,7 @@
     "index.html": "/index.html"
   },
   "entrypoints": [
-    "static/css/main.c56df80e.css",
-    "static/js/main.8db463a9.js"
+    "static/css/main.b300d482.css",
+    "static/js/main.d1b5698e.js"
   ]
 }

@@ -124,7 +124,7 @@ const ProjectForm = (props) => {
 			telegramLink: project ? project.telegramLink : "",
 			ordering: project ? project.ordering : 0,
 			inProgress: project ? (project.inProgress === 1 ? true : false) : true,
-			isActive: project ? (project.isActive === 1 ? true : false) : true,
+			isActive: project ? (project.isActive == 1 ? true : false) : true,
 			isDisplayHomepage: project ? (project.isDisplayHomepage === 1 ? true : false) : false,
 			image: project ? project.image : "",
 		},

@@ -1,12 +1,14 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
 	Button,
 	Card,
 	CardBody,
+	CardFooter,
 	CardHeader,
 	Col,
 	Container,
 	Form,
+	FormFeedback,
 	FormGroup,
 	Input,
 	Label,
@@ -16,39 +18,56 @@ import {
 	Row,
 	Spinner,
 	TabContent,
-	Table,
-	TabPane,
+	TabPane
 } from "reactstrap";
+import Select from 'react-select'
 import BreadCrumb from "../../../Components/Common/BreadCrumb";
 import { Link, useParams } from "react-router-dom";
+import TinymceEditor from "../../../Components/Common/TinymceEditor";
+
+import * as Yup from "yup";
+import axios from "axios";
+import { useFormik, validateYupSchema } from "formik";
 import classnames from "classnames";
-
-import { useFormik } from "formik";
-
+// Import React FilePond
+import { FilePond, registerPlugin } from "react-filepond";
+// Import FilePond styles
+import "filepond/dist/filepond.min.css";
+import FilePondPluginImageExifOrientation from "filepond-plugin-image-exif-orientation";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css";
 import { createSelector } from "reselect";
 import { useDispatch, useSelector } from "react-redux";
-import {
-	createCampaign,
-	fetchCampaignDetail,
-	resetCampaignShowDetail,
-} from "../../../store/actions";
+import { createCampaign, fetchCampaignDetail, resetCampaignShowDetail, fetchCampaignCategoryList, resetCampaignCategoryList } from "../../../store/actions";
 import withRouter from "../../../Components/Common/withRouter";
 import { api } from "../../../config";
-import CountUp from "react-countup";
-import TableContainer from "../../../Components/Common/TableContainer";
-import Loader from "../../../Components/Common/Loader";
+import { selectOptions } from "@testing-library/user-event/dist/cjs/utility/selectOptions.js";
+import { options } from "@fullcalendar/core/preact.js";
+import { type } from "@testing-library/user-event/dist/cjs/utility/type.js";
+import { locations } from "../../../common/data";
+// Register the plugins
+registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview);
 
 const CampaignForm = (props) => {
 	const { id } = useParams();
 	document.title = `Campaign: ${id ? "Edit" : "create"} | Admin & Dashboards`;
-	// Custom Tabs Bordered
-	const [customActiveTab, setcustomActiveTab] = useState("1");
-	const toggleCustom = (tab) => {
-		if (customActiveTab !== tab) {
-			setcustomActiveTab(tab);
+	const dispatch = useDispatch();
+	const [titleTap, settitleTap] = useState("ENG");
+	const titleTapToggle = (tab) => {
+		if (titleTap !== tab) {
+			settitleTap(tab);
 		}
 	};
-	const dispatch = useDispatch();
+	const [contentDesc, setContentDesc] = useState("");
+	const [contentDescKh, setContentDescKh] = useState("");
+	const [contentDescCh, setContentDescCh] = useState("");
+	const [campaignCategory, setCampaignCategory] = useState(null);
+	const [customActiveTab, setcustomActiveTab] = useState("1");
+	const [location, setLocation] = useState();
+
+	const [campaignGallery, setCampaignGallery] = useState([]);
+	const [fileVideos, setFileVideos] = useState([]);
+	const [fileProfile, setFileProfile] = useState([]);
 
 	const createCampaignSelector = createSelector(
 		(state) => state.CreateCampaignReducer,
@@ -64,6 +83,29 @@ const CampaignForm = (props) => {
 	);
 	const { campaign, isLoading } = useSelector(createCampaignDetailSelector);
 
+	const campaignCategoryListSelector = createSelector(
+		(state) => state.CampaignCategoryListReducer,
+		(layout) => ({ campaignCategories: layout.campaignCategories })
+	);
+	const { campaignCategories } = useSelector(campaignCategoryListSelector);
+
+	const handleEditorChange = (e) => {
+		setContentDesc(e.target.getContent());
+	};
+	const handleEditorChangeKh = (e) => {
+		setContentDescKh(e.target.getContent());
+	};
+	const handleEditorChangeCh = (e) => {
+		setContentDescCh(e.target.getContent());
+	};
+
+	useEffect(() => {
+		dispatch(fetchCampaignCategoryList());
+		return () => {
+			dispatch(resetCampaignCategoryList());
+		};
+	}, [dispatch]);
+
 	useEffect(() => {
 		if (id) dispatch(fetchCampaignDetail(id));
 
@@ -72,105 +114,89 @@ const CampaignForm = (props) => {
 		};
 	}, [id, dispatch]);
 
-	
+	useEffect(() => {
+		if (campaign) {
+			setContentDesc(campaign.fullStory);
+			setContentDescKh(campaign.fullStoryKm);
+			setContentDescCh(campaign.fullStoryCh);
+			setCampaignCategory(campaign.campaignCategoryId);
+			setLocation({value: campaign.location,label: campaign.location});
+			setCampaignGallery(
+				campaign?.campaignGallery?.length > 0 ? campaign?.campaignGallery?.map((img) => ({ source: img, options: { type: "local" } })) : []
+			);
 
-	const columns = useMemo(
-		() => [
-			{
-				Header: "ID",
-				accessor: "id",
-				Cell: (contact) => <span className="fw-semibold">{parseInt(contact.row.id) + 1}</span>,
-				filterable: false,
-			},
-			{
-				Header: "Donor",
-				accessor: "donorId",
-				filterable: false,
-				Cell: (donor) => (
-					<div className="d-flex align-items-center">
-						<div className="flex-shrink-0 me-3">
-							<div className="avatar-sm bg-light rounded p-1 d-flex align-items-center">
-								{donor.row.original.donor?.image ? (
-									<img src={api.FILE_URI + donor.row.original.donor?.image} alt="" className="img-fluid d-block" />
-								) : (
-									<div className="mx-auto w-100 h-100">
-										<div className="avatar-title bg-success-subtle text-success fs-24">
-											<i className="mdi mdi-image-filter-hdr"></i>
-										</div>
-									</div>
-								)}
-							</div>
-						</div>
-						<div className="flex-grow-1">
-							<h5 className="fs-14 mb-1">
-								<Link to="#" className="text-body">
-									{donor.row.original.donor?.name || "Anonymous"}
-								</Link>
-							</h5>
-							<p className="text-muted mb-0 text-truncate" style={{ width: "200px" }}>
-								<span className="fw-medium ">{donor.row.original.donor?.email || "Undefined"} | {donor.row.original.donor?.phoneNumber || "Undefined"}</span>
-							</p>
-						</div>
-					</div>
-				),
-			},
-			{
-				Header: "Amount",
-				accessor: "amount",
-				filterable: false,
-				Cell: (donor) => <span className="fw-semibold">${donor.row.original.amount?.toFixed(2)} USD</span>,
-			},
-			{
-				Header: "Payment Method",
-				accessor: "paymentMethod",
-				filterable: false,
-				Cell: (donor) => <span className="fw-semibold">{donor.row.original.paymentMethod?.toUpperCase()}</span>,
-			},
-			{
-				Header: "Donation Date",
-				accessor: "donationDate",
-				filterable: false,
-				Cell: (donor) => <div className="d-flex align-items-center">
-				<div className="flex-grow-1">
-					<p className="mb-0">
-						<span className="fw-medium text-muted">{donor.row.original.donationDate}</span>
-					</p>
-				</div>
-			</div>,
-			},
-			
-			{
-				// End Table
-				Header: "Status",
-				accessor: "status",
-				filterable: false,
-				Cell: (donor) => (
-					<>
-						{donor.row.original.isConfirmAgreement === 1 ? (
-							<span className="badge bg-success-subtle text-success">Confirm Payment</span>
-						) : (
-							<span className="badge bg-danger-subtle text-danger">Payment Decline</span>
-						)}
-					</>
-				),
+			setFileProfile(campaign?.profile?.length > 0 ? [{source: campaign.profile, options: {type: "local"}}] : []);
+
+			if (campaign.videoFile) {
+				setFileVideos([
+					{
+						source: campaign.videoFile,
+						options: {
+							type: "local",
+						},
+					},
+				]);
+			} else {
+				setFileVideos([]);
 			}
-		],
-		[]
-	);
+		} else {
+			setContentDesc("");
+			setContentDescKh("");
+			setContentDescCh("");
+		}
+	}, [campaign]);
 
 	const campaignValidation = useFormik({
 		enableReinitialize: true,
 
 		initialValues: {
 			id: id || "",
-			isInNeed: campaign?.isInNeed === 1 ? true : false,
-			isTrending: campaign?.isTrending === 1 ? true : false,
-			isLatest: campaign?.isLatest === 1 ? true : false,
-			allowEdit: campaign?.allowEdit === 1 ? true : false,
-			status: campaign?.status || "",
-			ordering: campaign?.ordering || 0,
+			creatorId: campaign ? campaign.creatorId : "1",
+			campaignCategoryId: campaign ? campaign.campaignCategoryId : "",
+			location: campaign ? campaign.location : "",
+			city: campaign ? campaign.city : "",
+			campaignTileKm: campaign ? campaign.campaignTileKm : "",
+			campaignTileCh: campaign ? campaign.campaignTileCh : "",
+			campaignTile: campaign ? campaign.campaignTile : "",
+			referenceLink: campaign ? campaign.referenceLink : "",
+			videoLink: campaign ? campaign.videoLink : "",
+			goal: campaign ? campaign.goal : "",
+			startDate: campaign ? campaign.startDate : "",
+			endDate: campaign ? campaign.endDate : "",
+			gratitude: campaign ? campaign.gratitude : "",
+			gratitudeKm: campaign ? campaign.gratitudeKm : "",
+			gratitudeCh: campaign ? campaign.gratitudeCh : "",
+			fullStory: campaign ? campaign.fullStory : "",
+			fullStoryKm: campaign ? campaign.fullStoryKm : "",
+			fullStoryCh: campaign ? campaign.fullStoryCh : "",
+			additionalInformation: campaign ? campaign.additionalInformation : "",
+			additionalInformationKm: campaign ? campaign.additionalInformationKm : "",
+			additionalInformationCh: campaign ? campaign.additionalInformationCh : "",
+			involvement: campaign ? campaign.involvement : "",
+			involvementKm: campaign ? campaign.involvementKm : "",
+			involvementCh: campaign ? campaign.involvementCh : "",
+			campaignGallery: campaign ? campaign.campaignGallery : "",
+			videoFile: campaign ? campaign.videoFile :  "",
+			fullName: campaign ? campaign.fullName : "",
+			status: campaign ? campaign.status : "COMPLETE",
+			profile: campaign ? campaign.profile : "",
+			ordering: campaign ? campaign.ordering : 0,
+			isActive: campaign ? (campaign.isActive == 1 ? true : false) : true,
+			isInNeed: campaign ? (campaign.isInNeed == 1 ? true : false) : true,
+			isLatest: campaign ? (campaign.isLatest == 1 ? true : false) : true,
 		},
+		validationSchema: Yup.object({
+			campaignTile: Yup.string().required("Please Enter Title"),
+			campaignCategoryId: Yup.string().required("Please Select Category"),
+		}),
 		onSubmit: (values) => {
+			values.fullStory = contentDesc;
+			values.fullStoryKm = contentDescKh;
+			values.fullStoryCh = contentDescCh;
+			values.campaignCategoryId = campaignCategory;
+			values.campaignGallery = campaignGallery?.length > 0 ? campaignGallery.map((file) => file.serverId) : [];
+			values.videoFile = fileVideos?.length > 0 ? fileVideos[0].serverId : "";
+			values.profile = fileProfile?.length > 0 ? fileProfile[0].serverId : "";
 			dispatch(createCampaign(values, props.router.navigate));
 		},
 	});
@@ -179,14 +205,14 @@ const CampaignForm = (props) => {
 		<React.Fragment>
 			<div className="page-content">
 				<Container fluid>
-					<BreadCrumb title="Campaign Menu" pageTitle="Dashboard" pageLink="/campaign-menu" />
+					<BreadCrumb title="Project & Event" pageTitle="Dashboard" pageLink="/campaign-menu" />
 					<Row>
 						<Col lg={12}>
 							<Card>
 								<CardHeader>
 									<Row className="justify-content-between align-items-center gy-3">
 										<Col lg={3}>
-											<h5 className="mt-2">{id ? "Edit" : "Create"} Campaign</h5>
+											<h5 className="mt-2">{id ? "Edit" : "Create"} Project</h5>
 										</Col>
 										<Col className="col-lg-auto">
 											<div className="d-md-flex text-nowrap gap-2">
@@ -210,9 +236,50 @@ const CampaignForm = (props) => {
 						action="#"
 					>
 						<Row>
-							<Col lg={8}>
+							<Col xl={12}>
 								<Card>
-									<CardBody>
+									<CardHeader>
+										<div className="align-items-center d-flex">
+											<div className="flex-shrink-0">
+												<Nav tabs className="nav justify-content-end nav-tabs-custom rounded card-header-tabs border-bottom-0">
+													<NavItem>
+														<NavLink
+															style={{ cursor: "pointer" }}
+															className={classnames({ active: titleTap === "ENG" })}
+															onClick={() => {
+																titleTapToggle("ENG");
+															}}
+														>
+															English
+														</NavLink>
+													</NavItem>
+													<NavItem>
+														<NavLink
+															style={{ cursor: "pointer" }}
+															className={classnames({ active: titleTap === "KHM" })}
+															onClick={() => {
+																titleTapToggle("KHM");
+															}}
+														>
+															Khmer
+														</NavLink>
+													</NavItem>
+													<NavItem>
+														<NavLink
+															style={{ cursor: "pointer" }}
+															className={classnames({ active: titleTap === "CH" })}
+															onClick={() => {
+																titleTapToggle("CH");
+															}}
+														>
+															Chinese
+														</NavLink>
+													</NavItem>
+												</Nav>
+											</div>
+										</div>
+									</CardHeader>
+									{/* <CardBody>
 										<Nav tabs className="nav nav-tabs nav-tabs-custom nav-success nav-justified mb-3">
 											<NavItem>
 												<NavLink
@@ -266,495 +333,501 @@ const CampaignForm = (props) => {
 													Profile
 												</NavLink>
 											</NavItem>
-											<NavItem>
-												<NavLink
-													style={{ cursor: "pointer" }}
-													className={classnames({
-														active: customActiveTab === "5",
-													})}
-													onClick={() => {
-														toggleCustom("5");
-													}}
-												>
-													Donation Record
-												</NavLink>
-											</NavItem>
+	
 										</Nav>
+									</CardBody> */}
+								</Card>
+								<TabContent activeTab={customActiveTab} className="text-muted">
+									<TabPane tabId="1" id="home1">
+										<Card>
+											<CardBody>
+												<div className="mb-3 mt-3">
+													<label htmlFor="exampleFormControlInput1" className="form-label main-label">
+														Project Category
+													</label>
 
-										<TabContent activeTab={customActiveTab} className="text-muted">
-											<TabPane tabId="1" id="home1">
-												<h5 className="card-title mb-3">Campaign</h5>
-												<div className="table-responsive">
-													<Table className="table-borderless mb-0">
-														<tbody>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	Campaign Category :
-																</th>
-																<td className="text-muted">{campaign?.campaignCategory?.name}</td>
-															</tr>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	Location :
-																</th>
-																<td className="text-muted">{campaign?.location}</td>
-															</tr>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	City/Province :
-																</th>
-																<td className="text-muted">{campaign?.city}</td>
-															</tr>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	Campaign Title :
-																</th>
-																<td className="text-muted">
-																	<p className="mb-0">{campaign?.campaignTile}</p>
-																	<p className="mb-0">{campaign?.campaignTileKm}</p>
-																</td>
-															</tr>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	Reference Link :
-																</th>
-																<td className="text-muted">{campaign?.referenceLink}</td>
-															</tr>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	Full Story :
-																</th>
-															</tr>
-															<tr>
-																<td colSpan={2} className="text-muted">
-																	<div dangerouslySetInnerHTML={{ __html: campaign?.fullStoryKm }}></div>
-																	<div dangerouslySetInnerHTML={{ __html: campaign?.fullStory }}></div>
-																</td>
-															</tr>
-														</tbody>
-													</Table>
+													<Input
+														className="form-select p-2"
+														id="select-news-type"
+														name="campaignCategoryId"
+														type="select"
+														onChange={(e) => {
+																console.log(e.target.value);
+																setCampaignCategory(e.target.value);
+																campaignValidation.handleChange(e);
+															}
+														}
+														value={campaignCategory}
+													>
+														<option value="">-- Selected Category --</option>
+														{campaignCategories?.map((el) => (
+															<option key={el.id} value={el.id}>
+															{el.name}
+															</option>
+														))}
+													</Input>
+
+
+													{!campaignCategory ? (
+														<div className="text-danger">Please select category</div>
+													) : null}
 												</div>
-												<h5 className="card-title mb-3">Additional Information</h5>
-												<div className="table-responsive">
-													<Table className="table-borderless mb-0">
-														<tbody>
-															<tr>
-																<th className="ps-0" scope="row">
-																	Use of Funds :
-																</th>
-															</tr>
-															<tr>
-																<td colSpan={2} className="text-muted">
-																	<p>{campaign?.additionalInformation}</p>
-																	<p>{campaign?.additionalInformationKm}</p>
-																</td>
-															</tr>
-															<tr>
-																<th className="ps-0" scope="row">
-																	Involvement :
-																</th>
-															</tr>
-															<tr>
-																<td colSpan={2} className="text-muted">
-																	<p>{campaign?.involvement}</p>
-																	<p>{campaign?.involvementKm}</p>
-																</td>
-															</tr>
-														</tbody>
-													</Table>
+												<div className="mb-3">
+													<label htmlFor="exampleFormControlInput1" className="form-label main-label">
+														Location
+													</label>
+													<div>
+														{/* <input
+															type="text"
+															className="form-control"
+															placeholder="Location"
+															aria-label="Location"
+															aria-describedby="button-addon2"
+															name="location"
+															onChange={campaignValidation.handleChange}
+															value={campaignValidation.values.location}
+														/> */}
+														<Select
+															options={locations}
+															className="campaign-select-input"
+															placeholder="Select Location"
+															isClearable={true}
+															isSearchable={true}
+															onChange={setLocation}
+															name="location"
+															value={location}
+															invalid={campaignValidation.values.location ? true : false}
+														/>
+														{/* <button className="btn btn-outline-secondary" type="button" id="button-addon2" onClick={() => setLocationPicker(true)}>
+															<i className="fas fa-map-marker-alt"></i>
+														</button> */}
+													</div>
 												</div>
-											</TabPane>
-											<TabPane tabId="2">
-												<div className="table-responsive">
-													<Table className="table-borderless mb-0">
-														<tbody>
-															<tr>
-																<th className="ps-0" scope="row">
-																	Gallery :
-																</th>
-															</tr>
-															<tr>
-																<td colSpan={2} className="text-muted">
-																	<div className="row border border-dashed gx-2 p-2 mb-2">
-																		{campaign?.campaignGallery?.map((img, index) => (
-																			<div className="col-4" key={index}>
-																				<img src={`${api.FILE_URI}${img}`} alt="" className="img-fluid rounded" />
-																			</div>
-																		))}
-																	</div>
-																</td>
-															</tr>
-															<tr>
-																<th className="ps-0" scope="row">
-																	Video Link :
-																</th>
-															</tr>
-															<tr>
-																<td colSpan={2} className="text-muted">
-																	<a href={campaign?.videoLink} target="_blank" rel="noreferrer">
-																		{campaign?.videoLink}
-																	</a>
-																</td>
-															</tr>
-															<tr>
-																<th className="ps-0" scope="row">
-																	Video :
-																</th>
-															</tr>
-															<tr>
-																<td colSpan={2} className="text-muted">
-																	<div className=" border border-dashed gx-2 p-2 mb-2">
-																		{campaign?.videoFile ? (
-																			<video height="320" controls style={{ width: "100%", backgroundColor: "black" }}>
-																				<source src={`${api.FILE_URI}${campaign?.videoFile}`} type="video/mp4" />
-																			</video>
-																		) : null}
-																	</div>
-																</td>
-															</tr>
-														</tbody>
-													</Table>
+												<div className="mb-3">
+													<label htmlFor="exampleFormControlInput1" className="form-label main-label">
+														Address
+													</label>
+													<input
+														type="text"
+														className="form-control"
+														id="exampleFormControlInput1"
+														placeholder="Enter Address"
+														name="city"
+														onChange={campaignValidation.handleChange}
+														value={campaignValidation.values.city}
+													/>
 												</div>
-											</TabPane>
-											<TabPane tabId="3">
-												<div className="table-responsive">
-													<Table className="table-borderless mb-0">
-														<tbody>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	Goal :
-																</th>
-																<td className="text-muted">${campaign?.goal?.toFixed(2)} USD</td>
-															</tr>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	Start Date :
-																</th>
-																<td className="text-muted">{campaign?.startDate}</td>
-															</tr>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	End Date :
-																</th>
-																<td className="text-muted">{campaign?.endDate}</td>
-															</tr>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	Gratitude :
-																</th>
-																<td className="text-muted">
-																	<p>{campaign?.gratitude}</p>
-																	<p>{campaign?.gratitudeKm}</p>
-																</td>
-															</tr>
-														</tbody>
-													</Table>
+												<TabContent activeTab={titleTap}>
+													<TabPane tabId="ENG" id="eng">
+														<div className="mb-3">
+															<Label className="form-label" htmlFor="campaignTile-input">
+																Title
+															</Label>
+															<Input
+																type="text"
+																className="form-control"
+																id="campaignTile-input"
+																placeholder="Enter Title English"
+																name="campaignTile"
+																onChange={campaignValidation.handleChange}
+																onBlur={campaignValidation.handleBlur}
+																value={campaignValidation.values.campaignTile}
+															/>
+															{campaignValidation.errors?.campaignTile ? (
+																<div className="text-danger">Please input title</div>
+															) : null}
+														</div>
+														<div className="mb-3">
+															<Label>Full Story</Label>
+															<TinymceEditor onUploadImage={handleEditorChange} initDataValue={contentDesc} />
+														</div>
+														<div className="mb-3">
+															<Label>Additional Information</Label>
+															<Input
+																type="text"
+																className="form-control"
+																id="additionalInformation-input"
+																placeholder="Enter additionalInformation English"
+																name="additionalInformation"
+																onChange={campaignValidation.handleChange}
+																onBlur={campaignValidation.handleBlur}
+																value={campaignValidation.values.additionalInformation}
+															/>
+														</div>
+														<div className="mb-3">
+															<Label>Your Involvement</Label>
+															<Input
+																type="text"
+																className="form-control"
+																id="involvement-input"
+																placeholder="Enter involvement English"
+																name="involvement"
+																onChange={campaignValidation.handleChange}
+																onBlur={campaignValidation.handleBlur}
+																value={campaignValidation.values.involvement}
+															/>
+														</div>
+													</TabPane>
+													<TabPane tabId="KHM" id="khm">
+														<div className="mb-3">
+															<Label className="form-label" htmlFor="campaignTileKm-input">
+																Title
+															</Label>
+															<Input
+																type="text"
+																className="form-control"
+																id="campaignTileKm-input"
+																placeholder="Enter Title Khmer"
+																name="campaignTileKm"
+																onChange={campaignValidation.handleChange}
+																onBlur={campaignValidation.handleBlur}
+																value={campaignValidation.values.campaignTileKm}
+															/>
+														</div>
+														<div className="mb-3">
+															<Label>Full Story</Label>
+															<TinymceEditor onUploadImage={handleEditorChangeKh} initDataValue={contentDescKh} />
+														</div>
+														<div className="mb-3">
+															<Label>Additional Information</Label>
+															<Input
+																type="text"
+																className="form-control"
+																id="additionalInformationKm-input"
+																placeholder="Enter additionalInformation Khmer"
+																name="additionalInformationKm"
+																onChange={campaignValidation.handleChange}
+																onBlur={campaignValidation.handleBlur}
+																value={campaignValidation.values.additionalInformationKm}
+															/>
+														</div>
+														<div className="mb-3">
+															<Label>Your Involvement</Label>
+															<Input
+																type="text"
+																className="form-control"
+																id="involvementKm-input"
+																placeholder="Enter involvement Khmer"
+																name="involvementKm"
+																onChange={campaignValidation.handleChange}
+																onBlur={campaignValidation.handleBlur}
+																value={campaignValidation.values.involvementKm}
+															/>
+														</div>
+													</TabPane>
+													<TabPane tabId="CH" id="ch">
+														<div className="mb-3">
+															<Label className="form-label" htmlFor="campaignTileCh-input">
+																Title
+															</Label>
+															<Input
+																type="text"
+																className="form-control"
+																id="campaignTileCh-input"
+																placeholder="Enter Title Chinese"
+																name="campaignTileCh"
+																onChange={campaignValidation.handleChange}
+																onBlur={campaignValidation.handleBlur}
+																value={campaignValidation.values.campaignTileCh}
+															/>
+														</div>
+														<div className="mb-3">
+															<Label>Full Story</Label>
+															<TinymceEditor onUploadImage={handleEditorChangeCh} initDataValue={contentDescCh} />
+														</div>
+														<div className="mb-3">
+															<Label>Additional Information</Label>
+															<Input
+																type="text"
+																className="form-control"
+																id="additionalInformationCh-input"
+																placeholder="Enter additionalInformation Chinese"
+																name="additionalInformationCh"
+																onChange={campaignValidation.handleChange}
+																onBlur={campaignValidation.handleBlur}
+																value={campaignValidation.values.additionalInformationCh}
+															/>
+														</div>
+														<div className="mb-3">
+															<Label>Your Involvement</Label>
+															<Input
+																type="text"
+																className="form-control"
+																id="involvementCh-input"
+																placeholder="Enter involvement Chinese"
+																name="involvementCh"
+																onChange={campaignValidation.handleChange}
+																onBlur={campaignValidation.handleBlur}
+																value={campaignValidation.values.involvementCh}
+															/>
+														</div>
+													</TabPane>
+												</TabContent>
+
+												<div className="mb-3">
+													<Label className="form-label" htmlFor="referenceLink-input">
+														Reference Link
+													</Label>
+													<Input
+														type="text"
+														className="form-control"
+														id="referenceLink-input"
+														placeholder="Enter Link"
+														name="referenceLink"
+														onChange={campaignValidation.handleChange}
+														onBlur={campaignValidation.handleBlur}
+														value={campaignValidation.values.referenceLink}
+													/>
 												</div>
-											</TabPane>
-											<TabPane tabId="4">
-												<div className="table-responsive">
-													<Table className="table-borderless mb-0">
-														<tbody>
-															<tr>
-																<th className="ps-0" scope="row">
-																	Profile :
-																</th>
-															</tr>
-															<tr>
-																<td colSpan={2} className="text-muted">
-																	<div className="row border border-dashed gx-2 p-2 mb-2">
-																		<div className="col-4">
-																			<img
-																				src={`${api.FILE_URI}${campaign?.profile}`}
-																				alt=""
-																				className="rounded-circle avatar-xl"
-																				style={{ objectFit: "cover" }}
-																			/>
-																		</div>
-																	</div>
-																</td>
-															</tr>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	Full Name :
-																</th>
-																<td className="text-muted">{campaign?.fullName}</td>
-															</tr>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	Phone Number :
-																</th>
-																<td className="text-muted">{campaign?.phoneNumber}</td>
-															</tr>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	Document Type :
-																</th>
-																<td className="text-muted">{campaign?.documentType?.toUpperCase()}</td>
-															</tr>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	Identity Number :
-																</th>
-																<td className="text-muted">{campaign?.identityNumber}</td>
-															</tr>
-															<tr>
-																<td colSpan={2} className="text-muted">
-																	<div className="row border border-dashed gx-2 p-2 mb-2">
-																		{campaign?.idCardFront ? (
-																			<div className="col-4">
-																				<img src={`${api.FILE_URI}${campaign?.idCardFront}`} alt="" className="img-fluid rounded" />
-																			</div>
-																		) : null}
-																		{campaign?.idCardBack ? (
-																			<div className="col-4">
-																				<img src={`${api.FILE_URI}${campaign?.idCardBack}`} alt="" className="img-fluid rounded" />
-																			</div>
-																		) : null}
-																		{campaign?.passport ? (
-																			<div className="col-4">
-																				<img src={`${api.FILE_URI}${campaign?.passport}`} alt="" className="img-fluid rounded" />
-																			</div>
-																		) : null}
-																	</div>
-																</td>
-															</tr>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	Location :
-																</th>
-																<td className="text-muted">{campaign?.location}</td>
-															</tr>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	City/Province :
-																</th>
-																<td className="text-muted">{campaign?.city}</td>
-															</tr>
-														</tbody>
-													</Table>
+											</CardBody>
+										</Card>
+									</TabPane>
+									<TabPane tabId="1" id="media1">
+										<Card>
+											<CardBody>
+												<div className="mb-3">
+													<Label className="form-label" htmlFor="thumbnail-input">
+														Photo (1024 x 692 px)
+													</Label>
+													<div className="position-relative d-block mx-auto">
+														<div style={{ width: "100%" }}>
+															<FilePond
+																labelIdle='<span class="filepond--label-action">Choose Image</span>'
+																files={campaignGallery}
+																onupdatefiles={setCampaignGallery}
+																allowMultiple={true}
+																maxFiles={5}
+																name="file"
+																server={`${api.BASE_URL}/save-image/campaign`}
+																className="filepond filepond-input-multiple"
+																stylePanelLayout="compact"
+															/>
+														</div>
+														{campaignValidation.errors?.campaignGallery ? (
+															<div className="text-danger">Please input image</div>
+														) : null}
+													</div>
 												</div>
-												<h5 className="card-title mt-3 mb-2">Bank Account to Receive Funds</h5>
-												<div className="table-responsive">
-													<Table className="table-borderless mb-0">
-														<tbody>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	Payment Method :
-																</th>
-																<td className="text-muted">{campaign?.receiveByBank?.toUpperCase()}</td>
-															</tr>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	Account Name :
-																</th>
-																<td className="text-muted">{campaign?.accountName}</td>
-															</tr>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	Account Number :
-																</th>
-																<td className="text-muted">{campaign?.accountNumber}</td>
-															</tr>
-														</tbody>
-													</Table>
+												<div className="mb-3">
+													<label htmlFor="exampleFormControlInput1" className="form-label main-label">
+														Video
+													</label>
+													<div className="card-upload-video">
+														<div className="form-floating">
+															<input
+																type="text"
+																className="form-control"
+																id="videoLink"
+																placeholder="http://..."
+																name="videoLink"
+																onChange={campaignValidation.handleChange}
+																value={campaignValidation.values.videoLink}
+															/>
+															<label htmlFor="videoLink">Video Link</label>
+														</div>
+														<span className="card-upload-video-hr" style={{textAlign: "center",display: "block",width: "100%"}}>OR</span>
+														<FilePond
+															files={fileVideos}
+															onupdatefiles={setFileVideos}
+															allowMultiple={true}
+															maxFiles={1}
+															storeAsFile={true}
+															server={`${api.BASE_URL}/save-image/campaign`}
+															name="file"
+															labelIdle='Drag & Drop video or <span className="filepond--label-action">Browse</span>'
+														/>
+													</div>
 												</div>
-												<h5 className="card-title mt-3 mb-2">Create By</h5>
-												<div className="table-responsive">
-													<Table className="table-borderless mb-0">
-														<tbody>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	Name :
-																</th>
-																<td className="text-muted">{campaign?.creator?.name}</td>
-															</tr>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	Email :
-																</th>
-																<td className="text-muted">{campaign?.creator?.email}</td>
-															</tr>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	Phone Number :
-																</th>
-																<td className="text-muted">{campaign?.creator?.phoneNumber}</td>
-															</tr>
-															<tr>
-																<th className="ps-0" scope="row" style={{ width: "160px" }}>
-																	Created At :
-																</th>
-																<td className="text-muted">{campaign?.created_at}</td>
-															</tr>
-														</tbody>
-													</Table>
+											</CardBody>
+										</Card>
+									</TabPane>
+									<TabPane tabId="1" id="goal1">
+										<Card>
+											<CardBody>
+												<div className="mb-3">
+													<Label className="form-label" htmlFor="goal-input">
+														Goal
+													</Label>
+													<Input
+														type="number"
+														className="form-control"
+														id="goal-input"
+														placeholder="Enter goal"
+														name="goal"
+														onChange={campaignValidation.handleChange}
+														onBlur={campaignValidation.handleBlur}
+														value={campaignValidation.values.goal}
+													/>
 												</div>
-											</TabPane>
-											<TabPane tabId="5">
+												<div className="mb-3">
+													<Row>
+														<Col lg={6}>
+															<Label className="form-label" htmlFor="startDate">
+																Start Date
+															</Label>
+															<Input
+																type="date"
+																placeholder="enter date"
+																name="startDate"
+																id="startDate"
+																onChange={campaignValidation.handleChange}
+																value={campaignValidation.values.startDate}
+															/>
+															{campaignValidation.errors.startDate && campaignValidation.touched.startDate ? (
+																<div className="text-danger">{campaignValidation.errors.startDate}</div>
+															) : null}
+														</Col>
+														<Col lg={6}>
+															<Label className="form-label" htmlFor="endDate">
+																End Date
+															</Label>
+															<Input
+																type="date"
+																placeholder="enter date"
+																name="endDate"
+																id="endDate"
+																onChange={campaignValidation.handleChange}
+																value={campaignValidation.values.endDate}
+															/>
+															{campaignValidation.errors.endDate && campaignValidation.touched.endDate ? (
+																<div className="text-danger">{campaignValidation.errors.endDate}</div>
+															) : null}
+														</Col>
+													</Row>
+												</div>
+												<TabContent activeTab={titleTap}>
+													<TabPane tabId="ENG" id="eng">
+														<div className="mb-3">
+															<Label className="form-label" htmlFor="gratitude-input">
+																Gratitude to the donor
+															</Label>
+															<Input
+																type="text"
+																className="form-control"
+																id="gratitude-input"
+																placeholder="Enter Title English"
+																name="gratitude"
+																onChange={campaignValidation.handleChange}
+																onBlur={campaignValidation.handleBlur}
+																value={campaignValidation.values.gratitude}
+															/>
+														</div>
+													</TabPane>
+													<TabPane tabId="KHM" id="khm">
+														<div className="mb-3">
+															<Label className="form-label" htmlFor="gratitudeKm-input">
+																Gratitude to the donor
+															</Label>
+															<Input
+																type="text"
+																className="form-control"
+																id="gratitudeKm-input"
+																placeholder="Enter Title Khmer"
+																name="gratitudeKm"
+																onChange={campaignValidation.handleChange}
+																onBlur={campaignValidation.handleBlur}
+																value={campaignValidation.values.gratitudeKm}
+															/>
+														</div>
+													</TabPane>
+													<TabPane tabId="CH" id="ch">
+														<div className="mb-3">
+															<Label className="form-label" htmlFor="gratitudeCh-input">
+																Gratitude to the donor
+															</Label>
+															<Input
+																type="text"
+																className="form-control"
+																id="gratitudeCh-input"
+																placeholder="Enter Title Chinese"
+																name="gratitudeCh"
+																onChange={campaignValidation.handleChange}
+																onBlur={campaignValidation.handleBlur}
+																value={campaignValidation.values.gratitudeCh}
+															/>
+														</div>
+													</TabPane>
+												</TabContent>
+											</CardBody>
+										</Card>
+									</TabPane>
+									<TabPane tabId="1" id="media1">
+										<Card>
+											<CardBody>
 												<Row>
-													<Col lg={3} md={6}>
-														<Card>
-															<CardBody>
-																<div className="d-flex align-items-center">
-																	<div className="avatar-sm flex-shrink-0">
-																		<span className="avatar-title bg-light text-primary shadow rounded-circle fs-3">
-																			<i className={"align-middle ri-flag-line"}></i>
-																		</span>
-																	</div>
-																	<div className="flex-grow-1 ms-3">
-																		<p className="text-uppercase fw-semibold fs-12 text-muted mb-1">Goal</p>
-																		<h4 className=" mb-0">
-																			{" "}
-																			<CountUp start={0} end={campaign?.goal} decimals={2} separator={","} prefix={"$"} duration={3} />
-																		</h4>
-																	</div>
-																</div>
-															</CardBody>
-														</Card>
+													<Col lg={6}>
+														<div className="mb-3">
+															<Label className="form-label" htmlFor="fullName-input">
+																Create By
+															</Label>
+															<Input
+																type="text"
+																className="form-control"
+																id="fullName-input"
+																placeholder="Enter Create By"
+																name="fullName"
+																onChange={campaignValidation.handleChange}
+																onBlur={campaignValidation.handleBlur}
+																value={campaignValidation.values.fullName}
+															/>
+														</div>
 													</Col>
-													<Col lg={3} md={6}>
-														<Card>
-															<CardBody>
-																<div className="d-flex align-items-center">
-																	<div className="avatar-sm flex-shrink-0">
-																		<span className="avatar-title bg-light text-primary shadow rounded-circle fs-3">
-																			<i className={"align-middle ri-coins-line"}></i>
-																		</span>
-																	</div>
-																	<div className="flex-grow-1 ms-3">
-																		<p className="text-uppercase fw-semibold fs-12 text-muted mb-1">Total Raised</p>
-																		<h4 className=" mb-0">
-																			{" "}
-																			<CountUp start={0} end={campaign?.totalRaised} decimals={2} separator={","} prefix={"$"} duration={3} />
-																		</h4>
-																	</div>
-																</div>
-															</CardBody>
-														</Card>
-													</Col>
-													<Col lg={3} md={6}>
-														<Card>
-															<CardBody>
-																<div className="d-flex align-items-center">
-																	<div className="avatar-sm flex-shrink-0">
-																		<span className="avatar-title bg-light text-primary shadow rounded-circle fs-3">
-																			<i className={"align-middle ri-hand-coin-line"}></i>
-																		</span>
-																	</div>
-																	<div className="flex-grow-1 ms-3">
-																		<p className="text-uppercase fw-semibold fs-12 text-muted mb-1">Total Donation</p>
-																		<h4 className=" mb-0">
-																			{" "}
-																			<CountUp start={0} end={campaign?.totalDonation} decimals={0} separator={","} prefix={""} duration={3} />
-																		</h4>
-																	</div>
-																</div>
-															</CardBody>
-														</Card>
-													</Col>
-													<Col lg={3} md={6}>
-														<Card>
-															<CardBody>
-																<div className="d-flex align-items-center">
-																	<div className="avatar-sm flex-shrink-0">
-																		<span className="avatar-title bg-light text-primary shadow rounded-circle fs-3">
-																			<i className={"align-middle ri-coin-line"}></i>
-																		</span>
-																	</div>
-																	<div className="flex-grow-1 ms-3">
-																		<p className="text-uppercase fw-semibold fs-12 text-muted mb-1">Total Tips</p>
-																		<h4 className=" mb-0">
-																			{" "}
-																			<CountUp start={0} end={campaign?.totalTip} decimals={2} separator={","} prefix={"$"} duration={3} />
-																		</h4>
-																	</div>
-																</div>
-															</CardBody>
-														</Card>
-													</Col>
-													<Col xs={12}>
-														<Card id="contactList">
-															<CardBody className="pt-0">
-																<div>
-																	{!isLoading ? (
-																		<TableContainer
-																			columns={columns}
-																			data={campaign?.donations || []}
-																			isGlobalFilter={false}
-																			isAddUserList={false}
-																			customPageSize={8}
-																			className="custom-header-css"
-																			divClass="table-responsive table-card mb-2"
-																			tableClass="align-middle table-nowrap"
-																			theadClass="table-light"
-																			isContactsFilter={true}
-																			SearchPlaceholder="Search for contact..."
-																			isPagination={true}
-																		/>
-																	) : (
-																		<Loader error={true} />
-																	)}
-																</div>
-															</CardBody>
-														</Card>
+													<Col lg={6}>
+														<div className="mb-3">
+															<FilePond
+																files={fileProfile}
+																onupdatefiles={setFileProfile}
+																allowMultiple={false}
+																maxFiles={1}
+																storeAsFile={true}
+																server={`${api.BASE_URL}/save-image/campaign`}
+																name="file"
+																labelIdle='Drag & Drop video or <span className="filepond--label-action">Browse</span>'
+															/>
+														</div>
 													</Col>
 												</Row>
-											</TabPane>
-										</TabContent>
-									</CardBody>
-								</Card>
-							</Col>
-							<Col lg={4}>
+											
+											</CardBody>
+										</Card>
+									</TabPane>
+								</TabContent>
 								<Card>
 									<CardBody>
-										<FormGroup>
-											<Label for="exampleSelect">Campaign Status</Label>
+										<div className="mb-3">
+											<Label className="form-label" htmlFor="news-ordering-input">
+												Ordering
+											</Label>
 											<Input
-												id="exampleSelect"
+												type="number"
 												className="form-control"
-												name="status"
+												id="news-ordering-input"
+												placeholder="Enter news ordering"
+												name="ordering"
 												onChange={campaignValidation.handleChange}
-												value={campaignValidation.values.status}
-												type="select"
-											>
-												<option disabled>{campaignValidation.values.status}</option>
-												<option value="COMPLETE">Approve</option>
-												<option value="REJECTED">REJECTED</option>
-												<option value="FAILED">FAILED</option>
-												<option value="INACTIVE">INACTIVE</option>
-												<option value="COMPLETE">ACTIVE</option>
-											</Input>
-										</FormGroup>
-										<div className="form-check form-switch form-switch-md" dir="ltr">
+												onBlur={campaignValidation.handleBlur}
+												value={campaignValidation.values.ordering}
+											/>
+										</div>
+									</CardBody>
+								</Card>
+								<Card>
+									<CardBody>
+										<div className="form-check form-switch form-switch-md mb-3" dir="ltr">
 											<Input
 												type="checkbox"
 												className="form-check-input"
-												id="isInNeed"
-												name="isInNeed"
+												id="isActive"
+												name="isActive"
 												onChange={campaignValidation.handleChange}
 												onBlur={campaignValidation.handleBlur}
-												checked={campaignValidation.values.isInNeed}
+												checked={campaignValidation.values.isActive}
 											/>
-											<Label className="form-check-label" for="isInNeed">
-												Is campaign in need: <span className="fw-bolder">{campaignValidation.values.isInNeed ? "TRUE" : "FALSE"}</span>
+											<Label className="form-check-label" for="isActive">
+												Status: <span className="fw-bolder">{campaignValidation.values.isActive ? "Active" : "In-Active"}</span>
 											</Label>
 										</div>
-										<div className="form-check form-switch form-switch-md" dir="ltr">
-											<Input
-												type="checkbox"
-												className="form-check-input"
-												id="isTrending"
-												name="isTrending"
-												onChange={campaignValidation.handleChange}
-												onBlur={campaignValidation.handleBlur}
-												checked={campaignValidation.values.isTrending}
-											/>
-											<Label className="form-check-label" for="isTrending">
-												Is campaign trending: <span className="fw-bolder">{campaignValidation.values.isTrending ? "TRUE" : "FALSE"}</span>
-											</Label>
-										</div>
-										<div className="form-check form-switch form-switch-md" dir="ltr">
+										<div className="form-check form-switch form-switch-md mb-3" dir="ltr">
 											<Input
 												type="checkbox"
 												className="form-check-input"
@@ -765,43 +838,31 @@ const CampaignForm = (props) => {
 												checked={campaignValidation.values.isLatest}
 											/>
 											<Label className="form-check-label" for="isLatest">
-												Is latest: <span className="fw-bolder">{campaignValidation.values.isLatest ? "TRUE" : "FALSE"}</span>
+												Display Homepage: <span className="fw-bolder">{campaignValidation.values.isLatest ? "Show" : "Hide"}</span>
 											</Label>
 										</div>
+
 										<div className="form-check form-switch form-switch-md" dir="ltr">
 											<Input
 												type="checkbox"
 												className="form-check-input"
-												id="allowEdit"
-												name="allowEdit"
+												id="isInNeed"
+												name="isInNeed"
 												onChange={campaignValidation.handleChange}
 												onBlur={campaignValidation.handleBlur}
-												checked={campaignValidation.values.allowEdit}
+												checked={campaignValidation.values.isInNeed}
 											/>
-											<Label className="form-check-label" for="allowEdit">
-												Allow Edit: <span className="fw-bolder">{campaignValidation.values.allowEdit ? "TRUE" : "FALSE"}</span>
+											<Label className="form-check-label" for="isTrending">
+												In Need: <span className="fw-bolder">{campaignValidation.values.isInNeed ? "Show" : "Hide"}</span>
 											</Label>
-										</div>
-										<div className="my-3">
-											<Label className="form-label" htmlFor="campaign-ordering-input">
-												Ordering
-											</Label>
-											<Input
-												type="number"
-												className="form-control"
-												id="campaign-ordering-input"
-												placeholder="Enter campaign ordering"
-												name="ordering"
-												onChange={campaignValidation.handleChange}
-												onBlur={campaignValidation.handleBlur}
-												value={campaignValidation.values.ordering}
-											/>
 										</div>
 									</CardBody>
 								</Card>
+							</Col>
+							<Col>
 								<div className="text-start mb-4">
 									{useCampaignSelect.isLoading ? (
-										<Button type="button" color="primary" className="btn-load">
+										<Button color="primary" className="btn-load">
 											<span className="d-flex align-items-center">
 												<Spinner size="sm" className="flex-shrink-0">
 													Loading...
@@ -810,8 +871,8 @@ const CampaignForm = (props) => {
 											</span>
 										</Button>
 									) : (
-										<Button type="button" color="primary" className="btn-label" onClick={() => campaignValidation.handleSubmit()}>
-											<i className="ri-save-3-line label-icon align-middle fs-16 me-2"></i> Save Campaign
+										<Button type="submit" color="primary" className="btn-label">
+											<i className="ri-save-3-line label-icon align-middle fs-16 me-2"></i> Save News
 										</Button>
 									)}{" "}
 									<Link className="btn btn-label btn-danger" to="/campaign-menu">

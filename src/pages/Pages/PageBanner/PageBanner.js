@@ -185,6 +185,9 @@ const PageBanner = () => {
 					>
 						<div className="text-center">
 							<div style={{ width: "100%" }}>
+								<Label className="form-label">
+									Size: (1280x350 px)
+								</Label>
 								<FilePond
 									labelIdle='<span class="filepond--label-action">Choose Profile Image</span>'
 									files={file}

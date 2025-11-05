@@ -252,8 +252,331 @@ const Member = () => {
 				</ModalHeader>
 
 				<ModalBody>
-					<Row>
-						<Col lg={6}>
+					<Row style={{alignItems: "center"}}>
+						<Col lg={4}>
+							<div className="text-center">
+								<div className="profile-member position-relative d-inline-block mx-auto  mb-2">
+									<img src={api.FILE_URI + memberDetail.member?.image} style={{height: "170px",borderRadius: "100%"}} alt="" />
+								</div>
+							</div>
+						</Col>
+						<Col lg={8}>
+							<Row>
+								<Col lg={4} md={4}>
+									<Card>
+										<CardBody>
+											<div className="d-flex align-items-center">
+												<div className="flex-grow-1 ms-3">
+													<p className="text-uppercase fw-semibold fs-12 text-muted mb-1">Fund Raised</p>
+													<h4 className=" mb-0">
+														{" "}
+														<CountUp start={0} end={(memberDetail?.member?.totalRaised ? memberDetail?.member?.totalRaised : 0)} decimals={2} separator={","} prefix={"$"} duration={3} />
+													</h4>
+												</div>
+											</div>
+										</CardBody>
+									</Card>
+								</Col>
+								<Col lg={4} md={4}>
+									<Card>
+										<CardBody>
+											<div className="d-flex align-items-center">
+												<div className="flex-grow-1 ms-3">
+													<p className="text-uppercase fw-semibold fs-12 text-muted mb-1">Donation</p>
+													<h4 className=" mb-0">
+														{" "}
+														<CountUp start={0} end={(memberDetail?.member?.totalDonation ? memberDetail?.member?.totalDonation : 0)} decimals={2} separator={","} prefix={"$"} duration={1} />
+													</h4>
+												</div>
+											</div>
+										</CardBody>
+									</Card>
+								</Col>
+								<Col lg={4} md={4}>
+									<Card>
+										<CardBody>
+											<div className="d-flex align-items-center">
+												<div className="flex-grow-1 ms-3">
+													<p className="text-uppercase fw-semibold fs-12 text-muted mb-1">Withdraw</p>
+													<h4 className=" mb-0">
+														{" "}
+														<CountUp start={0} end={(memberDetail?.member?.totalWithdraw ? memberDetail?.member?.totalWithdraw : 0)} decimals={2} separator={","} prefix={"$"} duration={3} />
+													</h4>
+												</div>
+											</div>
+										</CardBody>
+									</Card>
+								</Col>
+								<Col lg={4} md={4}>
+									<Card>
+										<CardBody>
+											<div className="d-flex align-items-center">
+												<div className="flex-grow-1 ms-3">
+													<p className="text-uppercase fw-semibold fs-12 text-muted mb-1">Balance</p>
+													<h4 className=" mb-0">
+														{" "}
+														<CountUp start={0} end={(memberDetail?.member?.totalBalance ? memberDetail?.member?.totalBalance : 0)} decimals={2} separator={","} prefix={"$"} duration={1} />
+													</h4>
+												</div>
+											</div>
+										</CardBody>
+									</Card>
+								</Col>
+								<Col lg={4} md={4}>
+									<Card>
+										<CardBody>
+											<div className="d-flex align-items-center">
+												<div className="flex-grow-1 ms-3">
+													<p className="text-uppercase fw-semibold fs-12 text-muted mb-1">Campaigns</p>
+													<h4 className=" mb-0">
+														{" "}
+														<CountUp start={0} end={(memberDetail?.member?.campaignCount ? memberDetail?.member?.campaignCount : 0)} decimals={0} separator={","} prefix={""} duration={1} />
+													</h4>
+												</div>
+											</div>
+										</CardBody>
+									</Card>
+								</Col>
+								<Col lg={4} md={4}>
+									<Card>
+										<CardBody>
+											<div className="d-flex align-items-center">
+												<div className="flex-grow-1 ms-3">
+													<p className="text-uppercase fw-semibold fs-12 text-muted mb-1">Donors</p>
+													<h4 className=" mb-0">
+														{" "}
+														<CountUp start={0} end={(memberDetail?.member?.totalDonors ? memberDetail?.member?.totalDonors : 0)} decimals={0} separator={","} prefix={""} duration={3} />
+													</h4>
+												</div>
+											</div>
+										</CardBody>
+									</Card>
+								</Col>
+							</Row>
+						</Col>
+						<Label className="form-label" style={{ fontSize: "1.5rem", fontWeight: "600", margin: "1rem 0"}}>
+							Personal Information
+						</Label>
+						<Col lg={6} md={6}>
+							<div className="mb-2">
+								<Label htmlFor="firstName" className="form-label">
+									First Name
+								</Label>
+								<Input
+									id="firstName"
+									name="firstName"
+									type="text"
+									className="form-control"
+									placeholder="Enter first name"
+									onChange={memberValidation.handleChange}
+									onBlur={memberValidation.handleBlur}
+									value={memberValidation.values.firstName || ""}
+									disabled
+								/>
+							</div>
+						</Col>
+						<Col lg={6} md={6}>
+							<div className="mb-2">
+								<Label htmlFor="lastName" className="form-label">
+									Last Name
+								</Label>
+								<Input
+									id="lastName"
+									name="lastName"
+									type="text"
+									className="form-control"
+									placeholder="Enter last name"
+									onChange={memberValidation.handleChange}
+									onBlur={memberValidation.handleBlur}
+									value={memberValidation.values.lastName || ""}
+									disabled
+								/>
+							</div>
+						</Col>
+						<Col lg={6} md={6}>
+							<div className="mb-2">
+								<Label htmlFor="emailInput" className="form-label">
+									Email address
+								</Label>
+								<Input
+									type="email"
+									className="form-control"
+									id="emailInput"
+									placeholder="Enter email"
+									name="email"
+									onChange={memberValidation.handleChange}
+									onBlur={memberValidation.handleBlur}
+									value={memberValidation.values.email || ""}
+									disabled
+								/>
+							</div>
+						</Col>
+						<Col lg={6} md={6}>
+							<div className="mb-2">
+								<Label htmlFor="phoneNumber" className="form-label">
+									Phone number
+								</Label>
+								<Input
+									type="text"
+									className="form-control"
+									id="phoneNumber"
+									placeholder="Enter phone number"
+									name="phoneNumber"
+									onChange={memberValidation.handleChange}
+									onBlur={memberValidation.handleBlur}
+									value={memberValidation.values.phoneNumber || ""}
+									disabled
+								/>
+							</div>
+						</Col>
+						<Col lg={6} md={6}>
+							<div className="mb-2">
+								<Label htmlFor="fullname" className="form-label">
+									FullName
+								</Label>
+								<Input
+									type="text"
+									className="form-control"
+									id="fullname"
+									placeholder="Enter fullname"
+									name="fullname"
+									onChange={memberValidation.handleChange}
+									onBlur={memberValidation.handleBlur}
+									value={memberDetail?.member?.info?.fullname || ""}
+									disabled
+								/>
+							</div>
+						</Col>
+						<Col lg={6} md={6}>
+							<div className="mb-2">
+								<Label htmlFor="age" className="form-label">
+									Age
+								</Label>
+								<Input
+									type="text"
+									className="form-control"
+									id="age"
+									placeholder="Enter age"
+									name="age"
+									onChange={memberValidation.handleChange}
+									onBlur={memberValidation.handleBlur}
+									value={memberDetail?.member?.info?.age || ""}
+									disabled
+								/>
+							</div>
+						</Col>
+						<Col lg={6} md={6}>
+							<div className="mb-2">
+								<Label htmlFor="gender" className="form-label">
+									Gender
+								</Label>
+								<Input
+									type="text"
+									className="form-control"
+									id="gender"
+									name="gender"
+									onChange={memberValidation.handleChange}
+									onBlur={memberValidation.handleBlur}
+									value={memberDetail?.member?.info?.gender == "male" ? "Male" : "Female"}
+									disabled
+								/>
+							</div>
+						</Col>
+						<Col lg={6} md={6}>
+							<div className="mb-2">
+								<Label htmlFor="location" className="form-label">
+									City
+								</Label>
+								<Input
+									type="text"
+									className="form-control"
+									id="location"
+									name="location"
+									onChange={memberValidation.handleChange}
+									onBlur={memberValidation.handleBlur}
+									value={memberDetail?.member?.info?.city || ""}
+									disabled
+								/>
+							</div>
+						</Col>
+						<Col lg={12} md={12}>
+							<div className="mb-2">
+								<Label htmlFor="location" className="form-label">
+									Location
+								</Label>
+								<Input
+									type="text"
+									className="form-control"
+									id="location"
+									name="location"
+									onChange={memberValidation.handleChange}
+									onBlur={memberValidation.handleBlur}
+									value={memberDetail?.member?.info?.location || ""}
+									disabled
+								/>
+							</div>
+						</Col>
+
+						<Col lg={6} md={6}>
+							<div className="mb-2">
+								<Label htmlFor="location" className="form-label">
+									Date
+								</Label>
+								<Input
+									type="date"
+									className="form-control"
+									id="location"
+									name="location"
+									onChange={memberValidation.handleChange}
+									onBlur={memberValidation.handleBlur}
+									value={memberDetail?.member?.info?.date || ""}
+									disabled
+								/>
+							</div>
+						</Col>
+						
+						<Col lg={6} md={6}>
+							<div className="mb-2">
+								<Label htmlFor="phoneNumber" className="form-label">
+									Member Type
+								</Label>
+								<Input
+									type="text"
+									className="form-control"
+									id="phoneNumber"
+									placeholder="Enter phone number"
+									name="phoneNumber"
+									onChange={memberValidation.handleChange}
+									onBlur={memberValidation.handleBlur}
+									value={memberDetail?.member?.memberType || ""}
+									disabled
+								/>
+							</div>
+						</Col>
+						<Col lg={12} style={{textAlign: "center"}}>
+							<Label className="form-label" style={{ fontSize: "1rem", fontWeight: "600", textDecoration: "underline" }}>
+								{memberDetail?.member?.idType == "ID_CARD" ? "ID" : "Passport"} Card
+							</Label>
+							<div className="row border border-dashed justify-content-center gx-2 mb-3">
+								{memberDetail?.member?.idCardFront && memberDetail?.member?.idType === "ID_CARD" ? (
+									<div className="col-6">
+										<img src={api.FILE_URI + memberDetail?.member?.idCardFront} alt="" className="img-fluid rounded" />
+									</div>
+								) : null}
+								{memberDetail?.member?.idCardBack && memberDetail?.member?.idType === "ID_CARD" ? (
+									<div className="col-6">
+										<img src={api.FILE_URI + memberDetail?.member?.idCardBack} alt="" className="img-fluid rounded" />
+									</div>
+								) : null}
+								{memberDetail?.member?.passport && memberDetail?.member?.idType === "PASSPORT" ? (
+									<div className="col-6">
+										<img src={api.FILE_URI + memberDetail?.member?.passport} alt="" className="img-fluid rounded" />
+									</div>
+								) : null}
+							</div>
+						</Col>
+						{/* Old Code */}
+						{/* <Col lg={6}>
 							<Form
 								onSubmit={(e) => {
 									e.preventDefault();
@@ -449,7 +772,7 @@ const Member = () => {
 													<p className="text-uppercase fw-semibold fs-12 text-muted mb-1">Fund Raised</p>
 													<h4 className=" mb-0">
 														{" "}
-														<CountUp start={0} end={memberDetail?.member?.totalRaised} decimals={2} separator={","} prefix={"$"} duration={3} />
+														<CountUp start={0} end={(memberDetail?.member?.totalRaised ? memberDetail?.member?.totalRaised : 0)} decimals={2} separator={","} prefix={"$"} duration={3} />
 													</h4>
 												</div>
 											</div>
@@ -464,7 +787,7 @@ const Member = () => {
 													<p className="text-uppercase fw-semibold fs-12 text-muted mb-1">Donation</p>
 													<h4 className=" mb-0">
 														{" "}
-														<CountUp start={0} end={memberDetail?.member?.totalDonation} decimals={2} separator={","} prefix={"$"} duration={1} />
+														<CountUp start={0} end={(memberDetail?.member?.totalDonation ? memberDetail?.member?.totalDonation : 0)} decimals={2} separator={","} prefix={"$"} duration={1} />
 													</h4>
 												</div>
 											</div>
@@ -479,7 +802,7 @@ const Member = () => {
 													<p className="text-uppercase fw-semibold fs-12 text-muted mb-1">Withdraw</p>
 													<h4 className=" mb-0">
 														{" "}
-														<CountUp start={0} end={memberDetail?.member?.totalWithdraw} decimals={2} separator={","} prefix={"$"} duration={3} />
+														<CountUp start={0} end={(memberDetail?.member?.totalWithdraw ? memberDetail?.member?.totalWithdraw : 0)} decimals={2} separator={","} prefix={"$"} duration={3} />
 													</h4>
 												</div>
 											</div>
@@ -494,7 +817,7 @@ const Member = () => {
 													<p className="text-uppercase fw-semibold fs-12 text-muted mb-1">Balance</p>
 													<h4 className=" mb-0">
 														{" "}
-														<CountUp start={0} end={memberDetail?.member?.totalBalance} decimals={2} separator={","} prefix={"$"} duration={1} />
+														<CountUp start={0} end={(memberDetail?.member?.totalBalance ? memberDetail?.member?.totalBalance : 0)} decimals={2} separator={","} prefix={"$"} duration={1} />
 													</h4>
 												</div>
 											</div>
@@ -509,7 +832,7 @@ const Member = () => {
 													<p className="text-uppercase fw-semibold fs-12 text-muted mb-1">Campaigns</p>
 													<h4 className=" mb-0">
 														{" "}
-														<CountUp start={0} end={memberDetail?.member?.campaignCount} decimals={0} separator={","} prefix={""} duration={1} />
+														<CountUp start={0} end={(memberDetail?.member?.campaignCount ? memberDetail?.member?.campaignCount : 0)} decimals={0} separator={","} prefix={""} duration={1} />
 													</h4>
 												</div>
 											</div>
@@ -524,7 +847,7 @@ const Member = () => {
 													<p className="text-uppercase fw-semibold fs-12 text-muted mb-1">Donors</p>
 													<h4 className=" mb-0">
 														{" "}
-														<CountUp start={0} end={memberDetail?.member?.totalDonors} decimals={0} separator={","} prefix={""} duration={3} />
+														<CountUp start={0} end={(memberDetail?.member?.totalDonors ? memberDetail?.member?.totalDonors : 0)} decimals={0} separator={","} prefix={""} duration={3} />
 													</h4>
 												</div>
 											</div>
@@ -593,7 +916,7 @@ const Member = () => {
 									</div>
 								</Col>
 							</Row>
-						</Col>
+						</Col> */}
 					</Row>
 				</ModalBody>
 			</Modal>

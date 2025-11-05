@@ -42,12 +42,23 @@ import TermOfService from "../pages/Pages/SiteSetting/TermOfService";
 import PrivacyPolicy from "../pages/Pages/SiteSetting/PrivacyPolicy";
 import CampaignMenu from "../pages/Pages/Campaign";
 import CampaignForm from "../pages/Pages/Campaign/CampaignForm";
+// import CampaignForm from "../pages/Pages/Campaign/CampaignForm2";
 import WithdrawMenu from "../pages/Pages/Withdraw";
 import WithdrawForm from "../pages/Pages/Withdraw/WithdrawForm";
 import HomePage from "../pages/Pages/SiteSetting/HomePage";
 import AboutPage from "../pages/Pages/SiteSetting/AboutPage";
 import Member from "../pages/Pages/Member/Member";
 import Team from "../pages/Pages/Team/Team";
+import ServiceMenu from "../pages/Pages/Service";
+import ServiceForm from "../pages/Pages/Service/ServiceForm";
+import PortfolioMenu from "../pages/Pages/Portfolio";
+import PortfolioForm from "../pages/Pages/Portfolio/PortfolioForm";
+import MemberInformation from "../pages/Pages/Member/MemberInformation";
+import Gallery from "../pages/Pages/Gallery/Gallery";
+import { components } from "react-select";
+import Video from "../pages/Pages/Video/Video";
+import DonationTerm from "../pages/Pages/SiteSetting/DonationTerm";
+import MemberDetail from "../pages/Pages/Member/MemberDetail";
 
 const authProtectedRoutes = [
 	{ path: "/dashboard", component: <Dashboard /> },
@@ -65,6 +76,12 @@ const authProtectedRoutes = [
 	{ path: "/project-menu", component: <ProjectMenu /> },
 	{ path: "/project-menu/create", component: <ProjectForm /> },
 	{ path: "/project-menu/edit/:id", component: <ProjectForm /> },
+	{ path: "/services-menu", component: <ServiceMenu /> },
+	{ path: "/services-menu/create", component: <ServiceForm /> },
+	{ path: "/services-menu/edit/:id", component: <ServiceForm /> },
+	{ path: "/portfolios-menu", component: <PortfolioMenu /> },
+	{ path: "/portfolios-menu/create", component: <PortfolioForm /> },
+	{ path: "/portfolios-menu/edit/:id", component: <PortfolioForm /> },
 	{ path: "/campaign-menu", component: <CampaignMenu /> },
 	{ path: "/campaign-menu/create", component: <CampaignForm /> },
 	{ path: "/campaign-menu/edit/:id", component: <CampaignForm /> },
@@ -81,6 +98,7 @@ const authProtectedRoutes = [
 	{ path: "/testimonial", component: <Testimonial /> },
 	{ path: "/term-service", component: <TermOfService /> },
 	{ path: "/privacy-policy", component: <PrivacyPolicy /> },
+	{ path: "/donation-term", component: <DonationTerm /> },
 	{ path: "/site-setting/about-company", component: <AboutCompany /> },
 	{ path: "/site-setting/who-we-are", component: <Whoweare /> },
 	{ path: "/site-setting/home-page", component: <HomePage /> },
@@ -96,6 +114,10 @@ const authProtectedRoutes = [
 	{ path: "/page-banner", component: <PageBanner /> },
 	{ path: "/user-management", component: <User /> },
 	{ path: "/member-management", component: <Member /> },
+	{ path: "/member-information/:id", component: <MemberInformation /> },
+	{ path: "/gallery", component: <Gallery /> },
+	{ path: "/video", component: <Video /> },
+	{ path: "/member-detail/:id", component: <MemberDetail /> },
 	{
 		path: "/",
 		exact: true,

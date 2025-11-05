@@ -18,6 +18,9 @@ import UserDetailReducer from "./user/detail/reducer";
 import MemberListReducer from "./member/list/reducer";
 import CreateMemberReducer from "./member/create/reducer";
 import MemberDetailReducer from "./member/detail/reducer";
+// Member Information
+import CreateMemberInformationReducer from "./memberInformation/create/reducer";
+import MemberInformationDetailReducer from "./memberInformation/detail/reducer";
 
 import PerformanceListReducer from "./performance/list/reducer";
 import CreatePerformanceReducer from "./performance/create/reducer";
@@ -54,6 +57,23 @@ import PageBannerListReducer from "./pageBanner/list/reducer";
 import CreatePageBannerReducer from "./pageBanner/create/reducer";
 import PageBannerDetailReducer from "./pageBanner/detail/reducer";
 import dashboardDetailReducer from "./dashboard/detail/reducer";
+// Service 
+import ServiceListReducer from "./service/list/reducer";
+import CreateServiceReducer from "./service/create/reducer";
+import ServiceDetailReducer from "./service/detail/reducer";
+
+// Project
+import PortfolioListReducer from "./portfolio/list/reducer";
+import CreatePortfolioReducer from "./portfolio/create/reducer";
+import PortfolioDetailReducer from "./portfolio/detail/reducer";
+
+// Gallery 
+import GalleryListReducer from "./gallery/list/reducer";
+import CreateGalleryReducer from "./gallery/create/reducer";
+import GalleryDetailReducer from "./gallery/detail/reducer";
+import VideoDetailReducer from "./video/detail/reducer";
+import VideoListReducer from "./video/list/reducer";
+import CreateVideoReducer from "./video/create/reducer";
 
 const rootReducer = combineReducers({
 	// public
@@ -71,6 +91,9 @@ const rootReducer = combineReducers({
 	MemberListReducer,
 	CreateMemberReducer,
 	MemberDetailReducer,
+	// Member Information
+	CreateMemberInformationReducer,
+	MemberInformationDetailReducer,
 	// Performance
 	PerformanceListReducer,
 	CreatePerformanceReducer,
@@ -116,6 +139,22 @@ const rootReducer = combineReducers({
 	TeamListReducer,
 	CreateTeamReducer,
 	TeamDetailReducer,
+	//Service
+	ServiceListReducer,
+	CreateServiceReducer,
+	ServiceDetailReducer,
+	//Project
+	PortfolioListReducer,
+	CreatePortfolioReducer,
+	PortfolioDetailReducer,
+	// Gallery
+	GalleryDetailReducer,
+	GalleryListReducer,
+	CreateGalleryReducer,
+	// Video 
+	VideoDetailReducer,
+	VideoListReducer,
+	CreateVideoReducer,
 	dashboardDetailReducer
 });
 
