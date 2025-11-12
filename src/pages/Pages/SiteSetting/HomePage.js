@@ -107,6 +107,9 @@ const HomePage = () => {
 			title: siteSetting ? siteSetting.title : "",
 			titleKh: siteSetting ? siteSetting.titleKh : "",
 			titleCh: siteSetting ? siteSetting.titleCh : "",
+			titleBar: siteSetting ? siteSetting.titleBar : "",
+			titleBarKh: siteSetting ? siteSetting.titleBarKh : "",
+			titleBarCh: siteSetting ? siteSetting.titleBarCh : "",
 			des: siteSetting ? siteSetting.des : "",
 			desKh: siteSetting ? siteSetting.desKh : "",
 			desCh: siteSetting ? siteSetting.desCh : "",
@@ -311,6 +314,78 @@ const HomePage = () => {
 										</div>
 									</CardHeader>
 								</Card>
+
+								<Card>
+									<CardBody>
+										{isLoading ? (
+											<span className="d-flex align-items-center">
+												<Spinner size="sm" className="flex-shrink-0">
+													Loading...
+												</Spinner>
+												<span className="flex-grow-1 ms-2">Loading...</span>
+											</span>
+										) : (
+											<Row>
+												<Col xl={8}>
+													<TabContent activeTab={titleTap}>
+														<TabPane tabId="ENG" id="eng1">
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="titleBar-input">
+																	Title Top Bar
+																</Label>
+																<Input
+																	type="text"
+																	className="form-control"
+																	id="titleBar-input"
+																	placeholder="Enter text"
+																	name="titleBar"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.titleBar}
+																/>
+															</div>
+														</TabPane>
+														<TabPane tabId="KHM" id="khm1">
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="titleBarKh-input">
+																	Title Top Bar
+																</Label>
+																<Input
+																	type="text"
+																	className="form-control"
+																	id="titleBarKh-input"
+																	placeholder="Enter text"
+																	name="titleBarKh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.titleBarKh}
+																/>
+															</div>
+														</TabPane>
+														<TabPane tabId="CH" id="ch1">
+															<div className="mb-3">
+																<Label className="form-label" htmlFor="titleBarCh-input">
+																	Title Top Bar
+																</Label>
+																<Input
+																	type="text"
+																	className="form-control"
+																	id="titleBarCh-input"
+																	placeholder="Enter text"
+																	name="titleBarCh"
+																	onChange={settingForm.handleChange}
+																	onBlur={settingForm.handleBlur}
+																	value={settingForm.values.titleBarCh}
+																/>
+															</div>
+														</TabPane>
+													</TabContent>
+												</Col>
+											</Row>
+										)}
+									</CardBody>
+								</Card>
+
 								<Card>
 									<CardBody>
 										{isLoading ? (
