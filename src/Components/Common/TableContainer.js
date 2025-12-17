@@ -34,6 +34,7 @@ function GlobalFilter({
 	isProductsFilter,
 	isLeadsFilter,
 	SearchPlaceholder,
+	totalDonation
 }) {
 	const count = preGlobalFilteredRows.length;
 	const [value, setValue] = React.useState(globalFilter);
@@ -45,7 +46,7 @@ function GlobalFilter({
 		<React.Fragment>
 			<CardBody className="border border-dashed border-end-0 border-start-0">
 				<form>
-					<Row className="g-3">
+					<Row className="g-3" style={{alignItems: "center"}}>
 						<Col>
 							<div
 								className={
@@ -68,6 +69,21 @@ function GlobalFilter({
 								<i className="bx bx-search-alt search-icon"></i>
 							</div>
 						</Col>
+						{
+							totalDonation ? (
+								<Col>
+									<div
+										className={
+											isProductsFilter || isContactsFilter || isCompaniesFilter || isNFTRankingFilter
+												? "search-box me-2 mb-2 d-inline-block text-end w-100"
+												: "search-box me-2 mb-2 d-inline-block col-12 text-end w-100"
+										}
+									>
+										Total Donation: ${totalDonation.toFixed(2)}
+									</div>
+								</Col>
+							) : ""
+						}
 						{isProductsFilter && <ProductsGlobalFilter />}
 						{isCustomerFilter && <CustomersGlobalFilter />}
 						{isOrderFilter && <OrderGlobalFilter />}
@@ -115,6 +131,7 @@ const TableContainer = ({
 	thClass,
 	divClass,
 	SearchPlaceholder,
+	totalDonation
 }) => {
 	const {
 		getTableProps,
@@ -145,7 +162,7 @@ const TableContainer = ({
 				sortBy: [
 					{
 						id: "id",
-						desc: true,
+						desc: false,
 					},
 				],
 			},
@@ -201,6 +218,7 @@ const TableContainer = ({
 						isNFTRankingFilter={isNFTRankingFilter}
 						isTaskListFilter={isTaskListFilter}
 						SearchPlaceholder={SearchPlaceholder}
+						totalDonation={totalDonation}
 					/>
 				)}
 				{isAddOptions && (

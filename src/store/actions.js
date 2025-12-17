@@ -86,3 +86,5 @@ export * from "./gallery/list/actions";
 export * from "./video/create/actions";
 export * from "./video/detail/actions";
 export * from "./video/list/actions";
+
+export * from "./donorList/list/actions";

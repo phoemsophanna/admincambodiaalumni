@@ -59,6 +59,7 @@ import { components } from "react-select";
 import Video from "../pages/Pages/Video/Video";
 import DonationTerm from "../pages/Pages/SiteSetting/DonationTerm";
 import MemberDetail from "../pages/Pages/Member/MemberDetail";
+import DonorListMenu from "../pages/Pages/DonorList";
 
 const authProtectedRoutes = [
 	{ path: "/dashboard", component: <Dashboard /> },
@@ -116,6 +117,7 @@ const authProtectedRoutes = [
 	{ path: "/member-management", component: <Member /> },
 	{ path: "/member-information/:id", component: <MemberInformation /> },
 	{ path: "/gallery", component: <Gallery /> },
+	{ path: "/donor-list-menu", component: <DonorListMenu /> },
 	{ path: "/video", component: <Video /> },
 	{ path: "/member-detail/:id", component: <MemberDetail /> },
 	{

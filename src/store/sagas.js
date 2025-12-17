@@ -79,6 +79,8 @@ import CreateGalleryMainSaga from "./gallery/create/saga";
 import VideoDetailSaga from "./video/detail/saga";
 import VideoListSaga from "./video/list/saga";
 import CreateVideoMainSaga from "./video/create/saga";
+//
+import DonorListSaga from "./donorList/list/saga";
 
 export default function* rootSaga() {
 	yield all([
@@ -148,6 +150,7 @@ export default function* rootSaga() {
 		fork(CreateGalleryMainSaga),
 		fork(VideoDetailSaga),
 		fork(VideoListSaga),
-		fork(CreateVideoMainSaga)
+		fork(CreateVideoMainSaga),
+		fork(DonorListSaga)
 	]);
 }

@@ -35,6 +35,15 @@ const Navdata = () => {
 			},
 		},
 		{
+			id: "donor-list",
+			label: "Donor List",
+			icon: "mdi mdi-briefcase-variant-outline",
+			link: "/donor-list-menu",
+			click: function (e) {
+				e.preventDefault();
+			},
+		},
+		{
 			id: "gallery",
 			label: "Gallery",
 			icon: "mdi mdi-image",
@@ -52,15 +61,7 @@ const Navdata = () => {
 				e.preventDefault();
 			},
 		},
-		// {
-		// 	id: "withdraw",
-		// 	label: "Withdraw",
-		// 	icon: "mdi mdi-briefcase-variant-outline",
-		// 	link: "/withdraw-menu",
-		// 	click: function (e) {
-		// 		e.preventDefault();
-		// 	},
-		// },
+
 		// {
 		// 	id: "project",
 		// 	label: "Project",

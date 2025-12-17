@@ -148,3 +148,5 @@ export const postCreatePageBanner = (body) => api.create(url.PAGE_BANNER_URI, bo
 export const getPageBannerShowDetail = (param) => api.get(`${url.PAGE_BANNER_URI}/detail`, param);
 export const deletePageBanner = (userId) => api.delete(`${url.PAGE_BANNER_URI}/delete/${userId}`, null);
 export const getDashboardShowDetail = () => api.get(url.DASHBOARD_MANAGEMENT_URI, null);
+
+export const getDonorList = () => api.get(url.DONOR_MANAGEMENT_URL, null);

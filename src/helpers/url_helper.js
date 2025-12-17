@@ -39,3 +39,5 @@ export const SERVICE_MANAGEMENT_URI = "/services";
 export const PORTFOLIO_MANAGEMENT_URI = "/portfolios";
 export const GALLERY_MANAGEMENT_URL = "/galleries";
 export const VIDEO_MANAGEMENT_URL = "/video";
+
+export const DONOR_MANAGEMENT_URL = "/donor-lists";

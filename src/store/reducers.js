@@ -74,6 +74,7 @@ import GalleryDetailReducer from "./gallery/detail/reducer";
 import VideoDetailReducer from "./video/detail/reducer";
 import VideoListReducer from "./video/list/reducer";
 import CreateVideoReducer from "./video/create/reducer";
+import DonorListReducer from "./donorList/list/reducer";
 
 const rootReducer = combineReducers({
 	// public
@@ -155,7 +156,8 @@ const rootReducer = combineReducers({
 	VideoDetailReducer,
 	VideoListReducer,
 	CreateVideoReducer,
-	dashboardDetailReducer
+	dashboardDetailReducer,
+	DonorListReducer
 });
 
 export default rootReducer;
