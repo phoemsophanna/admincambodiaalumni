@@ -39,7 +39,7 @@ function GlobalFilter({
 	const count = preGlobalFilteredRows.length;
 	const [value, setValue] = React.useState(globalFilter);
 	const onChange = useAsyncDebounce((value) => {
-		setGlobalFilter(value || undefined);
+		setGlobalFilter(value || undefined);	
 	}, 200);
 
 	return (
@@ -78,6 +78,7 @@ function GlobalFilter({
 												? "search-box me-2 mb-2 d-inline-block text-end w-100"
 												: "search-box me-2 mb-2 d-inline-block col-12 text-end w-100"
 										}
+										style={{fontWeight: "bold",fontSize: "14px"}}
 									>
 										Total Donation: ${totalDonation.toFixed(2)}
 									</div>
@@ -162,7 +163,7 @@ const TableContainer = ({
 				sortBy: [
 					{
 						id: "id",
-						desc: false,
+						desc: true,
 					},
 				],
 			},

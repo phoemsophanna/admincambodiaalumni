@@ -45,7 +45,7 @@ const DonorListMenu = () => {
 			},
 			{
 				Header: "Name",
-				accessor: "name",
+				accessor: row => row.user ? row.user.name : "Anonymous",
 				filterable: false,
 				Cell: (donor) => (
 
