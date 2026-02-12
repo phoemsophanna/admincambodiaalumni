@@ -145,17 +145,11 @@ const CampaignMenu = () => {
 				filterable: false,
 				Cell: (campaign) => (
 					<>
-						{campaign.row.original.status === "PENDING" ? (
-							<span className="badge bg-warning-subtle text-warning">PENDING</span>
-						) : campaign.row.original.status === "COMPLETE" ? (
-							<span className="badge bg-success-subtle text-success">APPROVE</span>
-						) : campaign.row.original.status === "REJECTED" ? (
-							<span className="badge bg-danger-subtle text-danger">REJECTED</span>
-						) : campaign.row.original.status === "FAILED" ? (
-							<span className="badge bg-danger-subtle text-danger">FAILED</span>
-						) : campaign.row.original.status === "INACTIVE" ? (
-							<span className="badge bg-danger-subtle text-danger">INACTIVE</span>
-						) : null}
+						{campaign.row.original.isActive ? (
+							<span className="badge bg-success-subtle text-success">ACTIVE</span>
+						) : (
+							<span className="badge bg-danger-subtle text-danger">IN-ACTIVE</span>
+						)}
 					</>
 				),
 			},
