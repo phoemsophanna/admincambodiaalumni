@@ -437,36 +437,42 @@ const CampaignForm = (props) => {
 																<div className="text-danger">Please input title</div>
 															) : null}
 														</div>
-														<div className="mb-3">
-															<Label>Full Story</Label>
-															<TinymceEditor onUploadImage={handleEditorChange} initDataValue={contentDesc} />
-														</div>
-														<div className="mb-3">
-															<Label>Additional Information</Label>
-															<Input
-																type="text"
-																className="form-control"
-																id="additionalInformation-input"
-																placeholder="Enter additionalInformation English"
-																name="additionalInformation"
-																onChange={campaignValidation.handleChange}
-																onBlur={campaignValidation.handleBlur}
-																value={campaignValidation.values.additionalInformation}
-															/>
-														</div>
-														<div className="mb-3">
-															<Label>Your Involvement</Label>
-															<Input
-																type="text"
-																className="form-control"
-																id="involvement-input"
-																placeholder="Enter involvement English"
-																name="involvement"
-																onChange={campaignValidation.handleChange}
-																onBlur={campaignValidation.handleBlur}
-																value={campaignValidation.values.involvement}
-															/>
-														</div>
+														{
+															campaignValidation.values.ordering != -2 ? (
+																<>
+																	<div className="mb-3">
+																		<Label>Full Story</Label>
+																		<TinymceEditor onUploadImage={handleEditorChange} initDataValue={contentDesc} />
+																	</div>
+																	<div className="mb-3">
+																		<Label>Additional Information</Label>
+																		<Input
+																			type="text"
+																			className="form-control"
+																			id="additionalInformation-input"
+																			placeholder="Enter additionalInformation English"
+																			name="additionalInformation"
+																			onChange={campaignValidation.handleChange}
+																			onBlur={campaignValidation.handleBlur}
+																			value={campaignValidation.values.additionalInformation}
+																		/>
+																	</div>
+																	<div className="mb-3">
+																		<Label>Your Involvement</Label>
+																		<Input
+																			type="text"
+																			className="form-control"
+																			id="involvement-input"
+																			placeholder="Enter involvement English"
+																			name="involvement"
+																			onChange={campaignValidation.handleChange}
+																			onBlur={campaignValidation.handleBlur}
+																			value={campaignValidation.values.involvement}
+																		/>
+																	</div>
+																</>
+															) : ""
+														}
 													</TabPane>
 													<TabPane tabId="KHM" id="khm">
 														<div className="mb-3">
@@ -484,36 +490,40 @@ const CampaignForm = (props) => {
 																value={campaignValidation.values.campaignTileKm}
 															/>
 														</div>
-														<div className="mb-3">
-															<Label>Full Story</Label>
-															<TinymceEditor onUploadImage={handleEditorChangeKh} initDataValue={contentDescKh} />
-														</div>
-														<div className="mb-3">
-															<Label>Additional Information</Label>
-															<Input
-																type="text"
-																className="form-control"
-																id="additionalInformationKm-input"
-																placeholder="Enter additionalInformation Khmer"
-																name="additionalInformationKm"
-																onChange={campaignValidation.handleChange}
-																onBlur={campaignValidation.handleBlur}
-																value={campaignValidation.values.additionalInformationKm}
-															/>
-														</div>
-														<div className="mb-3">
-															<Label>Your Involvement</Label>
-															<Input
-																type="text"
-																className="form-control"
-																id="involvementKm-input"
-																placeholder="Enter involvement Khmer"
-																name="involvementKm"
-																onChange={campaignValidation.handleChange}
-																onBlur={campaignValidation.handleBlur}
-																value={campaignValidation.values.involvementKm}
-															/>
-														</div>
+														{
+															campaignValidation.values.ordering != -2 ? (<>
+																<div className="mb-3">
+																	<Label>Full Story</Label>
+																	<TinymceEditor onUploadImage={handleEditorChangeKh} initDataValue={contentDescKh} />
+																</div>
+																<div className="mb-3">
+																	<Label>Additional Information</Label>
+																	<Input
+																		type="text"
+																		className="form-control"
+																		id="additionalInformationKm-input"
+																		placeholder="Enter additionalInformation Khmer"
+																		name="additionalInformationKm"
+																		onChange={campaignValidation.handleChange}
+																		onBlur={campaignValidation.handleBlur}
+																		value={campaignValidation.values.additionalInformationKm}
+																	/>
+																</div>
+																<div className="mb-3">
+																	<Label>Your Involvement</Label>
+																	<Input
+																		type="text"
+																		className="form-control"
+																		id="involvementKm-input"
+																		placeholder="Enter involvement Khmer"
+																		name="involvementKm"
+																		onChange={campaignValidation.handleChange}
+																		onBlur={campaignValidation.handleBlur}
+																		value={campaignValidation.values.involvementKm}
+																	/>
+																</div>
+															</>) : "" 
+														}
 													</TabPane>
 													<TabPane tabId="CH" id="ch">
 														<div className="mb-3">
@@ -531,36 +541,40 @@ const CampaignForm = (props) => {
 																value={campaignValidation.values.campaignTileCh}
 															/>
 														</div>
-														<div className="mb-3">
-															<Label>Full Story</Label>
-															<TinymceEditor onUploadImage={handleEditorChangeCh} initDataValue={contentDescCh} />
-														</div>
-														<div className="mb-3">
-															<Label>Additional Information</Label>
-															<Input
-																type="text"
-																className="form-control"
-																id="additionalInformationCh-input"
-																placeholder="Enter additionalInformation Chinese"
-																name="additionalInformationCh"
-																onChange={campaignValidation.handleChange}
-																onBlur={campaignValidation.handleBlur}
-																value={campaignValidation.values.additionalInformationCh}
-															/>
-														</div>
-														<div className="mb-3">
-															<Label>Your Involvement</Label>
-															<Input
-																type="text"
-																className="form-control"
-																id="involvementCh-input"
-																placeholder="Enter involvement Chinese"
-																name="involvementCh"
-																onChange={campaignValidation.handleChange}
-																onBlur={campaignValidation.handleBlur}
-																value={campaignValidation.values.involvementCh}
-															/>
-														</div>
+														{
+															campaignValidation.values.ordering != -2 ? (<>
+																<div className="mb-3">
+																	<Label>Full Story</Label>
+																	<TinymceEditor onUploadImage={handleEditorChangeCh} initDataValue={contentDescCh} />
+																</div>
+																<div className="mb-3">
+																	<Label>Additional Information</Label>
+																	<Input
+																		type="text"
+																		className="form-control"
+																		id="additionalInformationCh-input"
+																		placeholder="Enter additionalInformation Chinese"
+																		name="additionalInformationCh"
+																		onChange={campaignValidation.handleChange}
+																		onBlur={campaignValidation.handleBlur}
+																		value={campaignValidation.values.additionalInformationCh}
+																	/>
+																</div>
+																<div className="mb-3">
+																	<Label>Your Involvement</Label>
+																	<Input
+																		type="text"
+																		className="form-control"
+																		id="involvementCh-input"
+																		placeholder="Enter involvement Chinese"
+																		name="involvementCh"
+																		onChange={campaignValidation.handleChange}
+																		onBlur={campaignValidation.handleBlur}
+																		value={campaignValidation.values.involvementCh}
+																	/>
+																</div>
+															</>) : ""
+														}
 													</TabPane>
 												</TabContent>
 
@@ -792,72 +806,81 @@ const CampaignForm = (props) => {
 										</Card>
 									</TabPane>
 								</TabContent>
-								<Card>
-									<CardBody>
-										<div className="mb-3">
-											<Label className="form-label" htmlFor="news-ordering-input">
-												Ordering
-											</Label>
-											<Input
-												type="number"
-												className="form-control"
-												id="news-ordering-input"
-												placeholder="Enter news ordering"
-												name="ordering"
-												onChange={campaignValidation.handleChange}
-												onBlur={campaignValidation.handleBlur}
-												value={campaignValidation.values.ordering}
-											/>
-										</div>
-									</CardBody>
-								</Card>
-								<Card>
-									<CardBody>
-										<div className="form-check form-switch form-switch-md mb-3" dir="ltr">
-											<Input
-												type="checkbox"
-												className="form-check-input"
-												id="isActive"
-												name="isActive"
-												onChange={campaignValidation.handleChange}
-												onBlur={campaignValidation.handleBlur}
-												checked={campaignValidation.values.isActive}
-											/>
-											<Label className="form-check-label" for="isActive">
-												Status: <span className="fw-bolder">{campaignValidation.values.isActive ? "Active" : "In-Active"}</span>
-											</Label>
-										</div>
-										<div className="form-check form-switch form-switch-md mb-3" dir="ltr">
-											<Input
-												type="checkbox"
-												className="form-check-input"
-												id="isLatest"
-												name="isLatest"
-												onChange={campaignValidation.handleChange}
-												onBlur={campaignValidation.handleBlur}
-												checked={campaignValidation.values.isLatest}
-											/>
-											<Label className="form-check-label" for="isLatest">
-												Display Homepage: <span className="fw-bolder">{campaignValidation.values.isLatest ? "Show" : "Hide"}</span>
-											</Label>
-										</div>
+								{
+									campaignValidation.values.ordering != -2 ? (<>
+										<Card>
+											<CardBody>
+												<div className="mb-3">
+													<Label className="form-label" htmlFor="news-ordering-input">
+														Ordering
+													</Label>
+													<Input
+														type="number"
+														className="form-control"
+														id="news-ordering-input"
+														placeholder="Enter news ordering"
+														name="ordering"
+														onChange={campaignValidation.handleChange}
+														onBlur={campaignValidation.handleBlur}
+														value={campaignValidation.values.ordering}
+													/>
+												</div>
+											</CardBody>
+										</Card>
+									</>) : ""
+								}
 
-										<div className="form-check form-switch form-switch-md" dir="ltr">
-											<Input
-												type="checkbox"
-												className="form-check-input"
-												id="isInNeed"
-												name="isInNeed"
-												onChange={campaignValidation.handleChange}
-												onBlur={campaignValidation.handleBlur}
-												checked={campaignValidation.values.isInNeed}
-											/>
-											<Label className="form-check-label" for="isTrending">
-												In Need: <span className="fw-bolder">{campaignValidation.values.isInNeed ? "Show" : "Hide"}</span>
-											</Label>
-										</div>
-									</CardBody>
-								</Card>
+								{
+									campaignValidation.values.ordering != -2 ? (<>
+										<Card>
+											<CardBody>
+												<div className="form-check form-switch form-switch-md mb-3" dir="ltr">
+													<Input
+														type="checkbox"
+														className="form-check-input"
+														id="isActive"
+														name="isActive"
+														onChange={campaignValidation.handleChange}
+														onBlur={campaignValidation.handleBlur}
+														checked={campaignValidation.values.isActive}
+													/>
+													<Label className="form-check-label" for="isActive">
+														Status: <span className="fw-bolder">{campaignValidation.values.isActive ? "Active" : "In-Active"}</span>
+													</Label>
+												</div>
+												<div className="form-check form-switch form-switch-md mb-3" dir="ltr">
+													<Input
+														type="checkbox"
+														className="form-check-input"
+														id="isLatest"
+														name="isLatest"
+														onChange={campaignValidation.handleChange}
+														onBlur={campaignValidation.handleBlur}
+														checked={campaignValidation.values.isLatest}
+													/>
+													<Label className="form-check-label" for="isLatest">
+														Display Homepage: <span className="fw-bolder">{campaignValidation.values.isLatest ? "Show" : "Hide"}</span>
+													</Label>
+												</div>
+
+												<div className="form-check form-switch form-switch-md" dir="ltr">
+													<Input
+														type="checkbox"
+														className="form-check-input"
+														id="isInNeed"
+														name="isInNeed"
+														onChange={campaignValidation.handleChange}
+														onBlur={campaignValidation.handleBlur}
+														checked={campaignValidation.values.isInNeed}
+													/>
+													<Label className="form-check-label" for="isTrending">
+														In Need: <span className="fw-bolder">{campaignValidation.values.isInNeed ? "Show" : "Hide"}</span>
+													</Label>
+												</div>
+											</CardBody>
+										</Card>
+									</>) : ""
+								}
 							</Col>
 							<Col>
 								<div className="text-start mb-4">

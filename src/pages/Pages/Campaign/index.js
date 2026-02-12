@@ -145,11 +145,17 @@ const CampaignMenu = () => {
 				filterable: false,
 				Cell: (campaign) => (
 					<>
-						{campaign.row.original.isActive ? (
-							<span className="badge bg-success-subtle text-success">ACTIVE</span>
-						) : (
-							<span className="badge bg-danger-subtle text-danger">IN-ACTIVE</span>
-						)}
+						{
+							campaign.row.original.ordering != -2 ? (
+								<>
+									{campaign.row.original.isActive ? (
+										<span className="badge bg-success-subtle text-success">ACTIVE</span>
+									) : (
+										<span className="badge bg-danger-subtle text-danger">IN-ACTIVE</span>
+									)}
+								</>
+							) : ""
+						}
 					</>
 				),
 			},
@@ -163,19 +169,25 @@ const CampaignMenu = () => {
 									<i className="ri-eye-line align-bottom text-muted"></i>
 								</Link>
 							</li>
-							<li className="list-inline-item" title="Delete">
-								<Link
-									className="remove-item-btn"
-									onClick={() => {
-										const LeadData = cellProps.row.original;
-										setDeleteModal(true);
-										setUID(LeadData.id);
-									}}
-									to="#"
-								>
-									<i className="ri-delete-bin-fill align-bottom text-muted"></i>
-								</Link>
-							</li>
+							{
+								cellProps.row.original.ordering != -2 ? (
+									<>
+										<li className="list-inline-item" title="Delete">
+											<Link
+												className="remove-item-btn"
+												onClick={() => {
+													const LeadData = cellProps.row.original;
+													setDeleteModal(true);
+													setUID(LeadData.id);
+												}}
+												to="#"
+											>
+												<i className="ri-delete-bin-fill align-bottom text-muted"></i>
+											</Link>
+										</li>
+									</>
+								) : ""
+							}
 						</ul>
 					);
 				},
